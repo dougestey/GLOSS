@@ -1,0 +1,45 @@
+.rise-circle-dashed {
+  position: absolute;
+  border-radius: 50%;
+  width: 18rem;
+  height: 18rem;
+  top: 50%;
+  left: 50%;
+  margin-top: -9rem;
+  margin-left: -9rem;
+  border: 4px rgba(98, 208, 240, .4);
+  border-style: dotted;
+  -webkit-animation: spin-inverse 30s infinite linear;
+  animation: spin-inverse 30s infinite linear;
+}
+
+.rise-circle-dashed.rise-circle-dashed-small {
+  width: 9rem;
+  height: 9rem;
+  margin-top: -4.5rem;
+  margin-left: -4.5rem;
+  border-width: 2px;
+}
+
+.rise-circle-grooved {
+  position: absolute;
+  border-radius: 50%;
+  width: 21rem;
+  height: 21rem;
+  top: 50%;
+  left: 50%;
+  margin-top: -10.5rem;
+  margin-left: -10.5rem;
+  border: 10px rgba(98, 208, 240, .1);
+  border-style: groove;
+  -webkit-animation: spin 40s infinite linear;
+  animation: spin 40s infinite linear;
+}
+
+.rise-circle-grooved.rise-circle-grooved-small {
+  width: 10.5rem;
+  height: 10.5rem;
+  margin-top: -5.25rem;
+  margin-left: -5.25rem;
+  border-width: 5px;
+}

@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 class RiseHeader extends Component {
   render() {
     return(
-      <header id="page-header" className="push-50">
+      <header id="page-header" className="push-20">
         <div className="h3 text-right pull-right">
           <div className="text-success pull-right">ONLINE</div>
         </div>

@@ -16,5 +16,6 @@ main {
 
 * {
   user-select: none;
-  cursor: none;
+  /* TODO: enable this only for touch displays 
+  cursor: none; */
 }

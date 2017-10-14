@@ -1,0 +1,8 @@
+h1, h2, h3, h4, h5, h6 {
+  color: rgb(137, 231, 231);
+}
+
+.rise-location .rise-circle-dashed:focus,
+.rise-location .rise-circle-dashed:active {
+  background-color: rgba(0, 255, 255, 0.171);
+}

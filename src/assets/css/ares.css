@@ -445,12 +445,12 @@ a.link-sf:active:before {
 .font-w600 { font-weight: 600 !important; }
 .font-w700 { font-weight: 700 !important; }
 
-.push-5 { margin-bottom: 5px; }
-.push-10 { margin-bottom: 10px; }
-.push-20 { margin-bottom: 20px; }
-.push-30 { margin-bottom: 30px; }
-.push-40 { margin-bottom: 40px; }
-.push-50 { margin-bottom: 50px; }
+.push-5 { margin-bottom: 5%; }
+.push-10 { margin-bottom: 10%; }
+.push-20 { margin-bottom: 20%; }
+.push-30 { margin-bottom: 30%; }
+.push-40 { margin-bottom: 40%; }
+.push-50 { margin-bottom: 50%; }
 
 .items-push > div { margin-bottom: 30px; }
 

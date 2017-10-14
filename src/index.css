@@ -2,6 +2,8 @@
 @import 'assets/css/animate.min.css';
 @import 'assets/css/ares.css';
 
+@import 'styles/index.css';
+
 body {
   margin: 0;
   padding: 0;

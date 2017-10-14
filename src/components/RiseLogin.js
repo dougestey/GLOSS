@@ -6,8 +6,8 @@ class RiseLogin extends Component {
   render() {
     return(
       <div className="row push-40">
-        <div className="col-xs-4 col-xs-offset-4 text-center">
-            <img src={eve_login} />
+        <div className="text-center">
+            <img src={eve_login} alt="EVE SSO Login"/>
         </div>
       </div>
     )

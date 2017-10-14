@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-// import { VelocityComponent } from 'velocity-react';
+import React, { Component } from 'react'
+// import { VelocityComponent } from 'velocity-react'
 
-import './App.css';
+import './App.css'
 
-import RiseHeader from './components/RiseHeader';
-import RiseLogin from './components/RiseLogin';
-import RiseLocation from './components/RiseLocation';
+import RiseHeader from './components/RiseHeader'
+import RiseLogin from './components/RiseLogin'
+import RiseLocation from './components/RiseLocation'
 
 class App extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       showSubComponent: false
@@ -22,15 +22,15 @@ class App extends Component {
         <RiseHeader/>
 
         <main>
-          <RiseLogin />
+          {/* <RiseLogin /> */}
           <RiseLocation />
         </main>
       </div>
-    );
+    )
   }
 
   componentDidUpdate() {
   }
 }
 
-export default App;
+export default App
