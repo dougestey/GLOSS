@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 class RiseHeader extends Component {
   render() {
@@ -15,4 +15,4 @@ class RiseHeader extends Component {
   }
 }
 
-export default RiseHeader;
+export default RiseHeader

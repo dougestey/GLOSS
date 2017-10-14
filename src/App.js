@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 import RiseHeader from './components/RiseHeader';
-// import RiseLogin from './components/RiseLogin';
+import RiseLogin from './components/RiseLogin';
 import RiseLocation from './components/RiseLocation';
 
 class App extends Component {
@@ -22,6 +22,7 @@ class App extends Component {
         <RiseHeader/>
 
         <main>
+          <RiseLogin />
           <RiseLocation />
         </main>
       </div>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 class RiseLocation extends Component {
   render() {
@@ -13,4 +13,4 @@ class RiseLocation extends Component {
   }
 }
 
-export default RiseLocation;
+export default RiseLocation
