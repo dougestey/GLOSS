@@ -1,0 +1,14 @@
+[
+  {
+    "character_id": 93265215,
+    "join_time": "2016-04-29T12:34:56Z",
+    "role": "squad_commander",
+    "role_name": "Squad Commander (Boss)",
+    "ship_type_id": 33328,
+    "solar_system_id": 30003729,
+    "squad_id": 3129411261968,
+    "station_id": 61000180,
+    "takes_fleet_warp": true,
+    "wing_id": 2073711261968
+  }
+]

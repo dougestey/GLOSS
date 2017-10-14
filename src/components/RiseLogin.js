@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class RiseHeader extends Component {
+class RiseLogin extends Component {
   render() {
     return(
       <div className="row">
@@ -12,4 +12,4 @@ class RiseHeader extends Component {
   }
 }
 
-export default RiseHeader;
+export default RiseLogin;
