@@ -1,0 +1,15 @@
+/* Ares overrides */
+
+#page-container.modern-sf:before {
+  display: none;
+}
+
+.btn.btn-sf {
+  text-align: center;
+}
+
+/* General */
+
+main {
+  padding: 0 20px;
+}
