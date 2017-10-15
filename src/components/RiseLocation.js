@@ -5,7 +5,6 @@ class RiseLocation extends Component {
     return(
       <div className="rise-location row">
         <div className="rise-dial col-xs-4 text-center">
-          <div className="rise-circle-dashed rise-circle-dashed-small"></div>
           <div className="rise-circle-grooved rise-circle-grooved-small"></div>
           <h4>TG-Z23</h4>
           <h6>Stain</h6>
@@ -17,7 +16,6 @@ class RiseLocation extends Component {
           <h5>Stain</h5>
         </div>
         <div className="rise-dial col-xs-4 text-center">
-          <div className="rise-circle-dashed rise-circle-dashed-small"></div>
           <div className="rise-circle-grooved rise-circle-grooved-small"></div>
           <h4>TG-Z23</h4>
           <h6>Stain</h6>

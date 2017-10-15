@@ -3,13 +3,15 @@ import React, { Component } from 'react'
 class RiseHeader extends Component {
   render() {
     return(
-      <header id="page-header" className="push-20">
-        <div className="h3 text-right pull-right">
-          <div className="text-success pull-right">ONLINE</div>
+      <header className="push-20 clearfix">
+        <div className="text-right pull-right">
+          <h3 className="text-success pull-right">ONLINE</h3>
         </div>
-        <h1 className="h3 font-w200">
-          <a className="link-sf font-w300" href="index.html">RISE <small>v0.1</small></a>
-        </h1>
+        <div className="text-left pull-left">
+          <h3 className="font-w200">
+            <a className="rise-link" href="index.html">RISE <small>v0.1</small></a>
+          </h3>
+        </div>
       </header>
     )
   }

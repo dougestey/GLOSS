@@ -7,7 +7,7 @@ class RiseLogin extends Component {
     return(
       <div className="row push-40">
         <div className="text-center">
-            <img src={eve_login} alt="EVE SSO Login"/>
+          <img src={eve_login} alt="EVE SSO Login"/>
         </div>
       </div>
     )
