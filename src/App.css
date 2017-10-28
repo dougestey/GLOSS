@@ -94,6 +94,22 @@ a.rise-link:active:before {
   transform: scaleY(1.2);
 }
 
+a.rise-button {
+  padding: 1rem 2rem;
+  font-family: 'EVE Sans';
+  font-size: 4rem;
+  color: white;
+  text-transform: uppercase;
+  border: 2px #62d0f0 solid;
+  background: transparent;
+  border-radius: none;
+  transition: background 375ms ease-in-out;
+}
+
+a.rise-button:hover {
+  background: #62d0f0;
+}
+
 /* Utilities */
 
 .push-5 { margin-bottom: 5%; }

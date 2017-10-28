@@ -7,7 +7,7 @@ class RiseLogin extends Component {
     return(
       <div className="row push-40">
         <div className="text-center">
-          <img src={eve_login} alt="EVE SSO Login"/>
+          <a className="rise-button" href="http://arbiter/auth/authorize">Authorize</a>
         </div>
       </div>
     )

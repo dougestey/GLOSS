@@ -7,6 +7,7 @@ import RiseHeader from './components/RiseHeader'
 import RiseLogin from './components/RiseLogin'
 import RiseLocation from './components/RiseLocation'
 import RiseNotification from './components/RiseNotification'
+import RiseMain from './components/RiseMain'
 
 class App extends Component {
   constructor(props) {
@@ -20,13 +21,7 @@ class App extends Component {
     return (
       <div>
         <RiseHeader/>
-
-        <main>
-          {/* <RiseLogin /> */}
-          <RiseLocation />
-
-          <RiseNotification />
-        </main>
+        <RiseMain/>
       </div>
     )
   }
