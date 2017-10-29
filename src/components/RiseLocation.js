@@ -4,21 +4,24 @@ class RiseLocation extends Component {
   render() {
     return(
       <div className="rise-location row">
-        <div className="rise-dial col-xs-4 text-center">
+        <div className="rise-dial rise-dial-small col-xs-3 text-center">
           <div className="rise-circle-grooved rise-circle-grooved-small"></div>
-          <h4>TG-Z23</h4>
-          <h6>Stain</h6>
+          <h4>Stain</h4>
+          <h1>TG-Z23</h1>
+          <h4>0 / 0</h4>
         </div>
-        <div className="rise-dial col-xs-4 text-center">
+        <div className="rise-dial col-xs-6 text-center">
           <div className="rise-circle-dashed"></div>
           <div className="rise-circle-grooved"></div>
-          <h2>IP-MVJ</h2>
-          <h5>Stain</h5>
+          <h4 className="mb0">Stain</h4>
+          <h1>IP-MVJ</h1>
+          <h4 className="mb0">0 / 0</h4>
         </div>
-        <div className="rise-dial col-xs-4 text-center">
+        <div className="rise-dial rise-dial-small col-xs-3 text-center">
           <div className="rise-circle-grooved rise-circle-grooved-small"></div>
-          <h4>TG-Z23</h4>
-          <h6>Stain</h6>
+          <h4>Stain</h4>
+          <h1>TG-Z23</h1>
+          <h4>0 / 0</h4>
         </div>
       </div>
     )

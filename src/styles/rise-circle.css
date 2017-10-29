@@ -1,47 +1,44 @@
 .rise-circle-dashed {
   position: absolute;
   border-radius: 50%;
-  width: 19.5rem;
-  height: 19.5rem;
+  width: 25rem;
+  height: 25rem;
   top: 50%;
   left: 50%;
-  margin-top: -9.75rem;
-  margin-left: -9.75rem;
-  border: 4px rgba(98, 208, 240, .08);
-  border-style: dotted;
+  margin-top: -12.5rem;
+  margin-left: -12.5rem;
+  border: 4px rgba(59, 145, 168, 0.3);
+  border-style: dashed;
   -webkit-animation: spin-inverse 30s infinite linear;
   animation: spin-inverse 30s infinite linear;
 }
 
 .rise-circle-dashed.rise-circle-dashed-small {
-  width: 10rem;
-  height: 10rem;
-  margin-top: -5rem;
-  margin-left: -5rem;
-  border-width: 2px;
+  margin-top: -6.25rem;
+  transform: scale(0.5);
 }
 
 .rise-circle-grooved {
+  background: black;
+  z-index: -1;
   position: absolute;
   border-radius: 50%;
-  width: 18rem;
-  height: 18rem;
+  width: 23.5rem;
+  height: 23.5rem;
   top: 50%;
   left: 50%;
-  margin-top: -9rem;
-  margin-left: -9rem;
-  border: 10px rgba(98, 208, 240, .2);
+  margin-top: -11.75rem;
+  margin-left: -11.75rem;
+  border: 10px rgba(98, 208, 240, 0.7);
   border-style: double;
   -webkit-animation: spin 40s infinite linear;
   animation: spin 40s infinite linear;
 }
 
 .rise-circle-grooved.rise-circle-grooved-small {
-  width: 9rem;
-  height: 9rem;
-  margin-top: -4.5rem;
-  margin-left: -4.5rem;
+  transform: scale(0.5);  
   border-width: 5px;
   -webkit-animation: none;
   animation: none;
+  border-color: rgba(98, 208, 240, .2);
 }

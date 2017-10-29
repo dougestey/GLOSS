@@ -95,7 +95,7 @@ a.rise-link:active:before {
 }
 
 a.rise-button {
-  padding: 1rem 2rem;
+  padding: 1.5rem 2.5rem;
   font-family: 'EVE Sans';
   font-size: 4rem;
   color: white;
@@ -103,11 +103,18 @@ a.rise-button {
   border: 2px #62d0f0 solid;
   background: transparent;
   border-radius: none;
-  transition: background 375ms ease-in-out;
+  transition: background 375ms linear;
+
+  -webkit-animation: pulse 3s infinite linear;
+  animation: pulse 3s infinite linear;
+
+  position: relative;
 }
 
 a.rise-button:hover {
   background: #62d0f0;
+  opacity: 1;
+  animation: none;
 }
 
 /* Utilities */
@@ -119,44 +126,70 @@ a.rise-button:hover {
 .push-40 { margin-bottom: 40%; }
 .push-50 { margin-bottom: 50%; }
 
+.mb0 { margin-bottom: 0; }
+
 /* Animations */
 
-@-webkit-keyframes spin {
+@-webkit-keyframes pulse {
   from {
-      -webkit-transform: rotate(0deg);
+    opacity: 1;
+    box-shadow: 0px 0px 10px #62d0f0;
   }
 
   to {
-      -webkit-transform: rotate(360deg);
+    opacity: 0.7;
+    box-shadow: 0px 0px 50px #62d1f03a;
+  }
+}
+
+@keyframes pulse {
+  from {
+    opacity: 1;
+    box-shadow: 0px 0px 10px #62d0f0;
+  }
+
+  to {
+    opacity: 0.7;
+    box-shadow: 0px 0px 50px #62d1f03a;
+  }
+}
+
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: rotate(360deg);
   }
 }
 
 @keyframes spin {
   from {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
 
   to {
-      transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 
 @-webkit-keyframes spin-inverse {
   from {
-      -webkit-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
   }
 
   to {
-      -webkit-transform: rotate(-360deg);
+    -webkit-transform: rotate(-360deg);
   }
 }
 
 @keyframes spin-inverse {
   from {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
 
   to {
-      transform: rotate(-360deg);
+    transform: rotate(-360deg);
   }
 }
