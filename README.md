@@ -1,15 +1,20 @@
-# Project Rise
+# Gloss
+
+a Guided List Of Star Systems.
 
 The dream: a rich but performant nav computer for space travel. Designed for EVE Online with small touchscreen displays in mind.
 
-Purpose-built to work hand in hand with [Ascent](https://github.com/dougestey/ascent).
+Purpose-built to work hand in hand with [Arbiter](https://github.com/dougestey/arbiter).
 
 Currently under heavy development. Not supported in any way by the author at this time.
 
 ## Roadmap
 - [ ] EVE Single sign-on
-- [ ] Tracker module
-  - [ ] Live system display
+- [ ] Waypoint tracking
+  - [ ] Waypoint read
+  - [ ] Waypoint write
+  - [ ] Route display
+  - [ ] Current system display
   - [ ] Jumps
   - [ ] Kills
   - [ ] Security
@@ -24,10 +29,6 @@ Currently under heavy development. Not supported in any way by the author at thi
   - [ ] Nearby systems with capsuleer kills
   - [ ] Shared public data
   - [ ] Shared corporate data
-- [ ] Navigation module
-  - [ ] Waypoint read
-  - [ ] Waypoint write
-  - [ ] Route display
 - [ ] Fleet module
   - [ ] Display current fleet role
   - [ ] Display current fleet members
@@ -50,7 +51,7 @@ You will need the following things properly installed on your computer.
 ## Installation
 
 * `git clone <repository-url>` this repository
-* `cd rise`
+* `cd gloss`
 * `yarn`
 
 ## Running
@@ -78,7 +79,7 @@ Make use of the many generators for code, try `ember help generate` for more det
 Requires a running [Ascent](https://github.com/dougestey/ascent) server winstance.
 
 ### References
+- https://github.com/dougestey/arbiter
 - https://thenounproject.com/seanpjohnstone/collection/subtle-cyberpunk-ui-dark/
-- https://github.com/dougestey/rise
 - https://www.pinterest.es/pin/355362226835153293/
 - http://sciencefictioninterfaces.tumblr.com/

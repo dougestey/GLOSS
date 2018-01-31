@@ -3,7 +3,7 @@
 
 module.exports = function(environment) {
   let ENV = {
-    modulePrefix: 'rise',
+    modulePrefix: 'gloss',
     environment,
     rootURL: '/',
     locationType: 'auto',

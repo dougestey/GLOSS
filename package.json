@@ -1,15 +1,18 @@
 {
-  "name": "rise",
-  "version": "1.0.0",
+  "name": "gloss",
+  "version": "0.0.0",
   "private": false,
   "description": "A heads up display for space travel.",
   "license": "MIT",
-  "author": "get@dougestey.com",
+  "author": "doug.estey@gmail.com",
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dougestey/gloss.git"
+  },
   "scripts": {
     "build": "ember build",
     "start": "ember server",
@@ -27,6 +30,7 @@
     "ember-cli-htmlbars-inline-precompile": "^1.0.0",
     "ember-cli-inject-live-reload": "^1.4.1",
     "ember-cli-qunit": "^4.0.0",
+    "ember-cli-sass": "^7.1.4",
     "ember-cli-shims": "^1.1.0",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-uglify": "^2.0.0",
@@ -35,10 +39,13 @@
     "ember-load-initializers": "^1.0.0",
     "ember-resolver": "^4.0.0",
     "ember-source": "~2.16.0",
-    "ember-welcome-page": "^3.0.0",
+    "liquid-fire": "^0.29.1",
     "loader.js": "^4.2.3"
   },
   "engines": {
     "node": "^4.5 || 6.* || >= 7.*"
+  },
+  "dependencies": {
+    "spectre.css": "^0.5.0"
   }
 }

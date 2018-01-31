@@ -1,0 +1,84 @@
+// @import 'node_modules/spectre.css/src/spectre';
+
+@font-face {
+  font-family: 'EVE Sans';
+  src: url(fonts/EveSans.ttf);
+}
+
+body {
+  background: black;
+  color: azure;
+  font-family: 'EVE Sans', sans-serif;
+  text-transform: uppercase;
+  overflow: hidden;
+
+  * {
+    font-family: 'EVE Sans', sans-serif;
+    text-transform: uppercase;
+  }
+}
+
+.btn {
+  display: block;
+  appearance: none;
+  background: transparent;
+  color: azure;
+  text-transform: uppercase;
+  border: 1px solid azure;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+.message {
+  h3 {
+    overflow: hidden;
+    border-right: .15em solid azure;
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: 0;
+    animation:
+      typing 2s steps(40, end),
+      blink-caret .75s step-end infinite;
+  }
+
+  &.is-fading-out {
+    animation: fade-out 375ms;
+  }
+
+  @keyframes fade-out {
+    from { opacity: 1 }
+    to { opacity: 0 }
+  }
+
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: azure; }
+  }
+}
+
+.Gloss {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 100vh;
+}
+
+.Gloss-module {
+  max-width: 50%;
+}
+
+.Gloss-module--top {
+  align-self: flex-start;
+}
+
+.Gloss-module--bottom {
+  align-self: flex-end;
+}
