@@ -1,4 +1,8 @@
 <div class="message">
-  <h3>Link established. Welcome, {{model.character.CharacterName}}.</h3>
-  <p>Current system: {{model.location.name}}</p>
+  <h3>Link established. Welcome, {{model.character.name}}.</h3>
+  <p>
+    <span>{{model.character.ship.name}}</span> /
+    <span>{{model.character.system.name}}</span> /
+    <span class="{{if model.character.online 'green' 'red' }}">{{if model.character.online 'Online' 'Offline'}}</span>
+  </p>
 </div>
