@@ -1,6 +1,6 @@
 # Gloss
 
-a Guided List Of Star Systems.
+Guided List Of Star Systems.
 
 The dream: a rich but performant nav computer for space travel. Designed for EVE Online with small touchscreen displays in mind.
 
@@ -9,8 +9,10 @@ Purpose-built to work hand in hand with [Arbiter](https://github.com/dougestey/a
 Currently under heavy development. Not supported in any way by the author at this time.
 
 ## Roadmap
-- [ ] EVE Single sign-on
+- [x] EVE Single sign-on
+- [x] WebSocket connection to [Arbiter](https://github.com/dougestey/arbiter)
 - [ ] Waypoint tracking
+  - [x] Current system
   - [ ] Waypoint read
   - [ ] Waypoint write
   - [ ] Route display
@@ -22,7 +24,10 @@ Currently under heavy development. Not supported in any way by the author at thi
   - [ ] Neighbouring systems
   - [ ] Points of interest
 - [ ] Ship module
+  - [ ] Hull type
   - [ ] Jump fatigue readout
+  - [ ] Effective hit points
+  - [ ] Damage capability
 - [ ] Intel module
   - [ ] Interpret results from local via copypasta
   - [ ] Nearby systems with NPC kills
