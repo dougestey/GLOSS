@@ -6,14 +6,10 @@ export default Service.extend({
 
   start(characterId) {
     io.socket.on('character', bind(this, this.updateCharacter));
-    io.socket.get(`/api/characters/${characterId}`, bind(this, this.loadCharacter));
+    io.socket.get(`/api/characters/${characterId}`, bind(this, this.updateCharacter));
   },
 
-  updateCharacter(update) {
-    this.set('character', Object.assign(update.previous, update.data));
-  },
-
-  loadCharacter(data) {
+  updateCharacter(data) {
     this.set('character', data);
   }
 

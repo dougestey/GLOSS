@@ -8,8 +8,6 @@ export default Route.extend({
 
   location: service(),
 
-  character: computed.reads('location.character'),
-
   model() {
     return this.get('ajax').request('/auth/whoami');
   },

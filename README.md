@@ -81,10 +81,11 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 ### Deploying
 
-Requires a running [Ascent](https://github.com/dougestey/ascent) server winstance.
+Requires a running [Arbiter](https://github.com/dougestey/ascent) server winstance.
 
 ### References
-- https://github.com/dougestey/arbiter
 - https://thenounproject.com/seanpjohnstone/collection/subtle-cyberpunk-ui-dark/
 - https://www.pinterest.es/pin/355362226835153293/
 - http://sciencefictioninterfaces.tumblr.com/
+- https://codepen.io/somethingformed/pen/raWJXV
+- https://css-tricks.com/dont-overthink-flexbox-grids/

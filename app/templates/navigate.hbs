@@ -1,12 +1,61 @@
-<div class="message">
-  {{#if character.name}}
-    <h3>Link established. Welcome, {{character.name}}.</h3>
-    <p>
-      <span>{{character.ship.name}}</span> /
-      <span>{{character.system.name}}</span> /
-      <span class="{{if character.online 'green' 'red' }}">{{if character.online 'Online' 'Offline'}}</span>
-    </p>
-  {{else}}
-    <h3>Receiving...</h3>
-  {{/if}}
+<div class="Gloss-module Gloss-module--y Gloss-hud">
+<div class="Gloss-module Gloss-module--x">
+  {{gloss-shard
+    label="Jumps"
+    value=character.system.shipJumps
+    loaded=loadUiElements
+    loadOrder=3
+    }}
+
+  {{gloss-shard
+    label="Kills"
+    value=character.system.shipKills
+    loaded=loadUiElements
+    loadOrder=2
+    }}
+
+  {{gloss-shard
+    label="System"
+    value=character.system.name
+    loaded=loadUiElements
+    loadOrder=1
+    primary=true
+    }}
+
+  {{gloss-shard
+    label="Capsules"
+    value=character.system.podKills
+    loaded=loadUiElements
+    loadOrder=2
+    }}
+  
+  {{gloss-shard
+    label="NPC"
+    value=character.system.npcKills
+    loaded=loadUiElements
+    loadOrder=3
+    }}
+</div>
+
+<div class="Gloss-module">
+  {{gloss-message
+    header=welcomeMessage
+  }}
+</div>
+
+<div class="Gloss-module Gloss-module--x">
+  {{gloss-shard
+    label="Current ship"
+    value=character.ship.name
+    loaded=loadUiElements
+    loadOrder=6
+    }}
+
+  {{gloss-shard
+    label="Status"
+    value=(if character.online 'Online' 'Offline')
+    loaded=loadUiElements
+    loadOrder=7
+    }}
+</div>
 </div>
