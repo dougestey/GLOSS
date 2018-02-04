@@ -1,4 +1,13 @@
 {{#liquid-if loaded class=loadOrderClass}}
   <h5>{{label}}</h5>
-  <h2>{{value}}</h2>
+
+  <h2>
+    {{#if isNumeric}}
+      {{gloss-shard-value
+        value=value
+        }}
+    {{else}}
+      {{value}}
+    {{/if}}
+  </h2>
 {{/liquid-if}}

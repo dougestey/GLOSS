@@ -9,18 +9,20 @@ export default Controller.extend({
 
   character: computed.reads('location.character'),
 
-  init() {
-    this._super(...arguments);
-
-    later(() => {
-      this.set('loadUiElements', true);
-    }, 3000);
-  },
+  system: computed.reads('location.system'),
 
   welcomeMessage: computed('character.name', function() {
     let name = this.get('character.name');
 
     return `Link established. Welcome, ${name}.`;
   }),
+
+  init() {
+    this._super(...arguments);
+
+    later(() => {
+      this.set('loadUiElements', true);
+    }, 3000);
+  }
 
 });

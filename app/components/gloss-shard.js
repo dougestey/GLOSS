@@ -15,6 +15,12 @@ export default Component.extend({
     let order = this.get('loadOrder');
 
     return `ui-fade-${order}`;
+  }),
+
+  isNumeric: computed('value', function() {
+    let value = this.get('value');
+
+    return !isNaN(value);
   })
 
 });

@@ -1,61 +1,61 @@
 <div class="Gloss-module Gloss-module--y Gloss-hud">
-<div class="Gloss-module Gloss-module--x">
-  {{gloss-shard
-    label="Jumps"
-    value=character.system.shipJumps
-    loaded=loadUiElements
-    loadOrder=3
-    }}
+  <div class="Gloss-module Gloss-module--x">
+    {{gloss-shard
+      label="Jumps"
+      value=system.shipJumps
+      loaded=loadUiElements
+      loadOrder=3
+      }}
 
-  {{gloss-shard
-    label="Kills"
-    value=character.system.shipKills
-    loaded=loadUiElements
-    loadOrder=2
-    }}
+    {{gloss-shard
+      label="Kills"
+      value=system.shipKills
+      loaded=loadUiElements
+      loadOrder=2
+      }}
 
-  {{gloss-shard
-    label="System"
-    value=character.system.name
-    loaded=loadUiElements
-    loadOrder=1
-    primary=true
-    }}
+    {{gloss-shard
+      label="System"
+      value=system.name
+      loaded=loadUiElements
+      loadOrder=1
+      primary=true
+      }}
 
-  {{gloss-shard
-    label="Capsules"
-    value=character.system.podKills
-    loaded=loadUiElements
-    loadOrder=2
-    }}
-  
-  {{gloss-shard
-    label="NPC"
-    value=character.system.npcKills
-    loaded=loadUiElements
-    loadOrder=3
-    }}
-</div>
+    {{gloss-shard
+      label="Capsules"
+      value=system.podKills
+      loaded=loadUiElements
+      loadOrder=2
+      }}
 
-<div class="Gloss-module">
-  {{gloss-message
-    header=welcomeMessage
-  }}
-</div>
+    {{gloss-shard
+      label="NPC"
+      value=system.npcKills
+      loaded=loadUiElements
+      loadOrder=3
+      }}
+  </div>
 
-<div class="Gloss-module Gloss-module--x">
-  {{gloss-shard
-    label="Current ship"
-    value=character.ship.name
-    loaded=loadUiElements
-    loadOrder=6
+  <div class="Gloss-module">
+    {{gloss-message
+      header=welcomeMessage
     }}
+  </div>
 
-  {{gloss-shard
-    label="Status"
-    value=(if character.online 'Online' 'Offline')
-    loaded=loadUiElements
-    loadOrder=7
-    }}
-</div>
+  <div class="Gloss-module Gloss-module--x">
+    {{gloss-shard
+      label="Current ship"
+      value=character.ship.name
+      loaded=loadUiElements
+      loadOrder=6
+      }}
+
+    {{gloss-shard
+      label="Status"
+      value=(if character.online 'Online' 'Offline')
+      loaded=loadUiElements
+      loadOrder=7
+      }}
+  </div>
 </div>
