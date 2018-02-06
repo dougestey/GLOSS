@@ -21,7 +21,10 @@ export default Service.extend({
   },
 
   updateSystem(data) {
-    this.set('system', data);
+    let characterLocation = this.get('character.system');
+
+    if (characterLocation.id === data.id)
+      this.set('system', data);
   }
 
 });

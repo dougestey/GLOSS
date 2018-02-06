@@ -24,7 +24,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   position: relative;
   z-index: 1;
-  text-shadow: -5px 5px 6px rgba(0,0,0,0.4);
+  // text-shadow: -5px 5px 6px rgba(0,0,0,0.4); TODO: don't think this is performant enough
 }
 
 .liquid-container {
