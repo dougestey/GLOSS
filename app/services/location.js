@@ -7,7 +7,7 @@ export default Service.extend({
   start(characterId) {
     io.socket.on('character', bind(this, this.updateCharacter));
     io.socket.on('system', bind(this, this.updateSystem));
-    io.socket.on('kill', bind(this, this.notifyOfKill));
+    io.socket.on('kill', bind(this, this.notifyOfKill)); // TODO: Move?
 
     io.socket.get(`/api/characters/${characterId}`, bind(this, this.updateCharacter));
   },
@@ -28,11 +28,7 @@ export default Service.extend({
   },
 
   notifyOfKill(data) {
-    // TODO: Coming soon
-    // let systemId = this.get('character.system.systemId');
-    console.log('new kill detected', data);
-    // if (systemId === data.systemId)
-    //   this.get('notifications').dispatch('kill', data);
+    this.get('notifications').dispatch('kill', data);
   }
 
 });
