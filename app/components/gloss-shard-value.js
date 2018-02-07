@@ -1,3 +1,4 @@
+/* global Odometer */
 import Component from '@ember/component';
 import { later } from '@ember/runloop';
 

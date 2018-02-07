@@ -14,7 +14,7 @@ export default Controller.extend({
   welcomeMessage: computed('character.name', function() {
     let name = this.get('character.name');
 
-    return `Link established. Welcome, ${name}.`;
+    return name ? `Link established. Welcome, ${name}.` : 'Receiving...';
   }),
 
   init() {

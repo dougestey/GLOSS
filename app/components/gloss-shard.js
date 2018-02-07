@@ -8,13 +8,14 @@ export default Component.extend({
   ],
 
   classNameBindings: [
-    'primary:Gloss-shard--primary'
+    'primary:Gloss-shard--primary',
+    'isNumeric:Gloss-shard--number:Gloss-shard--string',
   ],
 
   loadOrderClass: computed('loadOrder', function() {
     let order = this.get('loadOrder');
 
-    return `ui-fade-${order}`;
+    return order ? `ui-fade-${order}` : '';
   }),
 
   isNumeric: computed('value', function() {

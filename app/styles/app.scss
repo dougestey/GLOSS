@@ -100,6 +100,10 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0.3rem 0 0 0;
   }
 
+  &.Gloss-shard--primary {
+    flex: 2;
+  }
+
   &:not(.Gloss-shard--primary) {
     h5 {
       font-size: 0.63em;
@@ -155,23 +159,14 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-.background {
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  // animation: glow 5s infinite; 
-  background:
-    radial-gradient(circle at center,
-    rgb(204, 255, 252) 0%,
-    rgba(204, 255, 252,0.88) 58%,
-    rgba(204, 255, 252,0.57) 80%,
-    rgba(204, 255, 252,0.27) 93%,
-    rgba(204, 255, 252,0) 100%);
-  opacity: 0.15;
-  pointer-events: none;
-  position: fixed;
-  z-index: 0;
+.Gloss-animate--pulse {
+  animation: pulse 375ms linear 1;
+}
+
+@keyframes pulse {
+  50% {
+    transform: scale(1.2);
+  }
 }
 
 @keyframes glow {
