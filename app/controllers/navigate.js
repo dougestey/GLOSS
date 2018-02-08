@@ -11,10 +11,16 @@ export default Controller.extend({
 
   system: computed.reads('location.system'),
 
-  welcomeMessage: computed('character.name', function() {
+  messageHeader: computed('character.name', function() {
     let name = this.get('character.name');
 
-    return name ? `Link established. Welcome, ${name}.` : 'Receiving...';
+    return name ? 'Link established' : 'Receiving...';
+  }),
+
+  messageSubheader: computed('character.name', function() {
+    let name = this.get('character.name');
+
+    return `Welcome, ${name}.`;
   }),
 
   init() {

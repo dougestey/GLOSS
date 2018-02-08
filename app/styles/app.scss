@@ -1,81 +1,14 @@
-@import 'styles/odometer-theme-default.css';
-@import url('https://fonts.googleapis.com/css?family=Titillium+Web:300');
-
-@font-face {
-  font-family: 'EVE Sans';
-  src: url(fonts/EveSans.ttf);
-}
-
-$primary: #d2fffd;
-$secondary: #307e7a;
+@import 'index';
 
 body {
   background: url(/assets/bg.jpg) center center no-repeat fixed #000;
   background-size: cover;
   color: $primary;
-  font-family: 'EVE Sans', 'Titillium Web', sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   letter-spacing: 1.4px;
   text-transform: uppercase;
   overflow: hidden;
   margin: 0;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  position: relative;
-  z-index: 1;
-  // text-shadow: -5px 5px 6px rgba(0,0,0,0.4); TODO: don't think this is performant enough
-}
-
-.liquid-container {
-  z-index: 1;
-}
-
-.red {
-  color: red;
-}
-
-.green {
-  color: green;
-}
-
-.Gloss-button {
-  display: block;
-  appearance: none;
-  background: linear-gradient(transparent, rgba($secondary, 0.05), rgba($secondary, 0.1));
-  color: rgba($primary, 0.85);
-  text-transform: uppercase;
-  border-left: 0.5px solid rgba($secondary, 0.1);
-  border-right: 0.5px solid rgba($secondary, 0.1);
-  padding: 1.5rem 2rem;
-  cursor: pointer;
-  font-size: 1.5rem;
-  text-decoration: none;
-  position: relative;
-  animation: typing 250ms ease-in;
-  transition: color 250ms ease-in;
-
-  &:hover {
-    color: rgba($primary, 1);
-    background: linear-gradient(transparent, rgba($secondary, 0.1), rgba($secondary, 0.2));
-
-    &:after {
-      background-color: rgba($primary, 1);
-    }
-  }
-
-  &:after {
-    content: '';
-    display: block;
-    position: absolute;
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba($secondary, 0.5);
-    animation: expand 350ms ease-in;
-    margin-top: 2rem;
-    transition: background-color 375ms;
-  }
 }
 
 .Gloss {
@@ -85,69 +18,17 @@ h1, h2, h3, h4, h5, h6 {
 
 .Gloss-module {
   display: flex;
-  align-items: center; 
-
-  > * {
-    flex: 1;
-  }
+  align-items: center;
+  flex: 1;
 
   &--x {
     flex-direction: row;
     width: 100%;
-
-    > .Gloss-shard {
-      text-align: center;
-    }
   }
 
   &--y {
     flex-direction: column;
-
-    > :first-child {
-      align-items: flex-start;
-    }
-
-    > :last-child {
-      align-items: flex-end;
-    }
-
-    > :first-child:last-child {
-      align-items: center;
-    }
   }
-}
-
-.Gloss-shard {
-  h5 {
-    margin: 0;
-    color: $secondary;
-  }
-
-  h2 {
-    margin: 0.3rem 0 0 0;
-  }
-
-  &.Gloss-shard--primary {
-    flex: 2;
-  }
-
-  &:not(.Gloss-shard--primary) {
-    h5 {
-      font-size: 0.63em;
-    }
-
-    h2 {
-      font-size: 1.125em;
-    }
-  }
-}
-
-.Gloss-panel {
-  > * {
-    flex: 0;
-  }
-
-  justify-content: flex-end;
 }
 
 .Gloss-hud {
@@ -164,74 +45,12 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-.Gloss-message {
-  h2, p {
-    overflow: hidden;
-    white-space: nowrap;
-    margin: 0 auto;
-    padding: 5px;
-  }
-
-  h2 {
-    border-right: .15em solid $primary;
-    animation:
-      typing 2s steps(40, end),
-      blink-caret .75s step-end infinite;
-  }
-
-  p {
-    text-align: center;
-    animation:
-      fade-sub 4s steps(40, end);
-  }
-}
-
-.Gloss-animate--pulse {
-  animation: pulse 375ms linear 1;
-}
-
-@keyframes expand {
-  0% {
-    left: 50%;
-    right: 50%;
-  }
-
-  100% {
-    left: 0;
-    right: 0;
-  }
-}
-
-@keyframes pulse {
-  50% {
-    transform: scale(1.2);
-  }
-}
-
-@keyframes glow {
-  0% { opacity: 0.1; }
-  50% { opacity: 0.05; }
-  100% { opacity: 0.1; }
-}
-
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
-}
-
-@keyframes typing-sub {
-  0% { width: 0 }
-  50% { width: 0 }
-  100% { width: 100% }
-}
-
-@keyframes fade-sub {
-  0% { opacity: 0 }
-  50% { opacity: 0 }
-  100% { opacity: 1 }
-}
-
-@keyframes blink-caret {
-  from, to { border-color: transparent }
-  50% { border-color: $primary; }
+.Gloss-logo {
+  font-weight: 300;
+  align-self: flex-end !important;
+  font-size: 3.75rem;
+  font-family: 'Titillium Web';
+  letter-spacing: 0.7rem;
+  margin: 0;
+  height: 5.6875rem;
 }

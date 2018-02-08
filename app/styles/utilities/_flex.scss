@@ -1,0 +1,29 @@
+/* Alignment */
+.Gloss-flex--start {
+  align-items: flex-start !important;
+}
+
+.Gloss-flex--middle {
+  align-items: center !important;
+}
+
+.Gloss-flex--end {
+  align-items: flex-end !important;
+}
+
+.Gloss-flex--self-start {
+  align-self: flex-start !important;
+}
+
+.Gloss-flex--self-middle {
+  align-self: center !important;
+}
+
+.Gloss-flex--self-end {
+  align-self: flex-end !important;
+}
+
+/* Sizing */
+.Gloss-flex--1_1 {
+  flex: 1.1 !important;
+}

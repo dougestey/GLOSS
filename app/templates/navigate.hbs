@@ -1,24 +1,24 @@
 <div class="Gloss-module Gloss-module--y Gloss-hud">
-  <div class="Gloss-module Gloss-module--x">
+  <div class="Gloss-module Gloss-module--x Gloss-flex--start">
     {{gloss-shard
       label="Jumps"
       value=system.shipJumps
       loaded=loadUiElements
-      loadOrder=3
+      loadOrder=2
       }}
 
     {{gloss-shard
       label="Kills"
       value=system.shipKills
       loaded=loadUiElements
-      loadOrder=2
+      loadOrder=1
       }}
 
     {{gloss-shard
       label="System"
       value=system.name
       loaded=loadUiElements
-      loadOrder=1
+      loadOrder=0
       primary=true
       }}
 
@@ -26,36 +26,37 @@
       label="Capsules"
       value=system.podKills
       loaded=loadUiElements
-      loadOrder=2
+      loadOrder=1
       }}
 
     {{gloss-shard
       label="NPC"
       value=system.npcKills
       loaded=loadUiElements
-      loadOrder=3
+      loadOrder=2
       }}
   </div>
 
   <div class="Gloss-module">
     {{gloss-message
-      header=welcomeMessage
+      header=messageHeader
+      subheader=messageSubheader
     }}
   </div>
 
-  <div class="Gloss-module Gloss-module--x">
+  <div class="Gloss-module Gloss-module--x Gloss-flex--end">
     {{gloss-shard
       label="Ship"
       value=character.ship.name
       loaded=loadUiElements
-      loadOrder=6
+      loadOrder=5
       }}
 
     {{gloss-shard
       label="Status"
       value=(if character.online 'Online' 'Offline')
       loaded=loadUiElements
-      loadOrder=7
+      loadOrder=6
       }}
   </div>
 </div>
