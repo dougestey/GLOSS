@@ -1,24 +1,23 @@
 @import 'styles/odometer-theme-default.css';
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web:300');
 
 @font-face {
   font-family: 'EVE Sans';
   src: url(fonts/EveSans.ttf);
 }
 
+$primary: #d2fffd;
+$secondary: #307e7a;
+
 body {
   background: url(/assets/bg.jpg) center center no-repeat fixed #000;
   background-size: cover;
-  color: azure;
-  font-family: 'EVE Sans', sans-serif;
+  color: $primary;
+  font-family: 'EVE Sans', 'Titillium Web', sans-serif;
   letter-spacing: 1.4px;
   text-transform: uppercase;
   overflow: hidden;
   margin: 0;
-
-  * {
-    font-family: 'EVE Sans', sans-serif;
-    text-transform: uppercase;
-  }
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -39,17 +38,44 @@ h1, h2, h3, h4, h5, h6 {
   color: green;
 }
 
-.btn {
+.Gloss-button {
   display: block;
   appearance: none;
-  background: transparent;
-  color: azure;
+  background: linear-gradient(transparent, rgba($secondary, 0.05), rgba($secondary, 0.1));
+  color: rgba($primary, 0.85);
   text-transform: uppercase;
-  border: 1px solid azure;
-  padding: 1rem 2rem;
+  border-left: 0.5px solid rgba($secondary, 0.1);
+  border-right: 0.5px solid rgba($secondary, 0.1);
+  padding: 1.5rem 2rem;
   cursor: pointer;
   font-size: 1.5rem;
   text-decoration: none;
+  position: relative;
+  animation: typing 250ms ease-in;
+  transition: color 250ms ease-in;
+
+  &:hover {
+    color: rgba($primary, 1);
+    background: linear-gradient(transparent, rgba($secondary, 0.1), rgba($secondary, 0.2));
+
+    &:after {
+      background-color: rgba($primary, 1);
+    }
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba($secondary, 0.5);
+    animation: expand 350ms ease-in;
+    margin-top: 2rem;
+    transition: background-color 375ms;
+  }
 }
 
 .Gloss {
@@ -94,6 +120,7 @@ h1, h2, h3, h4, h5, h6 {
 .Gloss-shard {
   h5 {
     margin: 0;
+    color: $secondary;
   }
 
   h2 {
@@ -146,7 +173,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   h2 {
-    border-right: .15em solid azure;
+    border-right: .15em solid $primary;
     animation:
       typing 2s steps(40, end),
       blink-caret .75s step-end infinite;
@@ -161,6 +188,18 @@ h1, h2, h3, h4, h5, h6 {
 
 .Gloss-animate--pulse {
   animation: pulse 375ms linear 1;
+}
+
+@keyframes expand {
+  0% {
+    left: 50%;
+    right: 50%;
+  }
+
+  100% {
+    left: 0;
+    right: 0;
+  }
 }
 
 @keyframes pulse {
@@ -194,5 +233,5 @@ h1, h2, h3, h4, h5, h6 {
 
 @keyframes blink-caret {
   from, to { border-color: transparent }
-  50% { border-color: azure; }
+  50% { border-color: $primary; }
 }

@@ -90,6 +90,10 @@ Requires a running [Arbiter](https://github.com/dougestey/arbiter) server instan
 
 ## Design Reference
 - http://sciencefictioninterfaces.tumblr.com/
+- https://www.youtube.com/watch?v=NGIJDM2Xf4w
+- https://creativemarket.com/dannehr/163951-Orbit-SciFi-UI-Kit/screenshots/#screenshot3
+- https://arwes.romelperez.com/play
+- https://www.behance.net/gallery/19051971/Hi-Tech-Interface-Builder-Pack
 - https://www.behance.net/gallery/30283093/Sci-fi-interface-HUD
 - https://thenounproject.com/seanpjohnstone/collection/subtle-cyberpunk-ui-dark/
 - https://codepen.io/somethingformed/pen/raWJXV
