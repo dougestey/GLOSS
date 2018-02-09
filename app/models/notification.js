@@ -1,25 +1,17 @@
 import DS from 'ember-data';
 
-const { attr, hasMany } = DS;
+const { attr, belongsTo } = DS;
 
 export default DS.Model.extend({
 
-  killId: attr('number'),
-
   time: attr('string'),
 
-  systemId: attr('string'),
+  subject: attr('string'),
 
-  totalAttackers: attr('number'),
+  message: attr('string'),
 
-  victimCharacterId: attr('number'),
-  victimShipTypeId: attr('number'),
-  victimCorporationId: attr('number'),
-  victimAllianceId: attr('number'),
-  
-  attackerCharacterId: attr('number'),
-  attackerShipTypeId: attr('number'),
-  attackerCorporationId: attr('number'),
-  attackerAllianceId: attr('number')
+  icon: attr('string'),
+
+  report: belongsTo('report', { polymorphic: true, async: true })
 
 });

@@ -1,15 +1,18 @@
 /* global io */
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import { bind } from '@ember/runloop';
 
 export default Service.extend({
 
+  notifications: service(),
+
   start(characterId) {
     io.socket.on('character', bind(this, this.updateCharacter));
     io.socket.on('system', bind(this, this.updateSystem));
-    io.socket.on('kill', bind(this, this.notifyOfKill)); // TODO: Move?
 
     io.socket.get(`/api/characters/${characterId}`, bind(this, this.updateCharacter));
+
+    this.get('notifications').enable();
   },
 
   updateCharacter(data) {
@@ -25,10 +28,6 @@ export default Service.extend({
 
     if (characterLocation.id === data.id)
       this.set('system', data);
-  },
-
-  notifyOfKill(data) {
-    this.get('notifications').dispatch('kill', data);
   }
 
 });
