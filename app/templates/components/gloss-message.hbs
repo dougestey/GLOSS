@@ -1,5 +1,9 @@
-{{#if header}}
-  <h2>{{header}}</h2>
-{{else}}
-  <h3>Receiving...</h3>
+{{#if (or header subheader)}}
+  {{#if header}}
+    <h2>{{header}}</h2>
+  {{/if}}
+
+  {{#if subheader}}
+    <h3 class="{{if loaded 'kill-animation'}}">{{subheader}}</h3>
+  {{/if}}
 {{/if}}

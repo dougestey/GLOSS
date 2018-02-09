@@ -1,0 +1,39 @@
+.Gloss-button {
+  display: block;
+  font-family: 'EVE Sans', sans-serif;
+  background: linear-gradient(transparent, rgba($secondary, 0.05), rgba($secondary, 0.1));
+  color: rgba($primary, 0.85);
+  text-transform: uppercase;
+  border-left: 0.5px solid rgba($secondary, 0.1);
+  border-right: 0.5px solid rgba($secondary, 0.1);
+  padding: 1.5rem 2rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+  text-decoration: none;
+  position: relative;
+  animation: typing 250ms ease-in;
+  transition: color 250ms ease-in;
+
+  &:hover {
+    color: rgba($primary, 1);
+    background: linear-gradient(transparent, rgba($secondary, 0.1), rgba($secondary, 0.2));
+
+    &:after {
+      background-color: rgba($primary, 1);
+    }
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba($secondary, 0.5);
+    animation: expand 350ms ease-in;
+    margin-top: 2rem;
+    transition: background-color 375ms;
+  }
+}

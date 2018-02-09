@@ -1,0 +1,31 @@
+.Gloss-shard {
+  flex: 1;
+  text-align: center;
+
+  h2, h5 {
+    font-family: 'EVE Sans', sans-serif;
+  }
+
+  h2 {
+    margin: 0.3rem 0 0 0;
+  }
+
+  h5 {
+    margin: 0;
+    color: $secondary;
+  }
+
+  &.Gloss-shard--primary {
+    flex: 2;
+  }
+
+  &:not(.Gloss-shard--primary) {
+    h2 {
+      font-size: 1.125em;
+    }
+
+    h5 {
+      font-size: 0.63em;
+    }
+  }
+}

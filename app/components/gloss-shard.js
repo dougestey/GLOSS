@@ -15,7 +15,7 @@ export default Component.extend({
   loadOrderClass: computed('loadOrder', function() {
     let order = this.get('loadOrder');
 
-    return order ? `ui-fade-${order}` : '';
+    return !isNaN(order) ? `ui-fade-${order}` : '';
   }),
 
   isNumeric: computed('value', function() {
