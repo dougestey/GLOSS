@@ -16,6 +16,7 @@ let _sanitize = (data) => {
 };
 
 export default IndexedDbConfigurationService.extend({
+
   currentVersion: 1,
 
   version1: {
@@ -32,8 +33,13 @@ export default IndexedDbConfigurationService.extend({
       'notification': (item) => {
         return {
           id: this._toString(get(item, 'id')),
-          time: this._toString(get(item, 'time')),
-          report: this._toString(get(item, 'report'))
+          type: this._toString(get(item, 'attributes.type')),
+          time: this._toString(get(item, 'attributes.time')),
+          systemName: this._toString(get(item, 'attributes.system-name')),
+          systemId: get(item, 'attributes.system-id'),
+          subject: this._toString(get(item, 'attributes.subject')),
+          message: this._toString(get(item, 'attributes.message')),
+          report: this._toString(get(item, 'attributes.report'))
         };
       },
       'kill': (item) => {
@@ -47,7 +53,7 @@ export default IndexedDbConfigurationService.extend({
           attacker: _sanitize(get(item, 'attributes.attacker')),
           totalAttackers: get(item, 'attributes.total-attackers'),
           fleetComposition: get(item, 'attributes.fleet-composition'),
-          totalAttackers: get(item, 'attributes.fleet-affiliation'),
+          fleetAffiliation: get(item, 'attributes.fleet-affiliation'),
         };
       }
     };

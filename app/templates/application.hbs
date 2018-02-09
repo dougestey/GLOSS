@@ -2,5 +2,7 @@
   {{liquid-outlet}}
 </div>
 
-{{gloss-notifier
-  notifications=model.notifications}}
+{{#each model.notifications as |notification|}}
+  {{gloss-notification
+    model=notification}}
+{{/each}}

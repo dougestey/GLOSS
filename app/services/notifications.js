@@ -1,29 +1,50 @@
 /* global io */
 import Service, { inject as service } from '@ember/service';
 import { bind } from '@ember/runloop';
+import moment from 'npm:moment';
 
 export default Service.extend({
 
   store: service(),
 
-  indexedDb: service(),
-
+  // TODO: Types will be configurable in settings
   enable() {
     io.socket.on('kill', bind(this, this.dispatchKill));
   },
 
   async dispatchKill(kill) {
-    // TODO
-    // let totalAttackersString = '';
+    let report = await this.get('store').createRecord('kill', kill).save();
 
-    // if (totalAttackers > 1)
-    //   totalAttackersString = ` + ${totalAttackers}`;
-    // let notification = this.get('indexedDb').add('notification', {
-    //   time: new Date().toISOString(),
-    //   subject: `${kill.victim.ship} down in ${kill.system.name}`,
-    //   message: `Killed by ${kill.attacker.name} (${kill.attacker.ship.name})${totalAttackersString}`
-    // });
-    return this.get('store').createRecord('kill', kill).save();
+    this._generateKillNotification(kill, report);
+  },
+
+  dispatchNotification(notification) {
+    this.get('store').createRecord('notification', notification).save();
+  },
+
+  // Golem down (IP-MVJ)
+  // Ten minutes ago / Damian Lansing (Widow) + 5
+  _generateKillNotification(kill, report) {
+    let fleetString = '',
+        attackerString = '';
+
+    if (kill.totalAttackers > 1)
+      fleetString = ` + ${kill.totalAttackers}`;
+
+    if (kill.attacker.name)
+      attackerString = `${kill.attacker.name} `;
+
+    let notification = {
+      type: 'kill',
+      time: kill.time,
+      systemName: kill.system,
+      systemId: kill.systemId,
+      subject: `${kill.victim.ship} down`,
+      message: `${attackerString}(${kill.attacker.ship})${fleetString}`,
+      report
+    };
+
+    this.dispatchNotification(notification);
   }
 
 });
