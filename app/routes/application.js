@@ -1,7 +1,8 @@
+import Dexie from 'npm:dexie';
+
 import Route from '@ember/routing/route';
 import { hash } from 'rsvp';
 import { inject as service } from '@ember/service';
-import Dexie from 'npm:dexie';
 // const { NotFoundError, UnauthorizedError } = DS;
 
 export default Route.extend({
@@ -14,11 +15,11 @@ export default Route.extend({
     return this.get('indexedDb').setup();
   },
 
-  model() {
-    return hash({
-      notifications: this.store.findAll('notification')
-    });
-  },
+  // model() {
+  //   return hash({
+  //     notifications: this.store.findAll('notification')
+  //   });
+  // },
 
   actions: {
     error(error) {

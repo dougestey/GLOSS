@@ -21,7 +21,7 @@ export default IndexedDbConfigurationService.extend({
 
   version1: {
     stores: {
-      'notification': '&id,time,report',
+      'notification': '&id,isRead,time,report',
       'kill': '&id,systemId'
     }
   },
@@ -34,6 +34,7 @@ export default IndexedDbConfigurationService.extend({
         return {
           id: this._toString(get(item, 'id')),
           type: this._toString(get(item, 'attributes.type')),
+          isRead: this._toZeroOne(get(item, 'attributes.is-read')),
           time: this._toString(get(item, 'attributes.time')),
           systemName: this._toString(get(item, 'attributes.system-name')),
           systemId: get(item, 'attributes.system-id'),

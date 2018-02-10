@@ -1,5 +1,11 @@
-.Gloss-notification {
-  position: fixed;
+.Gloss-notifier {
+  position: absolute;
   bottom: 1rem;
   right: 1rem;
+  top: 10%;
+  width: 20rem;
+}
+
+.Gloss-notification {
+  flex: 1;
 }

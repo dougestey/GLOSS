@@ -2,7 +2,13 @@
   {{liquid-outlet}}
 </div>
 
-{{#each model.notifications as |notification|}}
-  {{gloss-notification
-    model=notification}}
-{{/each}}
+<div class="Gloss-notifier">
+  <div class="Gloss-module Gloss-module--y Gloss-flex--end">
+    {{#each stream as |notification|}}
+      {{#liquid-unless notification.isRead class="ui-fade-0"}}
+        {{gloss-notification
+        model=notification}}
+      {{/liquid-unless}}
+    {{/each}}
+  </div>
+</div>

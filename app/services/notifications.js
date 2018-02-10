@@ -7,6 +7,8 @@ export default Service.extend({
 
   store: service(),
 
+  latest: [],
+
   // TODO: Types will be configurable in settings
   enable() {
     io.socket.on('kill', bind(this, this.dispatchKill));
@@ -18,8 +20,10 @@ export default Service.extend({
     this._generateKillNotification(kill, report);
   },
 
-  dispatchNotification(notification) {
-    this.get('store').createRecord('notification', notification).save();
+  async dispatchNotification(notification) {
+    let record = await this.get('store').createRecord('notification', notification).save();
+
+    this.get('latest').pushObject(record);
   },
 
   // Golem down (IP-MVJ)

@@ -1,17 +1,15 @@
-{{#liquid-if model class="ui-fade-0"}}
-  <div class="Gloss-notification--subject">
-    <span class="Gloss-notification--system">
-      {{model.systemName}}
-    </span>
+<div class="Gloss-notification--subject">
+  <span class="Gloss-notification--system">
+    {{model.systemName}}
+  </span>
 
-    {{model.subject}}
-  </div>
+  {{model.subject}}
+</div>
 
-  <div class="Gloss-notification--message">
-    <span class="Gloss-notification--time">
-      {{from-now model.time}}
-    </span>
+<div class="Gloss-notification--message">
+  <span class="Gloss-notification--time">
+    {{from-now model.time}}
+  </span>
 
-    {{model.message}}
-  </div>
-{{/liquid-if}}
+  {{model.message}}
+</div>

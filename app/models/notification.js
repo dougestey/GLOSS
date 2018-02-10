@@ -6,6 +6,8 @@ export default DS.Model.extend({
 
   type: attr('string'),
 
+  isRead: attr('boolean'),
+
   time: attr('string'),
 
   systemName: attr('string'),
@@ -16,6 +18,6 @@ export default DS.Model.extend({
 
   message: attr('string'),
 
-  report: belongsTo('report', { polymorphic: true, async: true })
+  report: belongsTo('report', { polymorphic: true, async: true }),
 
 });
