@@ -10,8 +10,18 @@ export default function(){
   for (let i = 0; i < 7; i++) {
     this.transition(
       this.hasClass(`ui-fade-${i}`),
-      this.toValue(true),
       this.useAndReverse('fade', { duration: 500, delay: 250 * i })
     );
   }
+
+  this.transition(
+    this.hasClass('ui-fade'),
+    this.useAndReverse('fade', { duration: 250 })
+  );
+
+  this.transition(
+    this.hasClass('ui-fade'),
+    this.toValue(true),
+    this.useAndReverse('fade', { duration: 250 })
+  );
 }

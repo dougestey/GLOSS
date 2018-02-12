@@ -1,15 +1,29 @@
-<div class="Gloss-notification--subject">
+<div class="Gloss-notification--line">
+  <span class="Gloss-notification--subject">
+    {{model.subject}}
+  </span>
+
+  <span class="Gloss-notification--subjectContext">
+    {{model.subjectContext}}
+  </span>
+</div>
+
+<div class="Gloss-notification--line">
+  <span class="Gloss-notification--message">
+    {{model.message}}
+  </span>
+
+  <span class="Gloss-notification--messageContext">
+    {{model.messageContext}}
+  </span>
+</div>
+
+<div class="Gloss-notification--line">
+  <span class="Gloss-notification--time">
+    {{from-now model.time}} in
+  </span>
+
   <span class="Gloss-notification--system">
     {{model.systemName}}
   </span>
-
-  {{model.subject}}
-</div>
-
-<div class="Gloss-notification--message">
-  <span class="Gloss-notification--time">
-    {{from-now model.time}}
-  </span>
-
-  {{model.message}}
 </div>

@@ -1,5 +1,6 @@
 /* global io */
 import Service, { inject as service } from '@ember/service';
+import { filter } from '@ember/object/computed';
 import { bind } from '@ember/runloop';
 import moment from 'npm:moment';
 
@@ -7,7 +8,11 @@ export default Service.extend({
 
   store: service(),
 
-  latest: [],
+  all: [],
+
+  latest: filter('all', function(item, index) {
+    return (index < 5);
+  }),
 
   // TODO: Types will be configurable in settings
   enable() {
@@ -23,28 +28,27 @@ export default Service.extend({
   async dispatchNotification(notification) {
     let record = await this.get('store').createRecord('notification', notification).save();
 
-    this.get('latest').pushObject(record);
+    this.get('all').pushObject(record);
   },
 
   // Golem down (IP-MVJ)
   // Ten minutes ago / Damian Lansing (Widow) + 5
   _generateKillNotification(kill, report) {
-    let fleetString = '',
-        attackerString = '';
+    let fleetString = '';
 
     if (kill.totalAttackers > 1)
       fleetString = ` + ${kill.totalAttackers}`;
-
-    if (kill.attacker.name)
-      attackerString = `${kill.attacker.name} `;
 
     let notification = {
       type: 'kill',
       time: kill.time,
       systemName: kill.system,
       systemId: kill.systemId,
-      subject: `${kill.victim.ship} down`,
-      message: `${attackerString}(${kill.attacker.ship})${fleetString}`,
+      subject: kill.victim.name,
+      subjectContext: kill.victim.ship,
+      message: kill.attacker.name,
+      messageContext: `${kill.attacker.ship}${fleetString}`,
+      isRead: false,
       report
     };
 

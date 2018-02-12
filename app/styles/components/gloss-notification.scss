@@ -1,11 +1,30 @@
 .Gloss-notifier {
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  top: 10%;
-  width: 20rem;
+  max-height: 80%;
+  width: 24rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .Gloss-notification {
-  flex: 1;
+  cursor: pointer;
+  background: linear-gradient(transparent, rgba($secondary, 0.1), rgba($secondary, 0.2));
+  margin-bottom: 1rem;
+  padding: 1rem;
+
+  &--line {
+    &:nth-child(2) {
+      font-size: 0.75rem;
+    }
+
+    &:nth-child(3) {
+      font-size: 0.75rem;
+    }
+  }
+
+  &--time,
+  &--subjectContext,
+  &--messageContext {
+    color: $secondary;
+    font-weight: 800;
+  }
 }

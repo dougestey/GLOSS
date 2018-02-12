@@ -7,9 +7,15 @@ export default Controller.extend({
 
   location: service(),
 
+  notifications: service(),
+
+  showWelcomeMessage: true,
+
   character: computed.reads('location.character'),
 
   system: computed.reads('location.system'),
+
+  stream: computed.reads('notifications.latest.[]'),
 
   messageHeader: computed('character.name', function() {
     let name = this.get('character.name');
@@ -20,7 +26,7 @@ export default Controller.extend({
   messageSubheader: computed('character.name', function() {
     let name = this.get('character.name');
 
-    return `Welcome, ${name}.`;
+    return name ? `Welcome, ${name}.` : 'Please standby.';
   }),
 
   init() {
@@ -29,6 +35,10 @@ export default Controller.extend({
     later(() => {
       this.set('loadUiElements', true);
     }, 3000);
+
+    later(() => {
+      this.set('showWelcomeMessage', false);
+    }, 5500);
   }
 
 });

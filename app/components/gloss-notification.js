@@ -15,7 +15,13 @@ export default Component.extend({
     later(() => {
       model.set('isRead', true);
       model.save();
-    }, 5000);
+    }, 7500);
+  },
+
+  click() {
+    let killId = this.get('model.report.killId');
+
+    window.open(`https://zkillboard.com/kill/${killId}/`,'_blank');
   }
 
 });

@@ -37,12 +37,24 @@
       }}
   </div>
 
-  <div class="Gloss-module">
-    {{gloss-message
-      header=messageHeader
-      subheader=messageSubheader
-    }}
-  </div>
+  {{#liquid-if showWelcomeMessage class="ui-fade-0" shrinkDelay=500}}
+    <div class="Gloss-module">
+      {{gloss-message
+        header=messageHeader
+        subheader=messageSubheader}}
+    </div>
+  {{else}}
+    <div class="Gloss-module">
+      <div class="Gloss-notifier">
+        {{#each stream as |notification|}}
+          {{#liquid-unless notification.isRead class="ui-scale" shrinkDelay=500}}
+            {{gloss-notification
+              model=notification}}
+          {{/liquid-unless}}
+        {{/each}}
+      </div>
+    </div>
+  {{/liquid-if}}
 
   <div class="Gloss-module Gloss-module--x Gloss-flex--end">
     {{gloss-shard
