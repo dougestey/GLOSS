@@ -7,7 +7,7 @@ export default function(){
   );
 
   /* Binds */
-  for (let i = 0; i < 7; i++) {
+  for (let i = 0; i < 10; i++) {
     this.transition(
       this.hasClass(`ui-fade-${i}`),
       this.useAndReverse('fade', { duration: 500, delay: 250 * i })
@@ -15,13 +15,14 @@ export default function(){
   }
 
   this.transition(
+    this.includingInitialRender(),
     this.hasClass('ui-fade'),
-    this.useAndReverse('fade', { duration: 250 })
+    this.use('fade', { duration: 250 })
   );
 
   this.transition(
-    this.hasClass('ui-fade'),
-    this.toValue(true),
-    this.useAndReverse('fade', { duration: 250 })
+    this.includingInitialRender(),
+    this.hasClass('ui-slide-from-top'),
+    this.use('toDown', { duration: 250 })
   );
 }

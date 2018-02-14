@@ -10,7 +10,14 @@ export default Component.extend({
   classNameBindings: [
     'primary:Gloss-shard--primary',
     'isNumeric:Gloss-shard--number:Gloss-shard--string',
+    'alignLeft:Gloss-shard--align-left'
   ],
+
+  alignLeft: computed('align', function() {
+    let alignLeft = this.get('align');
+
+    return alignLeft;
+  }),
 
   loadOrderClass: computed('loadOrder', function() {
     let order = this.get('loadOrder');

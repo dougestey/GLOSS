@@ -11,6 +11,10 @@
   align-items: flex-end !important;
 }
 
+.Gloss-flex--stretch {
+  align-items: stretch !important;
+}
+
 .Gloss-flex--self-start {
   align-self: flex-start !important;
 }
@@ -29,6 +33,14 @@
 }
 
 /* Sizing */
+.Gloss-flex--1 {
+  flex: 1 !important;
+}
+
 .Gloss-flex--1_1 {
   flex: 1.1 !important;
+}
+
+.Gloss-flex--4 {
+  flex: 4 !important;
 }

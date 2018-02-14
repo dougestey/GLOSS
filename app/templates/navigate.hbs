@@ -37,31 +37,51 @@
       }}
   </div>
 
-  {{#liquid-if showWelcomeMessage class="ui-fade-0" shrinkDelay=500}}
-    <div class="Gloss-module">
-      {{gloss-message
-        header=messageHeader
-        subheader=messageSubheader}}
-    </div>
-  {{else}}
-    <div class="Gloss-module">
-      <div class="Gloss-notifier">
-        {{#each stream as |notification|}}
-          {{#liquid-unless notification.isRead class="ui-scale" shrinkDelay=500}}
-            {{gloss-notification
-              model=notification}}
-          {{/liquid-unless}}
-        {{/each}}
+  <div class="Gloss-viewport">
+    {{#liquid-if loadUiElements class="ui-fade-9"}}
+      <div class="Gloss-module Gloss-module--x Gloss-flex--start">
+        <div class="Gloss-module Gloss-module--y Gloss-flex--start Gloss-flex--wrap Gloss-flex--4">
+          {{gloss-shard
+            value="Threats"
+            loaded=true
+            align="left"}}
+
+          <p>No active threats detected.</p>
+        </div>
+
+        <div class="Gloss-module Gloss-module--y Gloss-flex--start">
+          {{gloss-shard
+            value="Conflict"
+            loaded=true
+            align="left"}}
+
+          <div class="Gloss-notifier Gloss-module">
+            {{#each stream as |notification|}}
+              {{#liquid-if notification class="ui-slide-from-top" shrinkDelay=500}}
+                {{gloss-notification
+                  model=notification}}
+              {{/liquid-if}}
+            {{/each}}
+          </div>
+        </div>
       </div>
-    </div>
-  {{/liquid-if}}
+    {{/liquid-if}}
+  </div>
 
   <div class="Gloss-module Gloss-module--x Gloss-flex--end">
     {{gloss-shard
       label="Ship"
       value=character.ship.name
       loaded=loadUiElements
+      loadOrder=6
+      }}
+
+    {{gloss-shard
+      label="Commander"
+      value=character.name
+      loaded=loadUiElements
       loadOrder=5
+      primary=true
       }}
 
     {{gloss-shard

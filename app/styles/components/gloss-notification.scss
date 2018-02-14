@@ -1,8 +1,8 @@
 .Gloss-notifier {
-  max-height: 80%;
   width: 24rem;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
+  align-items: stretch !important;
 }
 
 .Gloss-notification {

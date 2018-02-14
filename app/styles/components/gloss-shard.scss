@@ -15,8 +15,12 @@
     color: $secondary;
   }
 
-  &.Gloss-shard--primary {
+  &--primary {
     flex: 2;
+  }
+
+  &--align-left {
+    text-align: left;
   }
 
   &:not(.Gloss-shard--primary) {

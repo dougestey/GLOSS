@@ -21,7 +21,7 @@ export default IndexedDbConfigurationService.extend({
 
   version1: {
     stores: {
-      'notification': '&id,isRead,time,report',
+      'notification': '&id,isRead,time',
       'kill': '&id,systemId'
     }
   },

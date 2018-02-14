@@ -5,7 +5,7 @@ body {
   background: url(/assets/bg.jpg) center center no-repeat fixed #000;
   background-size: cover;
   color: $primary;
-  font-family: 'Titillium Web', sans-serif;
+  font-family: 'Titillium Web', 'EVE Sans', sans-serif;
   letter-spacing: 1.4px;
   text-transform: uppercase;
   overflow: hidden;
@@ -15,6 +15,12 @@ body {
 .Gloss {
   height: 96vh;
   padding: 2vh;
+}
+
+.Gloss-viewport {
+  width: 85%;
+  flex: 4.5;
+  overflow: hidden;
 }
 
 .Gloss-module {
@@ -33,16 +39,13 @@ body {
 }
 
 .Gloss-hud {
-  flex: 3;
   height: 96vh;
+  width: 100%;
   align-items: center;
 
-  > :first-child {
-    max-width: 70%;
-  }
-
+  > :first-child,
   > :last-child {
-    max-width: 50%;
+    max-width: 70%;
   }
 }
 
@@ -50,7 +53,7 @@ body {
   font-weight: 300;
   align-self: flex-end !important;
   font-size: 3.75rem;
-  font-family: 'Titillium Web';
+  font-family: 'Titillium Web', sans-serif;
   letter-spacing: 0.7rem;
   margin: 0;
   height: 5.6875rem;

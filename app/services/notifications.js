@@ -8,11 +8,7 @@ export default Service.extend({
 
   store: service(),
 
-  all: [],
-
-  latest: filter('all', function(item, index) {
-    return (index < 5);
-  }),
+  latest: [],
 
   // TODO: Types will be configurable in settings
   enable() {
@@ -20,6 +16,7 @@ export default Service.extend({
   },
 
   async dispatchKill(kill) {
+    delete kill.id;
     let report = await this.get('store').createRecord('kill', kill).save();
 
     this._generateKillNotification(kill, report);
@@ -28,7 +25,7 @@ export default Service.extend({
   async dispatchNotification(notification) {
     let record = await this.get('store').createRecord('notification', notification).save();
 
-    this.get('all').pushObject(record);
+    this.get('latest').pushObject(record);
   },
 
   // Golem down (IP-MVJ)
