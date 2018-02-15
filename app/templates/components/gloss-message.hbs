@@ -1,4 +1,4 @@
-{{#liquid-if isShowingMessage class="ui-fade" shrinkDelay=500}}
+{{#liquid-if isShowingMessage class="ui-fade"}}
   <div class="Gloss Gloss-module Gloss-module--y Gloss-flex--middle">
     <div class="Gloss-module">
       <div>
@@ -8,7 +8,7 @@
           {{/if}}
 
           {{#if subheader}}
-            <h3 class="{{if loaded 'kill-animation'}}">{{subheader}}</h3>
+            <h3 class="{{if stopAnimating 'kill-animation'}}">{{subheader}}</h3>
           {{/if}}
         {{/if}}
       </div>

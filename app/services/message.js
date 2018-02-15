@@ -4,16 +4,11 @@ import { later } from '@ember/runloop';
 
 export default Service.extend({
 
-  isShowingMessage: computed('header', 'subheader', 'shouldShowMessage', function() {
-    let shouldShowMessage = this.get('shouldShowMessage');
+  show() {
+    this.set('isShowingMessage', true);
 
-    if (shouldShowMessage) {
-      return true;
-    }
-
-    this.set('shouldShowMessage', true);
-
-    later(() => { this.set('shouldShowMessage', false) }, 5000);
-  })
+    if (this.get('seconds'))
+      later(() => this.set('isShowingMessage', false), this.get('seconds') * 1000);
+  }
 
 });

@@ -22,10 +22,12 @@ export default Service.extend({
 
     if (this.get('firstCharacterLoad')) {
       this.get('message').setProperties({
+        seconds: 5,
         header: 'Link established',
         subheader: `Hello, ${data.name}.`
       });
 
+      this.get('message').show();
       this.set('firstCharacterLoad', false);
     }
 

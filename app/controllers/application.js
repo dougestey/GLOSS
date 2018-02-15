@@ -10,6 +10,8 @@ export default Controller.extend({
 
   messageSubheader: reads('message.subheader'),
 
-  isShowingMessage: reads('message.isShowingMessage')
+  isShowingMessage: reads('message.isShowingMessage'),
+
+  stopAnimating: reads('message.stopAnimating')
 
 });
