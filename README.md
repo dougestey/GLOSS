@@ -7,6 +7,8 @@ Purpose-built to work hand in hand with [Arbiter](https://github.com/dougestey/a
 
 Currently under heavy development. Not supported in any way by the author at this time.
 
+![gloss_navigate](https://user-images.githubusercontent.com/680366/36328204-4c3b3a62-132f-11e8-85b9-ca01dc725ffb.png)
+
 ## Features ##
 - EVE SSO Authentication
 - Blistering WebSocket connection to [Arbiter](https://github.com/dougestey/arbiter)
