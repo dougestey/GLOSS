@@ -46,7 +46,7 @@
             loaded=true
             align="left"}}
 
-          <p>No active threats detected.</p>
+          <p>No active threats detected in {{location.system.name}}.</p>
         </div>
 
         <div class="Gloss-module Gloss-module--y Gloss-flex--start">
@@ -61,6 +61,8 @@
                 {{gloss-notification
                   model=notification}}
               {{/liquid-if}}
+            {{else}}
+              <p>No conflict reported on your route.</p>
             {{/each}}
           </div>
         </div>
