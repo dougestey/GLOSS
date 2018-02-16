@@ -3,7 +3,7 @@ export default function(){
   this.transition(
     this.includingInitialRender(),
     this.outletName('main'),
-    this.useAndReverse('fade', { duration: 500 })
+    this.useAndReverse('fade', { duration: 250 })
   );
 
   /* Binds */

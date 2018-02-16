@@ -4,11 +4,15 @@ import { later } from '@ember/runloop';
 
 export default Service.extend({
 
-  show() {
-    this.set('isShowingMessage', true);
+  dispatch(header, subheader, seconds) {
+    this.setProperties({
+      header,
+      subheader,
+      isShowingMessage: true
+    });
 
-    if (this.get('seconds'))
-      later(() => this.set('isShowingMessage', false), this.get('seconds') * 1000);
+    if (seconds)
+      later(() => this.set('isShowingMessage', false), seconds * 1000);
   }
 
 });

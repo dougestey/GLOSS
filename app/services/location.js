@@ -21,18 +21,16 @@ export default Service.extend({
     io.socket.get(`/api/systems/${systemId}`, bind(this, this.updateSystem));
 
     if (this.get('firstCharacterLoad')) {
-      this.get('message').setProperties({
-        seconds: 5,
-        header: 'Link established',
-        subheader: `Hello, ${data.name}.`
-      });
+      this.get('message').dispatch(
+        'Link established',
+        `Hello, ${data.name}.`,
+        5
+      );
 
-      this.get('message').show();
       this.set('firstCharacterLoad', false);
     }
 
     this.set('character', data);
-    this.set('system', data.system);
   },
 
   updateSystem(data) {

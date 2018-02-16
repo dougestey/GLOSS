@@ -11,22 +11,14 @@ export default Controller.extend({
   init() {
     this._super(...arguments);
 
-    this.get('message').setProperties({
-      subheader: 'Booting system...',
-      seconds: 5
-    });
-
-    this.get('message').show();
+    this.get('message').dispatch(null, 'Booting system...', 5);
 
     later(() => {
       this.set('title', 'Gloss');
     }, 1500);
 
     later(() => {
-      this.get('message').setProperties({
-        subheader: 'System ready',
-        stopAnimating: true
-      });
+      this.get('message').dispatch(null, 'System ready');
     }, 3000);
 
     later(() => {
