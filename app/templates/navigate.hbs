@@ -46,7 +46,17 @@
             loaded=true
             align="left"}}
 
-          <p>No active threats detected in {{location.system.name}}.</p>
+          <div class="Gloss-notifier Gloss-module">
+            {{#each threats as |notification|}}
+              {{#liquid-if notification class="ui-slide-from-top" shrinkDelay=500}}
+                {{gloss-threat
+                  model=notification}}
+              {{/liquid-if}}
+            {{else}}
+              <p>No threats assessed in {{location.system.name}}.</p>
+            {{/each}}
+          </div>
+          {{!-- <p>No active threats detected in {{location.system.name}}.</p> --}}
         </div>
 
         <div class="Gloss-module Gloss-module--y Gloss-flex--start">

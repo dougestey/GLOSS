@@ -15,6 +15,8 @@ export default Controller.extend({
 
   stream: computed.reads('notifications.latest.[]'),
 
+  threats: computed.reads('notifications.fleets.[]'),
+
   init() {
     this._super(...arguments);
 
@@ -22,9 +24,7 @@ export default Controller.extend({
       this.set('loadUiElements', true);
     }, 500);
 
-    later(() => {
-      this.get('notifications').enable();
-    }, 7500);
+    this.get('notifications').enable();
   }
 
 });

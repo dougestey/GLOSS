@@ -22,7 +22,8 @@ export default IndexedDbConfigurationService.extend({
   version1: {
     stores: {
       'notification': '&id,isRead,time',
-      'kill': '&id,systemId'
+      'fleet': '&id,isActive,startTime'
+      // 'kill': '&id,systemId'
     }
   },
 
@@ -45,21 +46,35 @@ export default IndexedDbConfigurationService.extend({
           messageContext: this._toString(get(item, 'attributes.message-context'))
         };
       },
-      'kill': (item) => {
+      'fleet': (item) => {
         return {
           id: this._toString(get(item, 'id')),
           json: this._cleanObject(item),
-          time: this._toString(get(item, 'attributes.time')),
-          killId: get(item, 'attributes.kill-id'),
-          systemId: get(item, 'attributes.system-id'),
-          system: get(item, 'attributes.system'),
-          victim: _sanitize(get(item, 'attributes.victim')),
-          attacker: _sanitize(get(item, 'attributes.attacker')),
-          totalAttackers: get(item, 'attributes.total-attackers'),
-          fleetComposition: get(item, 'attributes.fleet-composition'),
-          fleetAffiliation: get(item, 'attributes.fleet-affiliation')
-        };
+          startTime: this._toString(get(item, 'attributes.start-time')),
+          endTime: this._toString(get(item, 'attributes.end-time')),
+          isActive: this._toZeroOne(get(item, 'attributes.is-active')),
+          lastSeen: this._toString(get(item, 'attributes.last-seen')),
+          composition: _sanitize(get(item, 'attributes.composition')),
+          configuration: this._toString(get(item, 'attributes.configuration')),
+          efficiency: this._toString(get(item, 'attributes.efficiency')),
+          dangerRatio: this._toString(get(item, 'attributes.danger-ratio')),
+        }
       }
+      // 'kill': (item) => {
+      //   return {
+      //     id: this._toString(get(item, 'id')),
+      //     json: this._cleanObject(item),
+      //     time: this._toString(get(item, 'attributes.time')),
+      //     killId: get(item, 'attributes.kill-id'),
+      //     systemId: get(item, 'attributes.system-id'),
+      //     system: get(item, 'attributes.system'),
+      //     victim: _sanitize(get(item, 'attributes.victim')),
+      //     attacker: _sanitize(get(item, 'attributes.attacker')),
+      //     totalAttackers: get(item, 'attributes.total-attackers'),
+      //     fleetComposition: get(item, 'attributes.fleet-composition'),
+      //     fleetAffiliation: get(item, 'attributes.fleet-affiliation')
+      //   };
+      // }
     };
   })
 

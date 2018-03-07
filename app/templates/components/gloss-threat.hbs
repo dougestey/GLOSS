@@ -1,0 +1,25 @@
+<div class="Gloss-notification--line">
+  <span class="Gloss-notification--subject">
+    {{model.configuration}}
+  </span>
+
+  <span class="Gloss-notification--subjectContext">
+    {{model.composition}}
+  </span>
+</div>
+
+<div class="Gloss-notification--line">
+  <span class="Gloss-notification--message">
+    {{model.dangerRatio}}
+  </span>
+
+  <span class="Gloss-notification--messageContext">
+    {{model.efficiency}}
+  </span>
+</div>
+
+<div class="Gloss-notification--line">
+  <span class="Gloss-notification--time">
+    {{from-now model.lastSeen}}
+  </span>
+</div>
