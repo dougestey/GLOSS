@@ -7,20 +7,6 @@ import { inject as service } from '@ember/service';
 
 export default Route.extend({
 
-  indexedDb: service(),
-
-  beforeModel() {
-    this._super(...arguments);
-
-    return this.get('indexedDb').setup();
-  },
-
-  // model() {
-  //   return hash({
-  //     notifications: this.store.findAll('notification')
-  //   });
-  // },
-
   actions: {
     error(error) {
       // TODO: i.e. if (error instanceof UnauthorizedError || error instanceof NotFoundError)

@@ -1,25 +1,29 @@
 <div class="Gloss-notification--line">
   <span class="Gloss-notification--subject">
-    {{model.configuration}}
+    {{#each model.characters as |pilot index|}}
+      {{#if (eq index 0)}}
+        {{pilot.name}}
+      {{/if}}
+    {{/each}}
   </span>
 
   <span class="Gloss-notification--subjectContext">
-    {{model.composition}}
+    {{!-- {{model.characters.length}} pilot(s) --}}
   </span>
 </div>
 
 <div class="Gloss-notification--line">
-  <span class="Gloss-notification--message">
-    {{model.dangerRatio}}
+  <span class="Gloss-notification--messageContext">
+    Threat level
   </span>
 
-  <span class="Gloss-notification--messageContext">
-    {{model.efficiency}}
+  <span class="Gloss-notification--message">
+    {{threat-level model.dangerRatio}}
   </span>
 </div>
 
 <div class="Gloss-notification--line">
   <span class="Gloss-notification--time">
-    {{from-now model.lastSeen}}
+    Last seen {{from-now model.lastSeen}}
   </span>
 </div>

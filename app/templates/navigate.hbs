@@ -47,14 +47,16 @@
             align="left"}}
 
           <div class="Gloss-notifier Gloss-module">
-            {{#each threats as |notification|}}
-              {{#liquid-if notification class="ui-slide-from-top" shrinkDelay=500}}
-                {{gloss-threat
-                  model=notification}}
-              {{/liquid-if}}
-            {{else}}
-              <p>No threats assessed in {{location.system.name}}.</p>
-            {{/each}}
+            {{#liquid-if loadNotifications class="ui-fade"}}
+              {{#each fleets as |notification|}}
+                {{#liquid-if notification class="ui-slide-from-top" shrinkDelay=500}}
+                  {{gloss-threat
+                    model=notification}}
+                {{/liquid-if}}
+              {{else}}
+                <p>No threats assessed in {{location.system.name}}.</p>
+              {{/each}}
+            {{/liquid-if}}
           </div>
           {{!-- <p>No active threats detected in {{location.system.name}}.</p> --}}
         </div>
@@ -66,14 +68,16 @@
             align="left"}}
 
           <div class="Gloss-notifier Gloss-module">
-            {{#each stream as |notification|}}
-              {{#liquid-if notification class="ui-slide-from-top" shrinkDelay=500}}
-                {{gloss-notification
-                  model=notification}}
-              {{/liquid-if}}
-            {{else}}
-              <p>No conflict reported on your route.</p>
-            {{/each}}
+            {{#liquid-if loadNotifications class="ui-fade"}}
+              {{#each kills as |notification|}}
+                {{#liquid-if notification class="ui-slide-from-top" shrinkDelay=500}}
+                  {{gloss-notification
+                    model=notification}}
+                {{/liquid-if}}
+              {{else}}
+                <p>No conflict reported on your route.</p>
+              {{/each}}
+            {{/liquid-if}}
           </div>
         </div>
       </div>

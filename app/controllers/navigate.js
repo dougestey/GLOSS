@@ -13,9 +13,9 @@ export default Controller.extend({
 
   system: computed.reads('location.system'),
 
-  stream: computed.reads('notifications.latest.[]'),
+  kills: computed.reads('notifications.kills.[]'),
 
-  threats: computed.reads('notifications.fleets.[]'),
+  fleets: computed.reads('notifications.fleets.[]'),
 
   init() {
     this._super(...arguments);
@@ -25,6 +25,10 @@ export default Controller.extend({
     }, 500);
 
     this.get('notifications').enable();
+
+    later(() => {
+      this.set('loadNotifications', true);
+    }, 5000);
   }
 
 });

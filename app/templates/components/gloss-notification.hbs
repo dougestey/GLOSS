@@ -1,10 +1,10 @@
 <div class="Gloss-notification--line">
   <span class="Gloss-notification--subject">
-    {{model.subject}}
+    {{model.victim.name}}
   </span>
 
   <span class="Gloss-notification--subjectContext">
-    {{model.subjectContext}}
+    {{model.ship.name}}
   </span>
 </div>
 
@@ -20,10 +20,10 @@
 
 <div class="Gloss-notification--line">
   <span class="Gloss-notification--time">
-    {{from-now model.time}} in
+    Destroyed {{from-now model.time}}
   </span>
 
-  <span class="Gloss-notification--system">
+  {{!-- <span class="Gloss-notification--system">
     {{model.systemName}}
-  </span>
+  </span> --}}
 </div>
