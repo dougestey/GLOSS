@@ -1,14 +1,14 @@
 <div class="Gloss-notification--line">
-  <span class="Gloss-notification--subject">
-    {{#each model.characters as |pilot index|}}
-      {{#if (eq index 0)}}
-        {{pilot.name}}
-      {{/if}}
-    {{/each}}
-  </span>
+  <span class="Gloss-notification--flex">
+    <span>
+      <strong>{{dominantFaction.name}}</strong>
+      <br>
+      <span class="Gloss-notification--subjectContext">
+        Pilots <strong>{{model.characters.length}}</strong> / Kills <strong>{{model.kills.length}}</strong>
+      </span>
+    </span>
 
-  <span class="Gloss-notification--subjectContext">
-    {{!-- {{model.characters.length}} pilot(s) --}}
+    <img src={{threatImageUrl}}>
   </span>
 </div>
 
@@ -18,12 +18,12 @@
   </span>
 
   <span class="Gloss-notification--message">
-    {{threat-level model.dangerRatio}}
+    <strong>{{threat-level model.dangerRatio}}</strong>
   </span>
 </div>
 
 <div class="Gloss-notification--line">
   <span class="Gloss-notification--time">
-    Last seen {{from-now model.lastSeen}}
+    Last seen <strong>{{moment-from-now model.lastSeen interval=1000}}</strong>
   </span>
 </div>

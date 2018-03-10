@@ -1,29 +1,16 @@
 <div class="Gloss-notification--line">
-  <span class="Gloss-notification--subject">
-    {{model.victim.name}}
-  </span>
+  <span class="Gloss-notification--flex">
+    <img src={{shipImageUrl}} class="Gloss-notification--image" />
 
-  <span class="Gloss-notification--subjectContext">
-    {{model.ship.name}}
+    <span>
+      <strong>{{model.victim.name}}</strong>
+      <br>
+      <span class="Gloss-notification--subjectContext">
+        {{model.ship.name}}
+      </span>
+      <span class="Gloss-notification--time">
+        <strong>{{model.positionName}}</strong> {{moment-from-now model.time interval=1000}}
+      </span>
+    </span>
   </span>
-</div>
-
-<div class="Gloss-notification--line">
-  <span class="Gloss-notification--message">
-    {{model.message}}
-  </span>
-
-  <span class="Gloss-notification--messageContext">
-    {{model.messageContext}}
-  </span>
-</div>
-
-<div class="Gloss-notification--line">
-  <span class="Gloss-notification--time">
-    Destroyed {{from-now model.time}}
-  </span>
-
-  {{!-- <span class="Gloss-notification--system">
-    {{model.systemName}}
-  </span> --}}
 </div>

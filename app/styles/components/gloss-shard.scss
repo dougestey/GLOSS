@@ -8,6 +8,10 @@
 
   h2 {
     margin: 0.3rem 0 0 0;
+
+    @media screen and (max-width: 375px) {
+      font-size: 1.25em;
+    }
   }
 
   h5 {
@@ -30,6 +34,11 @@
 
     h5 {
       font-size: 0.63em;
+    }
+
+    @media screen and (max-width: 375px) {
+      h2 { font-size: 1em; }
+      h5 { font-size: 0.5em; }
     }
   }
 }

@@ -39,32 +39,61 @@
 
   <div class="Gloss-viewport">
     {{#liquid-if loadUiElements class="ui-fade-9"}}
-      <div class="Gloss-module Gloss-module--x Gloss-flex--start">
-        <div class="Gloss-module Gloss-module--y Gloss-flex--start Gloss-flex--wrap Gloss-flex--4">
+      <div class="Gloss-module Gloss-module--x Gloss-flex--wrap Gloss-flex--start">
+
+        <div class="Gloss-module Gloss-module--y Gloss-flex--start Gloss-flex--3">
+
           {{gloss-shard
             value="Threats"
-            loaded=true
+            loaded=loadNotifications
             align="left"}}
 
-          <div class="Gloss-notifier Gloss-module">
-            {{#liquid-if loadNotifications class="ui-fade"}}
-              {{#each fleets as |notification|}}
-                {{#liquid-if notification class="ui-slide-from-top" shrinkDelay=500}}
-                  {{gloss-threat
-                    model=notification}}
-                {{/liquid-if}}
-              {{else}}
-                <p>No threats assessed in {{location.system.name}}.</p>
-              {{/each}}
-            {{/liquid-if}}
+          <div class="Gloss-module Gloss-module--x Gloss-flex--start">
+            <div class="Gloss-module">
+              {{#liquid-if loadNotifications class="ui-fade"}}
+                <div class="Gloss-module Gloss-module--x Gloss-flex--wrap">
+                  {{#each fleets as |notification|}}
+                    {{#liquid-if notification class="ui-slide-from-top" shrinkDelay=500}}
+                      {{gloss-threat
+                        model=notification}}
+                    {{/liquid-if}}
+                  {{else}}
+                    <p>No active threats in {{location.system.name}}.<br><br></p>
+                  {{/each}}
+                </div>
+              {{/liquid-if}}
+            </div>
           </div>
-          {{!-- <p>No active threats detected in {{location.system.name}}.</p> --}}
+
+          {{gloss-shard
+            value="Vessels"
+            loaded=loadNotifications
+            align="left"}}
+
+          <div class="Gloss-module Gloss-module--x Gloss-flex--start">
+            <div class="Gloss-module">
+              {{#liquid-if loadNotifications class="ui-fade"}}
+                <div class="Gloss-module Gloss-module--y">
+                  {{#each fleets as |fleet|}}
+                    <ul>
+                      {{#each-in fleet.composition as |index shipType|}}
+                        <li>{{shipType.name}} {{shipType.quantity}}</li>
+                      {{/each-in}}
+                    </ul>
+                  {{else}}
+                    <p>Fleet compositions for active threats will appear here.</p>
+                  {{/each}}
+                </div>
+              {{/liquid-if}}
+            </div>
+          </div>
+
         </div>
 
         <div class="Gloss-module Gloss-module--y Gloss-flex--start">
           {{gloss-shard
             value="Conflict"
-            loaded=true
+            loaded=loadNotifications
             align="left"}}
 
           <div class="Gloss-notifier Gloss-module">
@@ -75,7 +104,7 @@
                     model=notification}}
                 {{/liquid-if}}
               {{else}}
-                <p>No conflict reported on your route.</p>
+                <p>No conflict reported in system.</p>
               {{/each}}
             {{/liquid-if}}
           </div>

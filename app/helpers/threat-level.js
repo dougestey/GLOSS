@@ -7,12 +7,14 @@ export function threatLevel(params/*, hash*/) {
     return 'unknown';
   }
 
-  if (dangerRatio < 0.5) {
+  if (dangerRatio < 50) {
     return 'low';
   }
 
-  if (dangerRatio < 0.7) {
+  if (dangerRatio < 69) {
     return 'moderate';
+  } else {
+    return 'high';
   }
 }
 

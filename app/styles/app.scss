@@ -12,6 +12,10 @@ body {
   margin: 0;
 }
 
+p {
+  color: $secondary;
+}
+
 .Gloss {
   height: 96vh;
   padding: 2vh;
@@ -21,6 +25,19 @@ body {
   width: 85%;
   flex: 4.5;
   overflow: hidden;
+
+  .Gloss-shard h2,
+  .Gloss-module > p {
+    padding: 0 1rem;
+
+    @media screen and (max-width: 375px) {
+      padding: 0;
+    }
+  }
+
+  .Gloss-module {
+    min-width: 280px;
+  }
 }
 
 .Gloss-module {
@@ -46,6 +63,10 @@ body {
   > :first-child,
   > :last-child {
     max-width: 70%;
+
+    @media screen and (max-width: 375px) {
+      max-width: 100%;;
+    }
   }
 }
 
@@ -56,4 +77,10 @@ body {
   letter-spacing: 0.7rem;
   margin: 0 0 7.5rem 0;
   height: 5.6875rem;
+}
+
+.Gloss--highlight,
+strong {
+  color: $primary !important;
+  font-weight: 400;
 }

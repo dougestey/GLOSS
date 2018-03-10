@@ -2,7 +2,7 @@
 import Service, { inject as service } from '@ember/service';
 import { filter } from '@ember/object/computed';
 import { bind } from '@ember/runloop';
-import moment from 'npm:moment';
+import moment from 'moment';
 
 export default Service.extend({
 

@@ -1,5 +1,3 @@
-import Dexie from 'npm:dexie';
-
 import Route from '@ember/routing/route';
 import { hash } from 'rsvp';
 import { inject as service } from '@ember/service';
