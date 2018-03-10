@@ -1,22 +1,24 @@
 import Controller from '@ember/controller';
 import { later } from '@ember/runloop';
+import { inject as service } from '@ember/service';
 
 export default Controller.extend({
 
-  title: null,
+  message: service(),
 
-  message: 'Booting system...',
+  title: null,
 
   init() {
     this._super(...arguments);
+
+    this.get('message').dispatch(null, 'Booting system...', 5);
 
     later(() => {
       this.set('title', 'Gloss');
     }, 1500);
 
     later(() => {
-      this.set('loaded', true);
-      this.set('message', 'System ready');
+      this.get('message').dispatch(null, 'System ready');
     }, 3000);
 
     later(() => {

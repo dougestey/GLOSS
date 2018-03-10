@@ -1,19 +1,43 @@
+@import 'styles/odometer-theme-default.css';
 @import 'index';
 
 body {
   background: url(/assets/bg.jpg) center center no-repeat fixed #000;
   background-size: cover;
   color: $primary;
-  font-family: 'Titillium Web', sans-serif;
+  font-family: 'Titillium Web', 'EVE Sans', sans-serif;
   letter-spacing: 1.4px;
   text-transform: uppercase;
   overflow: hidden;
   margin: 0;
 }
 
+p {
+  color: $secondary;
+}
+
 .Gloss {
   height: 96vh;
   padding: 2vh;
+}
+
+.Gloss-viewport {
+  width: 85%;
+  flex: 4.5;
+  overflow: hidden;
+
+  .Gloss-shard h2,
+  .Gloss-module > p {
+    padding: 0 1rem;
+
+    @media screen and (max-width: 375px) {
+      padding: 0;
+    }
+  }
+
+  .Gloss-module {
+    min-width: 280px;
+  }
 }
 
 .Gloss-module {
@@ -32,25 +56,31 @@ body {
 }
 
 .Gloss-hud {
-  flex: 3;
   height: 96vh;
+  width: 100%;
   align-items: center;
 
-  > :first-child {
-    max-width: 70%;
-  }
-
+  > :first-child,
   > :last-child {
-    max-width: 50%;
+    max-width: 70%;
+
+    @media screen and (max-width: 375px) {
+      max-width: 100%;;
+    }
   }
 }
 
 .Gloss-logo {
   font-weight: 300;
-  align-self: flex-end !important;
   font-size: 3.75rem;
-  font-family: 'Titillium Web';
+  font-family: 'Titillium Web', sans-serif;
   letter-spacing: 0.7rem;
-  margin: 0;
+  margin: 0 0 7.5rem 0;
   height: 5.6875rem;
+}
+
+.Gloss--highlight,
+strong {
+  color: $primary !important;
+  font-weight: 400;
 }

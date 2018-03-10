@@ -1,9 +1,17 @@
-{{#if (or header subheader)}}
-  {{#if header}}
-    <h2>{{header}}</h2>
-  {{/if}}
+{{#liquid-if isShowingMessage class="ui-fade"}}
+  <div class="Gloss Gloss-module Gloss-module--y Gloss-flex--middle">
+    <div class="Gloss-module">
+      <div>
+        {{#if (or header subheader)}}
+          {{#if header}}
+            <h2>{{header}}</h2>
+          {{/if}}
 
-  {{#if subheader}}
-    <h3 class="{{if loaded 'kill-animation'}}">{{subheader}}</h3>
-  {{/if}}
-{{/if}}
+          {{#if subheader}}
+            <h3 class="{{if stopAnimating 'kill-animation'}}">{{subheader}}</h3>
+          {{/if}}
+        {{/if}}
+      </div>
+    </div>
+  </div>
+{{/liquid-if}}

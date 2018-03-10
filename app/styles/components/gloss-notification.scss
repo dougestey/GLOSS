@@ -1,0 +1,54 @@
+.Gloss-notifier {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: stretch !important;
+
+  p {
+    padding: 0 1rem;
+
+    @media screen and (max-width: 375px) {
+      padding: 0;
+    }
+  }
+}
+
+.Gloss-notification {
+  margin-top: 0.5rem;
+  cursor: pointer;
+  padding: 1rem;
+  color: $secondary;
+  font-weight: 400;
+  border: 1px solid transparent;
+  transition: border-color 250ms linear;
+
+  &--time {
+    font-size: 0.7rem;
+    display: block;
+    line-height: 2;
+  }
+
+  &--flex {
+    display: flex;
+    align-items: center;
+  }
+
+  &--image {
+    border-radius: 5rem;
+    margin-right: 1rem;
+  }
+
+  &--line {
+    &:nth-child(2) {
+      font-size: 0.75rem;
+    }
+
+    &:nth-child(3) {
+      font-size: 0.75rem;
+    }
+  }
+
+  &:hover {
+    background: linear-gradient(transparent, rgba($secondary, 0.1), rgba($secondary, 0.2));
+    border-color: $primary;
+  }
+}

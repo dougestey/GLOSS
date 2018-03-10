@@ -7,28 +7,28 @@ export default Controller.extend({
 
   location: service(),
 
+  notifications: service(),
+
   character: computed.reads('location.character'),
 
   system: computed.reads('location.system'),
 
-  messageHeader: computed('character.name', function() {
-    let name = this.get('character.name');
+  kills: computed.reads('notifications.kills.[]'),
 
-    return name ? 'Link established' : 'Receiving...';
-  }),
-
-  messageSubheader: computed('character.name', function() {
-    let name = this.get('character.name');
-
-    return `Welcome, ${name}.`;
-  }),
+  fleets: computed.reads('notifications.fleets.[]'),
 
   init() {
     this._super(...arguments);
 
     later(() => {
       this.set('loadUiElements', true);
-    }, 3000);
+    }, 500);
+
+    this.get('notifications').enable();
+
+    later(() => {
+      this.set('loadNotifications', true);
+    }, 5000);
   }
 
 });
