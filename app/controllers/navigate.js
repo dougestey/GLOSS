@@ -29,6 +29,12 @@ export default Controller.extend({
     later(() => {
       this.set('loadNotifications', true);
     }, 5000);
+  },
+
+  actions: {
+    selectThreat(fleet) {
+      this.set('selectedThreat', fleet);
+    }
   }
 
 });

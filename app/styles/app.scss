@@ -16,6 +16,10 @@ p {
   color: $secondary;
 }
 
+.bump-2 {
+  margin-top: 2rem;
+}
+
 .Gloss {
   height: 96vh;
   padding: 2vh;
@@ -27,7 +31,8 @@ p {
   overflow: hidden;
 
   .Gloss-shard h2,
-  .Gloss-module > p {
+  .Gloss-shard h5,
+  .Gloss-module p {
     padding: 0 1rem;
 
     @media screen and (max-width: 375px) {
@@ -36,7 +41,7 @@ p {
   }
 
   .Gloss-module {
-    min-width: 280px;
+    min-width: 360px;
   }
 }
 
@@ -52,6 +57,49 @@ p {
 
   &--y {
     flex-direction: column;
+  }
+}
+
+.Gloss-report {
+  padding: 0 1rem;
+
+  table {
+    margin-top: 1rem;
+    width: 100%;
+    border-collapse: collapse;
+
+    th {
+      color: $secondary;
+      font-size: 0.83rem;
+      font-family: 'EVE Sans', sans-serif !important;
+      text-align: left;
+      margin-right: 0.5rem;
+      padding: 0.5rem 0;
+    }
+
+    td {
+      font-size: 0.8rem;
+      margin-right: 0.5rem;
+      padding: 0.5rem 0;
+
+      a {
+        text-decoration: none;
+        color: $primary;
+      }
+    }
+  }
+
+  &--composition {
+    width: 100%;
+  }
+
+  &--ship {
+    display: inline-flex;
+    align-items: center;
+
+    img {
+      margin-right: 0.75rem;
+    }
   }
 }
 
@@ -83,4 +131,8 @@ p {
 strong {
   color: $primary !important;
   font-weight: 400;
+}
+
+.width-100 {
+  width: 100%;
 }

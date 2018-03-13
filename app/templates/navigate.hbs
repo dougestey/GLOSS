@@ -44,18 +44,23 @@
         <div class="Gloss-module Gloss-module--y Gloss-flex--start Gloss-flex--3">
 
           {{gloss-shard
+            label="System"
             value="Threats"
             loaded=loadNotifications
-            align="left"}}
+            align="left"
+            primary=true
+            }}
 
           <div class="Gloss-module Gloss-module--x Gloss-flex--start">
             <div class="Gloss-module">
               {{#liquid-if loadNotifications class="ui-fade"}}
                 <div class="Gloss-module Gloss-module--x Gloss-flex--wrap">
-                  {{#each fleets as |notification|}}
-                    {{#liquid-if notification class="ui-slide-from-top" shrinkDelay=500}}
+                  {{#each fleets as |fleet|}}
+                    {{#liquid-if fleet class="ui-slide-from-top" shrinkDelay=500}}
                       {{gloss-threat
-                        model=notification}}
+                        model=fleet
+                        selectThreat=(action 'selectThreat')
+                        }}
                     {{/liquid-if}}
                   {{else}}
                     <p>No active threats in {{location.system.name}}.<br><br></p>
@@ -66,34 +71,63 @@
           </div>
 
           {{gloss-shard
-            value="Vessels"
-            loaded=loadNotifications
-            align="left"}}
+            label="Threat Analysis"
+            value=selectedThreat.dominantFaction.name
+            loaded=selectedThreat
+            align="left"
+            bump=true
+            primary=true
+            }}
 
-          <div class="Gloss-module Gloss-module--x Gloss-flex--start">
-            <div class="Gloss-module">
-              {{#liquid-if loadNotifications class="ui-fade"}}
-                <div class="Gloss-module Gloss-module--y">
-                  {{#each fleets as |fleet|}}
-                    <ul>
-                      {{#each-in fleet.composition as |index shipType|}}
-                        <li>{{shipType.name}} {{shipType.quantity}}</li>
-                      {{/each-in}}
-                    </ul>
-                  {{else}}
-                    <p>Fleet compositions for active threats will appear here.</p>
-                  {{/each}}
-                </div>
-              {{/liquid-if}}
+          {{#liquid-if selectedThreat class="ui-fade width-100" style="width: 100%;"}}
+
+            <div class="Gloss-module Gloss-report Gloss-module--x Gloss-flex--start Gloss--flex-3">
+
+              <div class="Gloss-module Gloss-module--x Gloss-report--composition">
+                <table cellpadding="10">
+                  <thead>
+                    <th>Threat</th>
+                    <th>Name</th>
+                    <th>Ship</th>
+                    <th>Corporation</th>
+                    <th>Alliance</th>
+                  </thead>
+
+                  <tbody>
+                    {{#each (sort-by 'dangerRatio:desc' selectedThreat.characters) as |character|}}
+                      <tr class="Gloss-report--character">
+                        <td>{{#if (eq character.dangerRatio 0)}}N/A{{else}}{{character.dangerRatio}}%{{/if}}</td>
+                        <td><a href="{{zkill-character character}}" target="_blank">{{character.name}}</a></td>
+                        <td class="Gloss-report--ship">
+                          {{#if character.ship}}
+                            <img src="https://imageserver.eveonline.com/Type/{{character.ship.id}}_32.png" />
+                          {{/if}}
+                          {{character.ship.name}}
+                        </td>
+                        <td>{{character.corporation.name}}</td>
+                        <td>{{character.alliance.name}}</td>
+                      </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+              </div>
+
             </div>
-          </div>
+
+          {{else if (and loadNotifications fleets)}}
+
+            <p>Select a threat above to view detailed analysis.</p>
+
+          {{/liquid-if}}
 
         </div>
 
         <div class="Gloss-module Gloss-module--y Gloss-flex--start">
           {{gloss-shard
+            label="System"
             value="Conflict"
             loaded=loadNotifications
+            primary=true
             align="left"}}
 
           <div class="Gloss-notifier Gloss-module">

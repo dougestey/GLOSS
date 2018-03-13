@@ -28,6 +28,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV.ARBITER_URL = 'http://gloss/api';
   }
 
   if (environment === 'test') {
@@ -43,6 +44,7 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     // here you can enable a production-specific feature
+    ENV.ARBITER_URL = 'http://gloss.space/api';
   }
 
   return ENV;

@@ -19,10 +19,12 @@ export default Component.extend({
     return alignLeft;
   }),
 
-  loadOrderClass: computed('loadOrder', function() {
-    let order = this.get('loadOrder');
+  loadOrderClass: computed('loadOrder', 'bump', function() {
+    let order = this.get('loadOrder'),
+        orderClass = !isNaN(order) ? `ui-fade-${order}` : '',
+        bumpClass = this.get('bump') ? 'bump-2' : '';
 
-    return !isNaN(order) ? `ui-fade-${order}` : '';
+    return `${orderClass} ${bumpClass}`;
   }),
 
   isNumeric: computed('value', function() {

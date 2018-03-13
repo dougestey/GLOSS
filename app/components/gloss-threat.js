@@ -9,6 +9,15 @@ export default Component.extend({
     'Gloss-threat'
   ],
 
+  click() {
+    let dominantFaction = this.get('dominantFaction'),
+        fleet = this.get('model');
+
+    fleet.dominantFaction = dominantFaction;
+
+    this.sendAction('selectThreat', fleet);
+  },
+
   dominantShipType: computed('model.composition', function() {
     let compHash = this.get('model.composition');
 
@@ -36,7 +45,7 @@ export default Component.extend({
     let corpMax = corpHash[corpMaxKey],
         allMax = allHash[allMaxKey];
 
-    if (corpMax > allMax) {
+    if (!allMax || corpMax > allMax) {
       let { corporationId: id, name } = _.find(corps, (c) => c.corporationId === parseInt(corpMaxKey));
 
       return { id, name, type: 'Corporation' };
