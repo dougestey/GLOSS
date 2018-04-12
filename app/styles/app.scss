@@ -43,6 +43,10 @@ p {
   .Gloss-module {
     min-width: 360px;
   }
+
+  @media screen and (max-width: 1024px) {
+    width: 90%;
+  }
 }
 
 .Gloss-module {
@@ -112,8 +116,8 @@ p {
   > :last-child {
     max-width: 70%;
 
-    @media screen and (max-width: 375px) {
-      max-width: 100%;;
+    @media screen and (max-width: 1024px) {
+      max-width: 100%;
     }
   }
 }
