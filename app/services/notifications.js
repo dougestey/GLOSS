@@ -16,6 +16,7 @@ export default Service.extend({
   enable() {
     io.socket.on('kill', bind(this, this.receiveKill));
     io.socket.on('fleet', bind(this, this.receiveFleet));
+    io.socket.on('fleet_expire', bind(this, this.destroyFleet));
     io.socket.on('intel', bind(this, this.receiveIntel));
   },
 
@@ -24,7 +25,23 @@ export default Service.extend({
   },
 
   async receiveFleet(fleet) {
-    this.get('fleets').pushObject(fleet);
+    let fleets = this.get('fleets');
+    let existingFleet = fleets.findBy('id', fleet.id);
+
+    if (existingFleet) {
+      fleets.removeObject(existingFleet);
+    }
+
+    fleets.pushObject(fleet);
+  },
+
+  async destroyFleet(fleet) {
+    let fleets = this.get('fleets');
+    let fleetToDestroy = fleets.findBy('id', fleet.id);
+
+    if (fleetToDestroy) {
+      fleets.removeObject(fleetToDestroy);
+    }
   },
 
   async receiveIntel(data) {

@@ -10,13 +10,20 @@ export default Component.extend({
   classNameBindings: [
     'primary:Gloss-shard--primary',
     'isNumeric:Gloss-shard--number:Gloss-shard--string',
-    'alignLeft:Gloss-shard--align-left'
+    'alignLeft:Gloss-shard--align-left',
+    'alignRight:Gloss-shard--align-right'
   ],
 
   alignLeft: computed('align', function() {
     let alignLeft = this.get('align');
 
-    return alignLeft;
+    return alignLeft === 'left';
+  }),
+
+  alignRight: computed('align', function() {
+    let alignRight = this.get('align');
+
+    return alignRight === 'right';
   }),
 
   loadOrderClass: computed('loadOrder', 'bump', function() {

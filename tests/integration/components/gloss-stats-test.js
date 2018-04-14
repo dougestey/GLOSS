@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('gloss-navigation-hud', 'Integration | Component | gloss navigation hud', {
+moduleForComponent('gloss-stats', 'Integration | Component | gloss stats', {
   integration: true
 });
 
@@ -9,15 +9,15 @@ test('it renders', function(assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.render(hbs`{{gloss-navigation-hud}}`);
+  this.render(hbs`{{gloss-stats}}`);
 
   assert.equal(this.$().text().trim(), '');
 
   // Template block usage:
   this.render(hbs`
-    {{#gloss-navigation-hud}}
+    {{#gloss-stats}}
       template block text
-    {{/gloss-navigation-hud}}
+    {{/gloss-stats}}
   `);
 
   assert.equal(this.$().text().trim(), 'template block text');

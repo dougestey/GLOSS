@@ -27,6 +27,10 @@
     text-align: left;
   }
 
+  &--align-right {
+    text-align: right;
+  }
+
   &:not(.Gloss-shard--primary) {
     h2 {
       font-size: 1.125em;

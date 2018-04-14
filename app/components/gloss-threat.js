@@ -10,12 +10,10 @@ export default Component.extend({
   ],
 
   click() {
-    let dominantFaction = this.get('dominantFaction'),
-        fleet = this.get('model');
+    let fleet = this.get('model'),
+        faction = this.get('dominantFaction');
 
-    fleet.dominantFaction = dominantFaction;
-
-    this.sendAction('selectThreat', fleet);
+    this.sendAction('selectThreat', { fleet, faction });
   },
 
   dominantShipType: computed('model.composition', function() {

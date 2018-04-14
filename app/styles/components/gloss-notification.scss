@@ -3,6 +3,50 @@
   flex-direction: column-reverse;
   align-items: stretch !important;
 
+  .Gloss-stream {
+    position: relative;
+    max-width: 320px;
+    overflow-x: hidden !important;
+
+    &::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2rem;
+      z-index: 20;
+      background: linear-gradient(
+        black,
+        rgba(0, 0, 0, 0.001)
+      );
+    }
+
+    &::after {
+      content: '';
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2rem;
+      z-index: 20;
+      background: linear-gradient(
+        rgba(0, 0, 0, 0.001),
+        black
+      );
+    }
+
+    > .liquid-container {
+      width: 340px;
+      max-height: 82vh;
+      overflow-y: auto !important;
+
+      > .liquid-child > :first-child {
+        margin-top: 1rem;
+      }
+    }
+  }
+
   p {
     padding: 0 1rem;
 
@@ -13,18 +57,17 @@
 }
 
 .Gloss-notification {
-  margin-top: 0.5rem;
+  margin-top: 0;
   cursor: pointer;
-  padding: 1rem;
+  padding: 0.75rem 0 0.75rem 0.75rem;
   color: $secondary;
-  font-weight: 400;
-  border: 1px solid transparent;
-  transition: border-color 250ms linear;
+  font-weight: 600;
 
   &--time {
     font-size: 0.7rem;
     display: block;
     line-height: 2;
+    opacity: 0.7;
   }
 
   &--flex {
@@ -35,21 +78,25 @@
   &--image {
     border-radius: 5rem;
     margin-right: 1rem;
+    width: 3rem;
   }
 
   &--line {
+    * {
+      white-space: nowrap;
+    }
+
     &:nth-child(2) {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
     }
 
     &:nth-child(3) {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
     }
   }
 
   &:hover {
     background: linear-gradient(transparent, rgba($secondary, 0.1), rgba($secondary, 0.2));
-    border-color: $primary;
   }
 
   @media screen and (max-width: 1024px) {

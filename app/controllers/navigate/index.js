@@ -5,15 +5,9 @@ import { later } from '@ember/runloop';
 
 export default Controller.extend({
 
-  location: service(),
-
   notifications: service(),
 
-  character: reads('location.character'),
-
-  system: reads('location.system'),
-
-  kills: reads('notifications.kills.[]'),
+  fleets: reads('notifications.fleets.[]'),
 
   init() {
     this._super(...arguments);
@@ -27,6 +21,18 @@ export default Controller.extend({
     later(() => {
       this.set('loadNotifications', true);
     }, 5000);
+  },
+
+  actions: {
+    selectThreat({ fleet, faction }) {
+      this.set('selectedFleet', fleet);
+      this.set('selectedFaction', faction);
+    },
+
+    clearThreat() {
+      this.set('selectedFleet', undefined);
+      this.set('selectedFaction', undefined);
+    }
   }
 
 });

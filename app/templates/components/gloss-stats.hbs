@@ -1,0 +1,52 @@
+<div class="Gloss-module Gloss-module--x Gloss-flex--start">
+  {{gloss-shard
+    label="System"
+    value=system.name
+    loaded=loadUiElements
+    loadOrder=0
+    primary=true
+    align="left"
+    }}
+
+  {{gloss-shard
+    label="Jumps"
+    value=system.shipJumps
+    loaded=loadUiElements
+    loadOrder=1
+    }}
+
+  {{gloss-shard
+    label="NPC"
+    value=system.npcKills
+    loaded=loadUiElements
+    loadOrder=2
+    }}
+
+  {{gloss-shard
+    label="Ships"
+    value=system.shipKills
+    loaded=loadUiElements
+    loadOrder=3
+    }}
+
+  {{gloss-shard
+    label="Capsules"
+    value=system.podKills
+    loaded=loadUiElements
+    loadOrder=4
+    }}
+
+  {{gloss-shard
+    label="ESI"
+    value=(sub 60 (moment-diff system.updatedAt now precision='minutes' interval='60000'))
+    loaded=loadUiElements
+    loadOrder=5
+    }}
+
+  {{gloss-shard
+    label="Zkill"
+    value="Connected"
+    loaded=loadUiElements
+    loadOrder=6
+    }}
+</div>

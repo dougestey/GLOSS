@@ -9,7 +9,8 @@
         {{model.ship.name}}
       </span>
       <span class="Gloss-notification--time">
-        <strong>{{model.positionName}}</strong> {{moment-from-now model.time interval=1000}}
+        <span>{{moment-from-now model.time interval=1000 hideSuffix=true}}</span>
+        <span>/ {{model.positionName}}</span>
       </span>
     </span>
   </span>

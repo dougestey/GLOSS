@@ -1,6 +1,6 @@
 /* global io */
 import Service, { inject as service } from '@ember/service';
-import { bind, later } from '@ember/runloop';
+import { bind } from '@ember/runloop';
 
 export default Service.extend({
 
@@ -24,7 +24,7 @@ export default Service.extend({
       this.get('message').dispatch(
         'Link established',
         `Hello, ${data.name}.`,
-        5
+        2.75
       );
 
       this.set('firstCharacterLoad', false);

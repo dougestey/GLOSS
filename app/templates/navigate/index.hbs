@@ -1,0 +1,60 @@
+{{#liquid-if selectedFleet class="ui-fade width-100" shrinkDelay=5000}}
+  <a class="Gloss-button Gloss-button--small Gloss-flex--1" {{action 'clearThreat' this}}>Close Report</a>
+
+  <div class="Gloss-module Gloss-report Gloss-module--x Gloss-flex--start Gloss--flex-3">
+
+    <div class="Gloss-module Gloss-module--x Gloss-report--composition">
+      <table cellpadding="10">
+        <thead>
+          <th>Threat</th>
+          <th>Pilot</th>
+          <th>Ship</th>
+          <th>Corporation</th>
+          <th>Alliance</th>
+        </thead>
+
+        <tbody>
+          {{#each (sort-by 'dangerRatio:desc' selectedFleet.characters) as |character|}}
+            <tr class="Gloss-report--character">
+              <td>{{#if (eq character.dangerRatio 0)}}N/A{{else}}{{character.dangerRatio}}%{{/if}}</td>
+              <td><a href="{{zkill-character character}}" target="_blank">{{character.name}}</a></td>
+              <td class="Gloss-report--ship">
+                {{#if character.ship}}
+                  <img src="https://imageserver.eveonline.com/Type/{{character.ship.id}}_32.png" />
+                {{/if}}
+                {{character.ship.name}}
+              </td>
+              <td>{{character.corporation.name}}</td>
+              <td>{{character.alliance.name}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+{{else if loadNotifications}}
+
+  <div class="Gloss-module Gloss-module--x Gloss-threats Gloss-flex--start">
+    <div class="Gloss-module">
+      {{#if loadNotifications}}
+        <div class="Gloss-module Gloss-module--x Gloss-flex--wrap">
+          {{#each (sort-by 'dangerRatio:desc' fleets) as |fleet|}}
+            {{gloss-threat
+              model=fleet
+              selectThreat=(action 'selectThreat')
+              }}
+          {{else}}
+            <p>No active threats in this solar system.<br><br></p>
+          {{/each}}
+        </div>
+      {{/if}}
+    </div>
+  </div>
+
+  {{#if fleets}}
+    <p>Select a threat above to view detailed analysis.</p>
+  {{/if}}
+
+{{/liquid-if}}

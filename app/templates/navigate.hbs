@@ -1,146 +1,37 @@
 <div class="Gloss-module Gloss-module--y Gloss-hud">
-  <div class="Gloss-module Gloss-module--x Gloss-flex--start">
-    {{gloss-shard
-      label="Jumps"
-      value=system.shipJumps
-      loaded=loadUiElements
-      loadOrder=2
-      }}
-
-    {{gloss-shard
-      label="Kills"
-      value=system.shipKills
-      loaded=loadUiElements
-      loadOrder=1
-      }}
-
-    {{gloss-shard
-      label="System"
-      value=system.name
-      loaded=loadUiElements
-      loadOrder=0
-      primary=true
-      }}
-
-    {{gloss-shard
-      label="Capsules"
-      value=system.podKills
-      loaded=loadUiElements
-      loadOrder=1
-      }}
-
-    {{gloss-shard
-      label="NPC"
-      value=system.npcKills
-      loaded=loadUiElements
-      loadOrder=2
-      }}
-  </div>
+  {{gloss-stats
+    system=system
+    loadUiElements=loadUiElements
+    }}
 
   <div class="Gloss-viewport">
     {{#liquid-if loadUiElements class="ui-fade-9"}}
       <div class="Gloss-module Gloss-module--x Gloss-flex--wrap Gloss-flex--start">
 
-        <div class="Gloss-module Gloss-module--y Gloss-flex--start Gloss-flex--3">
+        <div class="Gloss-module Gloss-module--y Gloss-flex--start Gloss-flex--3 Gloss-analysis">
 
-          {{gloss-shard
-            label="System"
-            value="Threats"
-            loaded=loadNotifications
-            align="left"
-            primary=true
-            }}
+          <div class="Gloss-module Gloss-module--x Gloss-flex--end">
+            {{#link-to 'navigate.index' class='Gloss-button Gloss-button--small Gloss-flex--1'}}Local{{/link-to}}
 
-          <div class="Gloss-module Gloss-module--x Gloss-flex--start">
-            <div class="Gloss-module">
-              {{#liquid-if loadNotifications class="ui-fade"}}
-                <div class="Gloss-module Gloss-module--x Gloss-flex--wrap">
-                  {{#each fleets as |fleet|}}
-                    {{#liquid-if fleet class="ui-slide-from-top" shrinkDelay=500}}
-                      {{gloss-threat
-                        model=fleet
-                        selectThreat=(action 'selectThreat')
-                        }}
-                    {{/liquid-if}}
-                  {{else}}
-                    <p>No active threats in {{location.system.name}}.<br><br></p>
-                  {{/each}}
-                </div>
-              {{/liquid-if}}
-            </div>
-          </div>
+            {{#link-to 'navigate.tracker' class='Gloss-button Gloss-button--small Gloss-flex--1'}}Tracker{{/link-to}}
+          </div> 
 
-          {{gloss-shard
-            label="Threat Analysis"
-            value=selectedThreat.dominantFaction.name
-            loaded=selectedThreat
-            align="left"
-            bump=true
-            primary=true
-            }}
-
-          {{#liquid-if selectedThreat class="ui-fade width-100" style="width: 100%;"}}
-
-            <div class="Gloss-module Gloss-report Gloss-module--x Gloss-flex--start Gloss--flex-3">
-
-              <div class="Gloss-module Gloss-module--x Gloss-report--composition">
-                <table cellpadding="10">
-                  <thead>
-                    <th>Threat</th>
-                    <th>Name</th>
-                    <th>Ship</th>
-                    <th>Corporation</th>
-                    <th>Alliance</th>
-                  </thead>
-
-                  <tbody>
-                    {{#each (sort-by 'dangerRatio:desc' selectedThreat.characters) as |character|}}
-                      <tr class="Gloss-report--character">
-                        <td>{{#if (eq character.dangerRatio 0)}}N/A{{else}}{{character.dangerRatio}}%{{/if}}</td>
-                        <td><a href="{{zkill-character character}}" target="_blank">{{character.name}}</a></td>
-                        <td class="Gloss-report--ship">
-                          {{#if character.ship}}
-                            <img src="https://imageserver.eveonline.com/Type/{{character.ship.id}}_32.png" />
-                          {{/if}}
-                          {{character.ship.name}}
-                        </td>
-                        <td>{{character.corporation.name}}</td>
-                        <td>{{character.alliance.name}}</td>
-                      </tr>
-                    {{/each}}
-                  </tbody>
-                </table>
-              </div>
-
-            </div>
-
-          {{else if (and loadNotifications fleets)}}
-
-            <p>Select a threat above to view detailed analysis.</p>
-
-          {{/liquid-if}}
+          {{outlet}}
 
         </div>
 
         <div class="Gloss-module Gloss-module--y Gloss-flex--start">
-          {{gloss-shard
-            label="System"
-            value="Conflict"
-            loaded=loadNotifications
-            primary=true
-            align="left"}}
-
           <div class="Gloss-notifier Gloss-module">
-            {{#liquid-if loadNotifications class="ui-fade"}}
-              {{#each kills as |notification|}}
-                {{#liquid-if notification class="ui-slide-from-top" shrinkDelay=500}}
+            <div class="Gloss-stream Gloss-scroller">
+              {{#liquid-if loadNotifications class="ui-fade"}}
+                {{#each (sort-by 'time:desc' kills) as |notification|}}
                   {{gloss-notification
                     model=notification}}
-                {{/liquid-if}}
-              {{else}}
-                <p>No conflict reported in system.</p>
-              {{/each}}
-            {{/liquid-if}}
+                {{else}}
+                  <p>No conflict reported in system.</p>
+                {{/each}}
+              {{/liquid-if}}
+            </div>
           </div>
         </div>
       </div>
@@ -149,25 +40,17 @@
 
   <div class="Gloss-module Gloss-module--x Gloss-flex--end">
     {{gloss-shard
-      label="Ship"
-      value=character.ship.name
-      loaded=loadUiElements
-      loadOrder=6
-      }}
-
-    {{gloss-shard
-      label="Commander"
-      value=character.name
+      label=character.name
       loaded=loadUiElements
       loadOrder=5
-      primary=true
+      align="left"
       }}
 
     {{gloss-shard
-      label="Status"
-      value=(if character.online 'Online' 'Offline')
+      label=(if character.online 'online' 'offline')
       loaded=loadUiElements
       loadOrder=6
+      align="right"
       }}
   </div>
 </div>
