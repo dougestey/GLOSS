@@ -25,11 +25,15 @@ export default Controller.extend({
 
   actions: {
     selectThreat({ fleet, faction }) {
+      this.toggleProperty('detailMode');
+
       this.set('selectedFleet', fleet);
       this.set('selectedFaction', faction);
     },
 
     clearThreat() {
+      this.toggleProperty('detailMode');
+
       this.set('selectedFleet', undefined);
       this.set('selectedFaction', undefined);
     }

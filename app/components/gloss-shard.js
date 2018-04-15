@@ -29,7 +29,7 @@ export default Component.extend({
   loadOrderClass: computed('loadOrder', 'bump', function() {
     let order = this.get('loadOrder'),
         orderClass = !isNaN(order) ? `ui-fade-${order}` : '',
-        bumpClass = this.get('bump') ? 'bump-2' : '';
+        bumpClass = this.get('bump') ? 'mt2' : '';
 
     return `${orderClass} ${bumpClass}`;
   }),

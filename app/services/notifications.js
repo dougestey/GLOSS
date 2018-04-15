@@ -21,7 +21,14 @@ export default Service.extend({
   },
 
   async receiveKill(kill) {
-    this.get('kills').pushObject(kill);
+    let kills = this.get('fleets');
+    let existingKill = kills.findBy('id', kill.id);
+
+    if (existingKill) {
+      kills.removeObject(existingKill);
+    }
+
+    kills.pushObject(kill);
   },
 
   async receiveFleet(fleet) {

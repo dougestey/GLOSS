@@ -1,6 +1,6 @@
 .Gloss-button {
   display: block;
-  font-family: 'EVE Sans', sans-serif;
+  // font-family: 'EVE Sans', sans-serif;
   background: linear-gradient(transparent, rgba($secondary, 0.05), rgba($secondary, 0.1));
   color: rgba($primary, 0.85);
   text-transform: uppercase;
@@ -17,7 +17,8 @@
   transition: color 250ms ease-in;
   outline: none;
 
-  &:hover {
+  &:hover,
+  &.active {
     color: rgba($primary, 1);
     background: linear-gradient(transparent, rgba($secondary, 0.1), rgba($secondary, 0.2));
 
@@ -47,5 +48,16 @@
   &--small {
     padding: 0.75rem 1rem;
     font-size: 1rem;
+  }
+
+  &--mini {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  &--frameless {
+    &:after {
+      visibility: hidden;
+    }
   }
 }

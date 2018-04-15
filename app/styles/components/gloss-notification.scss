@@ -5,6 +5,7 @@
 
   .Gloss-stream {
     position: relative;
+    width: 30vw;
     max-width: 320px;
     overflow-x: hidden !important;
 
@@ -38,7 +39,7 @@
 
     > .liquid-container {
       width: 340px;
-      max-height: 82vh;
+      height: $viewport-y;
       overflow-y: auto !important;
 
       > .liquid-child > :first-child {

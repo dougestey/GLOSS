@@ -1,3 +1,5 @@
+$viewport-y: 90vh;
+
 @import 'styles/odometer-theme-default.css';
 @import 'index';
 
@@ -16,40 +18,26 @@ p {
   color: $secondary;
 }
 
-.bump-2 {
-  margin-top: 2rem;
-}
+.p0 { padding: 0; }
 
 .Gloss {
   height: 98vh;
   width: 98vw;
   padding: 1vh 1vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .Gloss-hud {
-  height: 98vh;
+  height: 100%;
   width: 98vw;
   align-items: center;
-
-  .Gloss-analysis {
-    height: 82vh;
-    overflow-y: auto;
-  }
-
-  .Gloss-report {
-    padding-top: 2vh;
-    max-height: 80vh;
-    overflow-y: auto;
-
-    white-space: nowrap;
-
-    overflow-x: hidden;
-  }
 }
 
 .Gloss-viewport {
   width: 98vw;
-  height: 78vh;
+  height: $viewport-y;
 
   .Gloss-shard h2,
   .Gloss-shard h5,
@@ -77,18 +65,34 @@ p {
   }
 }
 
-.Gloss-threats {
-  max-height: 62vh;
+.Gloss-analysis,
+.Gloss-threats,
+.Gloss-report {
   overflow-y: auto;
-  width: calc(100vw - 300px);
+  overflow-x: hidden;
+}
 
+.Gloss-report,
+.Gloss-threats {
+  max-height: $viewport-y - 10vh;
+  width: 74vw;
+}
+
+.Gloss-analysis {
+  width: 75vw;
+  max-height: $viewport-y;
+  padding-top: 2vh;
+}
+
+.Gloss-threats {
   .Gloss-notification {
     flex: 1;
   }
 }
 
 .Gloss-report {
-  padding: 0 1rem;
+  padding: 0 2vh;
+  white-space: nowrap;
 
   table {
     margin-top: 1rem;
@@ -135,7 +139,7 @@ p {
   font-size: 3.75rem;
   font-family: 'Titillium Web', sans-serif;
   letter-spacing: 0.7rem;
-  margin: 0 0 20vh 0;
+  margin: 0 0 10vh 0;
   height: 5.6875rem;
 }
 
@@ -147,4 +151,13 @@ strong {
 
 .width-100 {
   width: 100%;
+}
+
+.Gloss-fixed {
+  position: fixed;
+  width: 100%;
+
+  &--bottom {
+    bottom: 0;
+  }
 }
