@@ -1,34 +1,30 @@
-/* global io */
 import Service, { inject as service } from '@ember/service';
 import { bind } from '@ember/runloop';
 
 export default Service.extend({
 
+  arbiter: service(),
+
   message: service(),
+
+  notifications: service(),
 
   firstCharacterLoad: true,
 
   start(characterId) {
-    io.socket.on('character', bind(this, this.updateCharacter));
-    io.socket.on('system', bind(this, this.updateSystem));
+    let socket = this.get('arbiter.socket');
 
-    io.socket.get(`/api/characters/${characterId}`, bind(this, this.updateCharacter));
+    socket.on('character', bind(this, this.updateCharacter));
+    socket.on('system', bind(this, this.updateSystem));
+
+    socket.get(`/api/characters/${characterId}`, bind(this, this.updateCharacter));
   },
 
   updateCharacter(data) {
+    let socket = this.get('arbiter.socket');
     let systemId = data.system.systemId;
 
-    io.socket.get(`/api/systems/${systemId}`, bind(this, this.updateSystem));
-
-    if (this.get('firstCharacterLoad')) {
-      this.get('message').dispatch(
-        'Link established',
-        `Hello, ${data.name}.`,
-        4
-      );
-
-      this.set('firstCharacterLoad', false);
-    }
+    socket.get(`/api/systems/${systemId}`, bind(this, this.updateSystem));
 
     this.set('character', data);
   },

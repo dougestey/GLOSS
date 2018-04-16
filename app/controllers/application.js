@@ -4,6 +4,10 @@ import { reads } from '@ember/object/computed';
 
 export default Controller.extend({
 
+  arbiter: service(),
+
+  session: service(),
+
   message: service(),
 
   messageHeader: reads('message.header'),
@@ -14,6 +18,13 @@ export default Controller.extend({
 
   stopAnimating: reads('message.stopAnimating'),
 
-  shouldNotOverlay: reads('message.shouldNotOverlay')
+  shouldNotOverlay: reads('message.shouldNotOverlay'),
+
+  async init() {
+    this._super(...arguments);
+
+    await this.get('session').initialize();
+    this.get('arbiter').connect();
+  }
 
 });

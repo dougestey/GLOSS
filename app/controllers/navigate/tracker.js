@@ -35,7 +35,7 @@ export default Controller.extend({
 
       this.toggleProperty('detailMode');
 
-      this.get('message').dispatch(`${faction.name}`, `Tracking disabled`, 5);
+      this.get('message').dispatch(`Tracking disabled`, `${faction.name}`, 5);
     }
   }
 

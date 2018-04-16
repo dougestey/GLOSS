@@ -1,0 +1,26 @@
+import Service, { inject as service } from '@ember/service';
+
+export default Service.extend({
+
+  ajax: service(),
+
+  router: service('-routing'),
+
+  async initialize() {
+    let character;
+
+    try {
+      let response = await this.get('ajax').request('/auth/whoami');
+      character = response.character;
+    } catch(e) {
+      this.get('router').transitionTo('authorize');
+    }
+
+    if (character) {
+      this.set('character', character);
+    } else {
+      this.get('router').transitionTo('authorize');
+    }
+  }
+
+});

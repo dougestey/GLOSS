@@ -5,6 +5,8 @@ import { later } from '@ember/runloop';
 
 export default Controller.extend({
 
+  arbiter: service(),
+
   location: service(),
 
   notifications: service(),
@@ -15,14 +17,14 @@ export default Controller.extend({
 
   kills: reads('notifications.kills.[]'),
 
+  isConnected: reads('arbiter.connected'),
+
   init() {
     this._super(...arguments);
 
     later(() => {
       this.set('loadUiElements', true);
     }, 500);
-
-    this.get('notifications').enable();
 
     later(() => {
       this.set('loadNotifications', true);

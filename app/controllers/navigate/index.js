@@ -22,8 +22,6 @@ export default Controller.extend({
       this.set('loadUiElements', true);
     }, 500);
 
-    this.get('notifications').enable();
-
     later(() => {
       this.set('loadNotifications', true);
     }, 5000);
@@ -52,7 +50,7 @@ export default Controller.extend({
 
       this.toggleProperty('detailMode');
 
-      this.get('message').dispatch(`${faction.name}`, `Tracking enabled`, 5);
+      this.get('message').dispatch(`Tracking enabled`, `${faction.name}`, 5);
     }
   }
 

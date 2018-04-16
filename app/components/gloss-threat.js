@@ -1,8 +1,11 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { storageFor } from 'ember-local-storage';
 import _ from 'npm:lodash';
 
 export default Component.extend({
+
+  trackedFleets: storageFor('tracked-fleets'),
 
   classNames: [
     'Gloss-notification',
@@ -15,6 +18,10 @@ export default Component.extend({
 
     this.sendAction('selectThreat', { fleet, faction });
   },
+
+  isTracked: computed('model.id', function() {
+    return this.get('trackedFleets').includes(this.get('model.id'));
+  }),
 
   dominantShipType: computed('model.composition', function() {
     let compHash = this.get('model.composition');
@@ -58,6 +65,12 @@ export default Component.extend({
     let faction = this.get('dominantFaction');
 
     return `https://imageserver.eveonline.com/${faction.type}/${faction.id}_64.png`;
-  })
+  }),
+
+  actions: {
+    track(id) {
+      this.get('trackedFleets').addObject(id);
+    }
+  }
 
 });

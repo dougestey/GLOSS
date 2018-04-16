@@ -14,6 +14,10 @@ export default Service.extend({
 
     if (seconds)
       later(() => this.set('isShowingMessage', false), seconds * 1000);
+  },
+
+  clear() {
+    this.set('isShowingMessage', false);
   }
 
 });

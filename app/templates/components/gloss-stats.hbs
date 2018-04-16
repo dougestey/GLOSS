@@ -44,8 +44,8 @@
     }}
 
   {{gloss-shard
-    label="Zkill"
-    value="Connected"
+    label="Arbiter"
+    value=(if isConnected 'Online' 'Offline')
     loaded=loadUiElements
     loadOrder=6
     }}

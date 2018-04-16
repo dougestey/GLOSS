@@ -1,20 +1,15 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
+import { reads } from '@ember/object/computed';
 
 export default Route.extend({
 
-  ajax: service(),
+  session: service(),
 
-  location: service(),
+  user: reads('session.user'),
 
   model() {
-    return this.get('ajax').request('/auth/whoami');
-  },
-
-  afterModel(model) {
-    let characterId = model.character.characterId;
-
-    this.get('location').start(characterId);
+    return this.get('user');
   }
 
 });
