@@ -21,7 +21,7 @@ export default Service.extend({
   },
 
   async receiveKill(kill) {
-    let kills = this.get('fleets');
+    let kills = this.get('kills');
     let existingKill = kills.findBy('id', kill.id);
 
     if (existingKill) {
