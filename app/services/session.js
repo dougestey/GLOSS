@@ -13,13 +13,13 @@ export default Service.extend({
       let response = await this.get('ajax').request('/auth/whoami');
       character = response.character;
     } catch(e) {
-      this.get('router').transitionTo('authorize');
+      this.get('router').transitionTo('welcome');
     }
 
     if (character) {
       this.set('character', character);
     } else {
-      this.get('router').transitionTo('authorize');
+      this.get('router').transitionTo('welcome');
     }
   }
 
