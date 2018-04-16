@@ -54,10 +54,12 @@ export default Service.extend({
   _handleDisconnect() {
     this.set('connected', false);
 
-    this.get('message').dispatch(
-      'Connection lost',
-      `Arbiter has gone offline`
-    );
+    later(() => {
+      this.get('message').dispatch(
+        'Connection lost',
+        `Arbiter has gone offline`
+      );
+    }, 1000);
 
     this._reconnect();
   },
