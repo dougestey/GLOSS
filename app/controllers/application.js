@@ -12,6 +12,8 @@ export default Controller.extend({
 
   isShowingMessage: reads('message.isShowingMessage'),
 
-  stopAnimating: reads('message.stopAnimating')
+  stopAnimating: reads('message.stopAnimating'),
+
+  shouldNotOverlay: reads('message.shouldNotOverlay')
 
 });

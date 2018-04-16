@@ -24,7 +24,7 @@ export default Service.extend({
       this.get('message').dispatch(
         'Link established',
         `Hello, ${data.name}.`,
-        2.75
+        4
       );
 
       this.set('firstCharacterLoad', false);

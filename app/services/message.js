@@ -4,11 +4,12 @@ import { later } from '@ember/runloop';
 
 export default Service.extend({
 
-  dispatch(header, subheader, seconds) {
+  dispatch(header, subheader, seconds, shouldNotOverlay) {
     this.setProperties({
       header,
       subheader,
-      isShowingMessage: true
+      isShowingMessage: true,
+      shouldNotOverlay
     });
 
     if (seconds)

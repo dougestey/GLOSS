@@ -13,6 +13,8 @@ export default Controller.extend({
 
   fleets: reads('notifications.fleets.[]'),
 
+  detailMode: false,
+
   init() {
     this._super(...arguments);
 

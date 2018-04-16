@@ -1,6 +1,5 @@
 .Gloss-button {
   display: block;
-  // font-family: 'EVE Sans', sans-serif;
   background: linear-gradient(transparent, rgba($secondary, 0.05), rgba($secondary, 0.1));
   color: rgba($primary, 0.85);
   text-transform: uppercase;
@@ -23,8 +22,14 @@
     background: linear-gradient(transparent, rgba($secondary, 0.1), rgba($secondary, 0.2));
 
     &:after {
-      background-color: rgba($primary, 1);
+      left: 0;
+      right: 0;
+      animation: expand 350ms ease-in;
     }
+  }
+
+  &.active::after {
+    background-color: rgba($primary, 1);
   }
 
   &:focus {
@@ -37,10 +42,9 @@
     position: absolute;
     height: 2px;
     bottom: 0;
-    left: 0;
-    right: 0;
+    left: 50%;
+    right: 50%;
     background-color: rgba($secondary, 0.5);
-    animation: expand 350ms ease-in;
     margin-top: 2rem;
     transition: background-color 375ms;
   }

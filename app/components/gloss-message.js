@@ -5,7 +5,8 @@ export default Component.extend({
   classNames: 'Gloss-message',
 
   classNameBindings: [
-    'isShowingMessage:Gloss-message--show'
+    'isShowingMessage:Gloss-message--shown',
+    'shouldNotOverlay:Gloss-message--underlay'
   ]
 
 });

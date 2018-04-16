@@ -10,6 +10,8 @@ export default Controller.extend({
 
   fleets: reads('tracker.fleets.[]'),
 
+  detailMode: false,
+
   actions: {
     selectThreat({ fleet, faction }) {
       this.toggleProperty('detailMode');
