@@ -7,49 +7,21 @@ Purpose-built to work hand in hand with [Arbiter](https://github.com/dougestey/a
 
 Currently under heavy development. Not supported in any way by the author at this time.
 
-![gloss_navigate](https://user-images.githubusercontent.com/680366/36328204-4c3b3a62-132f-11e8-85b9-ca01dc725ffb.png)
+## Screenshots ##
+![screen shot 2018-04-16 at 6 51 50 pm](https://user-images.githubusercontent.com/680366/38839358-3a7b34e2-41a8-11e8-8ddd-eba5c0ae1091.png)
+
+![screen shot 2018-04-16 at 6 52 55 pm](https://user-images.githubusercontent.com/680366/38839379-50961ba2-41a8-11e8-90b2-112978b7cd92.png)
+
 
 ## Features ##
 - EVE SSO Authentication
 - Blistering WebSocket connection to [Arbiter](https://github.com/dougestey/arbiter)
 - Updates location, ship, status for active character sockets every 5 seconds
 - Updates ship jumps, kills, pods, NPCs every 1 hour
+- Live fleet tracking analysis provided by [Sentinel](https://github.com/dougestey/sentinel)
 
 ## Roadmap
-- [x] EVE Single sign-on
-- [x] WebSocket connection to [Arbiter](https://github.com/dougestey/arbiter)
-- [ ] Waypoint tracking
-  - [x] Current system
-  - [ ] Waypoint read
-  - [ ] Waypoint write
-  - [ ] Route display
-  - [x] Current system display
-  - [x] Jumps
-  - [x] Kills
-  - [ ] Security
-  - [ ] Celestial layout
-  - [ ] Neighbouring systems
-  - [ ] Points of interest
-- [ ] Ship module
-  - [x] Hull type
-  - [ ] Jump fatigue readout
-  - [ ] Effective hit points
-  - [ ] Damage capability
-- [ ] Intel module
-  - [ ] Interpret results from local via copypasta
-  - [ ] Nearby systems with NPC kills
-  - [ ] Nearby systems with capsuleer kills
-  - [ ] Shared public data
-  - [ ] Shared corporate data
-- [ ] Fleet module
-  - [ ] Display current fleet role
-  - [ ] Display current fleet members
-    - [ ] Ship type
-    - [ ] Current location
-  - [ ] Invite pilots
-  - [ ] Kick pilots
-- [ ] Chat module
-  - [ ] Slack support (TBD)
+Coming soon.
 
 ## Development
 
