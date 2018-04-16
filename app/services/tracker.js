@@ -9,6 +9,10 @@ export default Service.extend({
 
   add(fleet) {
     this.get('fleets').pushObject(fleet);
+  },
+
+  remove(fleet) {
+    this.get('fleets').removeObject(fleet);
   }
 
 });

@@ -5,7 +5,11 @@ import { later } from '@ember/runloop';
 
 export default Controller.extend({
 
+  message: service(),
+
   notifications: service(),
+
+  tracker: service(),
 
   fleets: reads('notifications.fleets.[]'),
 
@@ -36,6 +40,17 @@ export default Controller.extend({
 
       this.set('selectedFleet', undefined);
       this.set('selectedFaction', undefined);
+    },
+
+    trackThreat() {
+      let fleet = this.get('selectedFleet');
+      let faction = this.get('selectedFaction');
+
+      this.get('tracker').add(fleet);
+
+      this.toggleProperty('detailMode');
+
+      this.get('message').dispatch(`${faction.name}`, `Tracking enabled`, 5);
     }
   }
 

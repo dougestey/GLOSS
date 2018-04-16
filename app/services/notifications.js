@@ -1,12 +1,10 @@
 /* global io */
 import Service, { inject as service } from '@ember/service';
-import { filter } from '@ember/object/computed';
 import { bind } from '@ember/runloop';
-import moment from 'moment';
 
 export default Service.extend({
 
-  store: service(),
+  message: service(),
 
   kills: [],
 
@@ -37,6 +35,8 @@ export default Service.extend({
 
     if (existingFleet) {
       fleets.removeObject(existingFleet);
+    } else {
+      this.get('message').dispatch(`New threat in ${fleet.system.name}`, `${fleet.characters.length} pilot with ${fleet.kills.length} kills`, 5);
     }
 
     fleets.pushObject(fleet);

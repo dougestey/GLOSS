@@ -6,7 +6,7 @@
 
       <h3 class="m0 mt2 mr1">{{selectedFaction.name}}</h3>
 
-      <a class="Gloss-button Gloss-button--mini Gloss-button--frameless mt2 mr1" {{action 'clearThreat' this}}>Track Fleet</a>
+      <a class="Gloss-button Gloss-button--mini Gloss-button--frameless mt2 mr1" {{action 'trackThreat' this}}>Track Fleet</a>
       <a class="Gloss-button Gloss-button--mini Gloss-button--frameless mt2" {{action 'clearThreat' this}}>Close Report</a>
 
       <table cellpadding="10">
@@ -52,7 +52,7 @@
               selectThreat=(action 'selectThreat')
               }}
           {{else}}
-            <p class="mt2">No active threats in this solar system.<br><br></p>
+            <p class="mt2">No active threats in this solar system.</p>
           {{/each}}
         </div>
       {{/if}}
