@@ -6,7 +6,7 @@
     }}
 
   <div class="ui grid">
-    <div class="three column row no-gutter p0 mt2 mb2">
+    <div class="three column row no-gutter p0 mt2 mb1">
       <div class="column">
         {{#link-to 'navigate.index' class='Gloss-button Gloss-button--small'}}
           Local <span class="Gloss-button--detail">{{fleets.length}}</span>
@@ -59,28 +59,28 @@
       </div>
     </div>
   </div>
-</div>
 
-<div class="Gloss-module Gloss-module--x Gloss-flex--end Gloss-fixed Gloss-fixed--bottom">
+  <div class="Gloss-module Gloss-module--x Gloss-flex--end Gloss-fixed Gloss-fixed--bottom">
 
-  {{gloss-shard
-    label=(app-version)
-    loaded=loadUiElements
-    loadOrder=5
-    align="left"
-    }}
+    {{gloss-shard
+      label=(app-version)
+      loaded=loadUiElements
+      loadOrder=5
+      align="left"
+      }}
 
-  {{gloss-shard
-    label=character.name
-    loaded=loadUiElements
-    loadOrder=6
-    }}
+    {{gloss-shard
+      label=character.name
+      loaded=loadUiElements
+      loadOrder=6
+      }}
 
-  {{gloss-shard
-    label=(if character.online 'online' 'offline')
-    loaded=loadUiElements
-    loadOrder=7
-    align="right"
-    }}
+    {{gloss-shard
+      label=(if character.online 'online' 'offline')
+      loaded=loadUiElements
+      loadOrder=7
+      align="right"
+      }}
 
+  </div>
 </div>

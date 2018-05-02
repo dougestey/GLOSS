@@ -5,8 +5,8 @@
 
   .Gloss-stream {
     position: relative;
-    width: 30vw;
-    max-width: 320px;
+    // width: 100%;
+    max-width: 300px;
     overflow-x: hidden !important;
 
     > .liquid-container {
@@ -14,8 +14,12 @@
         margin-top: 1rem;
       }
 
-      width: 340px;
-      height: $viewport-y - 10vh;
+      > :last-child {
+        margin-bottom: 2rem;
+      }
+
+      width: 320px;
+      height: calc(100vh - 6.5625rem);
       overflow-y: auto !important;
     }
   }
