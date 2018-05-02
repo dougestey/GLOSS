@@ -2,6 +2,10 @@
   <div class="Gloss Gloss-module Gloss-module--y Gloss-flex--middle">
     <div class="Gloss-module">
       <div>
+        {{#if title}}
+          <h1 class="Gloss-logo">{{title}}</h1>
+        {{/if}}
+
         {{#if (or header subheader)}}
           {{#if header}}
             <h2>{{header}}</h2>

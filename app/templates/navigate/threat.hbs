@@ -1,0 +1,26 @@
+<table cellpadding="10">
+  <thead>
+    <th>Threat</th>
+    <th>Pilot</th>
+    <th>Ship</th>
+    <th>Corporation</th>
+    <th>Alliance</th>
+  </thead>
+
+  <tbody>
+    {{#each (sort-by 'dangerRatio:desc' model.characters) as |character|}}
+      <tr class="Gloss-report--character">
+        <td>{{#if (eq character.dangerRatio 0)}}N/A{{else}}{{character.dangerRatio}}%{{/if}}</td>
+        <td><a href="{{zkill-character character}}" target="_blank">{{character.name}}</a></td>
+        <td class="Gloss-report--ship">
+          {{#if character.ship}}
+            <img src="https://imageserver.eveonline.com/Type/{{character.ship.id}}_32.png" />
+          {{/if}}
+          {{character.ship.name}}
+        </td>
+        <td>{{character.corporation.name}}</td>
+        <td>{{if character.alliance character.alliance.name 'None'}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

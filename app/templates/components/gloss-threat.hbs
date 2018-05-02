@@ -1,4 +1,44 @@
-<div class="Gloss-notification--line">
+<div class="background" style={{backgroundImage}}></div>
+
+<div class="image">
+  <img src={{threatImageUrl}}>
+</div>
+
+<div class="content">
+  <div class="header">
+    {{dominantFaction.name}}
+  </div>
+
+  <div class="meta">
+    <span title="Pilots">
+      <i class="user outline icon"></i>
+      {{model.characters.length}}
+    </span>
+
+    <span title="Kills">
+      <i class="space shuttle icon" title="Kills"></i>
+      {{model.kills.length}}
+    </span>
+
+    <span title="Threat Level">
+      <i class="exclamation triangle icon"></i>
+      {{threat-level model.dangerRatio}}
+    </span>
+  </div>
+
+  <div class="description">
+    <p>{{dominantShipType.count}} {{dominantShipType.name}} {{#if otherShipCount}} + {{otherShipCount}} others {{/if}}</p>
+
+    <small>{{moment-from-now model.lastSeen}}</small>
+  </div>
+
+</div>
+{{!-- 
+<div class="extra content">
+  <div class="ui basic button inverted">Track</div>
+</div> --}}
+
+{{!-- <div class="Gloss-notification--line">
   <span class="Gloss-notification--flex">
     <span>
       <strong>{{dominantFaction.name}}</strong>
@@ -26,4 +66,4 @@
   <span class="Gloss-notification--time">
     Last seen <strong>{{moment-from-now model.lastSeen interval=1000}}</strong>
   </span>
-</div>
+</div> --}}

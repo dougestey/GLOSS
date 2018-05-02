@@ -2,12 +2,13 @@ $viewport-y: 90vh;
 
 @import 'styles/odometer-theme-default.css';
 @import 'index';
+@import 'node_modules/sass-semantic-ui/src/semantic-ui';
 
 body {
   background: url(/assets/bg.jpg) center center no-repeat fixed #000;
   background-size: auto 80%;
   color: $primary;
-  font-family: 'Titillium Web', 'EVE Sans', sans-serif;
+  font-family: $font-family;
   letter-spacing: 1.4px;
   text-transform: uppercase;
   overflow: hidden;
@@ -21,8 +22,8 @@ p {
 .p0 { padding: 0; }
 
 .Gloss {
-  height: 98vh;
-  width: 98vw;
+  width: 100%;
+  margin: 0 auto;
   padding: 1vh 1vw;
   display: flex;
   flex-direction: column;
@@ -37,7 +38,14 @@ p {
 
 .Gloss-viewport {
   width: 98vw;
-  height: $viewport-y;
+  max-height: $viewport-y;
+  overflow-y: auto;
+  bottom: 0;
+
+  > div,
+  > div > div {
+    height: $viewport-y;
+  }
 
   .Gloss-shard h2,
   .Gloss-shard h5,
@@ -139,8 +147,18 @@ p {
   font-size: 3.75rem;
   font-family: 'Titillium Web', sans-serif;
   letter-spacing: 0.7rem;
-  margin: 0 0 7rem 0;
+  margin: 0;
   height: 5.6875rem;
+
+  &--container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.0);
+    height: 5.6875rem;
+  }
 }
 
 .Gloss--highlight,

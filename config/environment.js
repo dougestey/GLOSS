@@ -19,7 +19,14 @@ module.exports = function(environment) {
     },
 
     APP: {
+    },
+
+    SemanticUI: {
+      import: {
+        css: false
+      }
     }
+
   };
 
   if (environment === 'development') {

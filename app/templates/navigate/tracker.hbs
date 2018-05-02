@@ -1,15 +1,23 @@
-{{#liquid-if detailMode class="ui-fade width-100"}}
+{{#ui-modal name="threat" class="threat inverted" onApprove=(action 'untrackThreat' this)}}
+  <div class="header">
+    {{selectedFaction.name}}
+  </div>
+  <div class="image content">
+    <div class="ui small image">
+      <img src={{threatImageUrl}} />
+    </div>
+    <div class="description">
+      <p>{{selectedFleet.characters.length}} pilots with {{selectedFleet.kills.length}} kills</p>
 
-  <div class="Gloss-module Gloss-report Gloss-module--y Gloss-flex--start Gloss--flex-3">
+      <p>{{selectedShipType.count}} {{selectedShipType.name}} {{#if selectedShipCount}} + {{selectedShipCount}} others {{/if}}</p>
 
-    <div class="Gloss-module Gloss-module--x Gloss-report--composition Gloss-flex--wrap Gloss-flex--start">
+      <small>Last seen {{moment-from-now selectedFleet.lastSeen}}</small>
+    </div>
+  </div>
 
-      <h3 class="m0 mt2 mr1">{{selectedFaction.name}}</h3>
-
-      <a class="Gloss-button Gloss-button--mini Gloss-button--frameless mt2 mr1" {{action 'untrackThreat' this}}>Untrack Fleet</a>
-      <a class="Gloss-button Gloss-button--mini Gloss-button--frameless mt2" {{action 'clearThreat' this}}>Close Report</a>
-
-      <table cellpadding="10">
+  <div class="content">
+    <div class="description">
+      <table class="ui celled table inverted" cellpadding="10">
         <thead>
           <th>Threat</th>
           <th>Pilot</th>
@@ -35,30 +43,37 @@
           {{/each}}
         </tbody>
       </table>
-
     </div>
-
   </div>
 
-{{else}}
+  <div class="actions ui grid">
+    <div class="two column row no-gutter">
+      <div class="column">
+        <div class="Gloss-button Gloss-button--frameless Gloss-button--small deny">
+          Close
+        </div>
+      </div>
 
-  <div class="Gloss-module Gloss-module--x Gloss-threats Gloss-flex--start">
-    <div class="Gloss-module">
-      <div class="Gloss-module Gloss-module--x Gloss-flex--wrap">
-        {{#each (sort-by 'dangerRatio:desc' fleets) as |fleet|}}
-          {{gloss-threat
-            model=fleet
-            selectThreat=(action 'selectThreat')
-            }}
-        {{else}}
-          <p class="mt2">You aren't tracking any fleets yet.</p>
-        {{/each}}
+      <div class="column">
+        <div class="Gloss-button Gloss-button--frameless Gloss-button--small positive">
+          <i class="power off icon"></i>
+
+          Stop tracking
+        </div>
       </div>
     </div>
   </div>
+{{/ui-modal}}
 
-  {{#if fleets}}
-    <p>Select a fleet above to view detailed analysis.</p>
-  {{/if}}
+<div class="ui link centered cards">
+  {{#each (sort-by 'lastSeen:desc' fleets) as |fleet|}}
+    {{gloss-threat
+      model=fleet
+      selectThreat=(action 'selectThreat')
+      }}
+  {{/each}}
+</div>
 
-{{/liquid-if}}
+{{#unless (and fleets fleets.length)}}
+  <p class="mt1 ml2">You aren't tracking any fleet movement.</p>
+{{/unless}}
