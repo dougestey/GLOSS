@@ -12,7 +12,7 @@
 
       <p>{{selectedShipType.count}} {{selectedShipType.name}} {{#if selectedShipCount}} + {{selectedShipCount}} others {{/if}}</p>
 
-      <small>Last seen {{moment-from-now selectedFleet.lastSeen}}</small>
+      <p>Last kill occurred {{moment-from-now selectedFleet.lastSeen}}</p>
     </div>
   </div>
 
@@ -75,6 +75,6 @@
   {{/each}}
 </div>
 
-{{#unless (and fleets fleets.length)}}
+{{#unless fleets.length}}
   <p class="mt4">No threats reported in this sector.</p>
 {{/unless}}

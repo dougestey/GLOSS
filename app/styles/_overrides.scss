@@ -12,6 +12,10 @@ $a-font-color: $primary;
 
 $font-family: 'Titillium Web', 'EVE Sans', sans-serif;
 
+a:hover {
+  color: white !important;
+}
+
 .ui {
   background: transparent !important;
 
@@ -22,14 +26,15 @@ $font-family: 'Titillium Web', 'EVE Sans', sans-serif;
       margin-top: 0.25rem !important;
       background: transparent !important;
       box-shadow: none !important;
+      // overflow: hidden;
 
       &:hover {
-        // background: linear-gradient(transparent, rgba($secondary, 0.1), rgba($secondary, 0.2)) !important;
-        transform: scale3d(1.025, 1.025, 1.025) !important;
+        transform: none !important;
         text-rendering: optimizeLegibility;
 
         > .background {
-          opacity: 0.5;
+          // transform: scale3d(1.1, 1.1, 1.1) !important;
+          opacity: 0.35;
         }
       }
 
@@ -38,7 +43,10 @@ $font-family: 'Titillium Web', 'EVE Sans', sans-serif;
         height: 100%;
         position: absolute;
         z-index: -1;
-        opacity: 0.25;
+        opacity: 0.15;
+        background-size: 140% !important;
+        background-position-x: 0;
+        background-repeat: no-repeat;
         transition: opacity 175ms linear;
       }
 
@@ -102,15 +110,17 @@ $font-family: 'Titillium Web', 'EVE Sans', sans-serif;
 
   &.modal {
     top: 2rem !important;
+    max-height: 70vh !important;
+    overflow-y: auto !important;
     z-index: 1001 !important;
     position: fixed !important;
     border-radius: 0 !important;
-    border: 2px rgba($secondary, 0.5) solid !important;
+    border: 2px rgba($secondary, 0.4) solid !important;
 
     > .header,
     > .content,
     > .actions {
-      background: rgba(5,5,5,0.9) !important;
+      background: darken($secondary, 35) !important;
       color: $primary !important;
       font-weight: 400 !important;
     }

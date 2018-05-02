@@ -52,7 +52,7 @@ export default Controller.extend({
 
       this.get('tracker').add(fleet);
 
-      this.get('message').dispatch(`Tracking enabled`, `${faction.name}`, 3.75);
+      this.get('message').dispatch(`Tracking enabled`, `${faction.name}`, 2);
     }
   }
 

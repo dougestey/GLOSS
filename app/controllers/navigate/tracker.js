@@ -37,7 +37,7 @@ export default Controller.extend({
 
       this.get('tracker').remove(fleet);
 
-      this.get('message').dispatch(`Tracking disabled`, `${faction.name}`, 5);
+      this.get('message').dispatch(`Tracking disabled`, `${faction.name}`, 2);
     }
   }
 

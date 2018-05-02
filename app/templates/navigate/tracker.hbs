@@ -11,7 +11,7 @@
 
       <p>{{selectedShipType.count}} {{selectedShipType.name}} {{#if selectedShipCount}} + {{selectedShipCount}} others {{/if}}</p>
 
-      <small>Last seen {{moment-from-now selectedFleet.lastSeen}}</small>
+      <p>Last kill occurred {{moment-from-now selectedFleet.lastSeen}}</p>
     </div>
   </div>
 
@@ -74,6 +74,6 @@
   {{/each}}
 </div>
 
-{{#unless (and fleets fleets.length)}}
+{{#unless fleets.length}}
   <p class="mt1 ml2">You aren't tracking any fleet movement.</p>
 {{/unless}}

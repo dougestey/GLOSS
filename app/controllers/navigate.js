@@ -25,6 +25,10 @@ export default Controller.extend({
 
   isConnected: reads('arbiter.connected'),
 
+  showKillStream: false,
+
+  queryParams: ['showKillStream'],
+
   init() {
     this._super(...arguments);
 
@@ -35,6 +39,12 @@ export default Controller.extend({
     later(() => {
       this.set('loadNotifications', true);
     }, 5000);
+  },
+
+  actions: {
+    toggleKillStream() {
+      this.toggleProperty('showKillStream');
+    }
   }
 
 });

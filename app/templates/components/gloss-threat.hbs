@@ -11,7 +11,7 @@
 
   <div class="meta">
     <span title="Pilots">
-      <i class="user outline icon"></i>
+      <i class="user icon"></i>
       {{model.characters.length}}
     </span>
 
@@ -29,41 +29,7 @@
   <div class="description">
     <p>{{dominantShipType.count}} {{dominantShipType.name}} {{#if otherShipCount}} + {{otherShipCount}} others {{/if}}</p>
 
-    <small>{{moment-from-now model.lastSeen}}</small>
+    <small>{{moment-from-now model.lastSeen interval=1000}}</small>
   </div>
 
 </div>
-{{!-- 
-<div class="extra content">
-  <div class="ui basic button inverted">Track</div>
-</div> --}}
-
-{{!-- <div class="Gloss-notification--line">
-  <span class="Gloss-notification--flex">
-    <span>
-      <strong>{{dominantFaction.name}}</strong>
-      <br>
-      <span class="Gloss-notification--subjectContext">
-        Pilots <strong>{{model.characters.length}}</strong> / Kills <strong>{{model.kills.length}}</strong>
-      </span>
-    </span>
-
-    <img src={{threatImageUrl}}>
-  </span>
-</div>
-
-<div class="Gloss-notification--line">
-  <span class="Gloss-notification--messageContext">
-    Threat level
-  </span>
-
-  <span class="Gloss-notification--message">
-    <strong>{{threat-level model.dangerRatio}}</strong>
-  </span>
-</div>
-
-<div class="Gloss-notification--line">
-  <span class="Gloss-notification--time">
-    Last seen <strong>{{moment-from-now model.lastSeen interval=1000}}</strong>
-  </span>
-</div> --}}
