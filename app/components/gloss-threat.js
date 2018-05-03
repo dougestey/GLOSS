@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { htmlSafe } from '@ember/string';
 import { storageFor } from 'ember-local-storage';
 import _ from 'npm:lodash';
 
@@ -8,25 +9,41 @@ export default Component.extend({
   trackedFleets: storageFor('tracked-fleets'),
 
   classNames: [
-    'Gloss-notification',
-    'Gloss-threat'
+    // 'Gloss-notification',
+    // 'Gloss-threat'
+    'card',
+    'ui',
+    'raised'
   ],
 
   click() {
     let fleet = this.get('model'),
-        faction = this.get('dominantFaction');
+        faction = this.get('dominantFaction'),
+        shipType = this.get('dominantShipType'),
+        otherShipCount = this.get('otherShipCount');
 
-    this.sendAction('selectThreat', { fleet, faction });
+    this.sendAction('selectThreat', { fleet, faction, shipType, otherShipCount });
   },
 
   isTracked: computed('model.id', function() {
     return this.get('trackedFleets').includes(this.get('model.id'));
   }),
 
-  dominantShipType: computed('model.composition', function() {
-    let compHash = this.get('model.composition');
+  dominantShipType: computed('model.composition', 'model.characters', function() {
+    let composition = this.get('model.composition');
+    let characters = this.get('model.characters');
+    let counted = _.countBy(composition);
 
-    return _.last(_.sortBy(compHash, 'quantity'));
+    let id = parseInt(_.max(_.keys(counted), (o) => counted[o]));
+    let count = parseInt(_.max(counted));
+
+    let characterId = parseInt(_.findKey(composition, function(i) {
+      return i === id;
+    }));
+    let character = _.findWhere(characters, { 'characterId': parseInt(characterId) });
+    let { name } = character.ship;
+
+    return { id, count, name };
   }),
 
   dominantFaction: computed('model.characters', function() {
@@ -61,10 +78,23 @@ export default Component.extend({
     }
   }),
 
+  otherShipCount: computed('model', 'dominantShipType', function() {
+    let dominantShipType = this.get('dominantShipType');
+    let totalPilots = this.get('model.characters.length');
+
+    return totalPilots - dominantShipType.count;
+  }),
+
   threatImageUrl: computed('dominantFaction', function() {
     let faction = this.get('dominantFaction');
 
-    return `https://imageserver.eveonline.com/${faction.type}/${faction.id}_64.png`;
+    return `https://imageserver.eveonline.com/${faction.type}/${faction.id}_128.png`;
+  }),
+
+  backgroundImage: computed('dominantShipType', function() {
+    let { id } = this.get('dominantShipType');
+
+    return htmlSafe(`background-image: url(https://imageserver.eveonline.com/Render/${id}_512.png) !important;`);
   }),
 
   actions: {

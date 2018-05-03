@@ -9,16 +9,10 @@ export default Controller.extend({
 
   message: service(),
 
-  title: null,
-
   init() {
     this._super(...arguments);
 
-    this.get('message').dispatch(null, 'Booting system...', 3.75, true);
-
-    later(() => {
-      this.set('title', 'Gloss');
-    }, 1500);
+    this.get('message').dispatch(null, 'Booting system...', undefined, true);
 
     later(() => {
       let online = this.get('arbiter').get('connected');

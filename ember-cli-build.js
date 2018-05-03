@@ -8,6 +8,12 @@ module.exports = function(defaults) {
     // Add options here
     "ember-cli-babel": {
       includePolyfill: true
+    },
+
+    sassOptions: {
+      includePaths: [
+        'node_modules/sass-semantic-ui/dist/themes/material/assets/fonts'
+      ]
     }
   });
 

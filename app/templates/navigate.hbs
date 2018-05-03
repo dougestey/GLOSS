@@ -1,57 +1,86 @@
-<div class="Gloss-module Gloss-module--y Gloss-hud">
+<div class="Gloss">
   {{gloss-stats
     system=system
     loadUiElements=loadUiElements
     isConnected=isConnected
     }}
 
-  <div class="Gloss-viewport">
-    {{#liquid-if loadUiElements class="ui-fade"}}
-      <div class="Gloss-module Gloss-module--x Gloss-flex--wrap Gloss-flex--start">
-
-        <div class="Gloss-module Gloss-module--y Gloss-flex--start Gloss-flex--3 Gloss-analysis">
-
-          <div class="Gloss-module Gloss-module--x Gloss-flex--end">
-            {{#link-to 'navigate.index' class='Gloss-button Gloss-button--small'}}Local{{/link-to}}
-
-            {{#link-to 'navigate.tracker' class='Gloss-button Gloss-button--small'}}Tracker{{/link-to}}
-          </div>
-
-          {{outlet class="ui-fade"}}
-
-        </div>
-
-        <div class="Gloss-module Gloss-module--y Gloss-flex--start">
-          <div class="Gloss-notifier Gloss-module">
-            <div class="Gloss-stream Gloss-scroller">
-              {{#liquid-if loadNotifications class="ui-fade"}}
-                {{#each (sort-by 'time:desc' kills) as |notification|}}
-                  {{gloss-notification
-                    model=notification}}
-                {{/each}}
-              {{/liquid-if}}
-            </div>
-          </div>
-        </div>
+  <div class="ui grid">
+    <div class="three column row no-gutter p0 mt2 mb1">
+      <div class="column">
+        {{#link-to 'navigate.index' class='Gloss-button Gloss-button--small'}}
+          Local <span class="Gloss-button--detail">{{fleets.length}}</span>
+        {{/link-to}}
       </div>
-    {{else}}
-      <p>Loading...</p>
+
+      <div class="column">
+        {{#link-to 'navigate.tracker' class='Gloss-button Gloss-button--small'}}
+          Tracker <span class="Gloss-button--detail">{{tracked.length}}</span>
+        {{/link-to}}
+      </div>
+
+      {{!-- <div class="column">
+        {{#link-to 'navigate.search' class='Gloss-button Gloss-button--small'}}
+          Search
+        {{/link-to}}
+      </div> --}}
+
+      <div class="column">
+        <a class="Gloss-button Gloss-button--small {{if showKillStream 'active'}}" {{action 'toggleKillStream' this}}>
+          Killstream <span class="Gloss-button--detail">{{kills.length}}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="Gloss-viewport {{if showKillStream 'Gloss-viewport--reduced'}}">
+    {{#unless (and loadNotifications (or fleets (eq fleets.length 0)))}}
+      <div class="ui active inverted text loader">Loading</div>
+    {{/unless}}
+
+    {{#liquid-if loadNotifications class="ui-fade"}}
+        <div class="ui grid padded">
+          <div class="row">
+            {{outlet}}
+          </div>
+        </div>
     {{/liquid-if}}
   </div>
 
+  <div class="Gloss-sidebar {{if showKillStream 'Gloss-sidebar--shown'}}">
+    <div class="Gloss-notifier Gloss-module">
+      <div class="Gloss-stream Gloss-scroller">
+        {{#liquid-if loadNotifications class="ui-fade"}}
+          {{#each (sort-by 'time:desc' kills) as |notification|}}
+            {{gloss-notification
+              model=notification}}
+          {{/each}}
+        {{/liquid-if}}
+      </div>
+    </div>
+  </div>
+
   <div class="Gloss-module Gloss-module--x Gloss-flex--end Gloss-fixed Gloss-fixed--bottom">
+
     {{gloss-shard
-      label=character.name
+      label=(app-version)
       loaded=loadUiElements
       loadOrder=5
       align="left"
       }}
 
     {{gloss-shard
-      label=(if character.online 'online' 'offline')
+      label=character.name
       loaded=loadUiElements
       loadOrder=6
+      }}
+
+    {{gloss-shard
+      label=(if character.online 'online' 'offline')
+      loaded=loadUiElements
+      loadOrder=7
       align="right"
       }}
+
   </div>
 </div>

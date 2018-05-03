@@ -14,7 +14,7 @@ export default Service.extend({
 
   kills: [],
 
-  fleets: [],
+  fleets: undefined,
 
   // TODO: Types will be configurable in settings
   enable() {
@@ -79,8 +79,11 @@ export default Service.extend({
     let { fleets, kills, systemId } = data;
 
     if (systemId === location.system.systemId) {
-      this.get('fleets').clear();
+      if (this.get('fleets'))
+        this.get('fleets').clear();
+
       this.get('kills').clear();
+      this.set('fleets', []);
 
       fleets.map((fleet) => this.get('fleets').pushObject(fleet));
       kills.map((kill) => this.get('kills').pushObject(kill));

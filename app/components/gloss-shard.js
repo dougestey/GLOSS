@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { htmlSafe } from '@ember/string';
 
 export default Component.extend({
 
@@ -13,6 +14,22 @@ export default Component.extend({
     'alignLeft:Gloss-shard--align-left',
     'alignRight:Gloss-shard--align-right'
   ],
+
+  attributeBindings: [
+    'shardStyle:style'
+  ],
+
+  click() {
+    if (this.get('selectAction'))
+      this.sendAction('selectAction');
+  },
+
+  shardStyle: computed('selectAction', function() {
+    let selectAction = this.get('selectAction');
+
+    if (selectAction)
+      return htmlSafe(`cursor: pointer;`);
+  }),
 
   alignLeft: computed('align', function() {
     let alignLeft = this.get('align');

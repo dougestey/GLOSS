@@ -3,7 +3,7 @@
   text-align: center;
 
   * {
-    font-family: 'EVE Sans', sans-serif !important;
+    font-family: 'EVE Sans', sans-serif;
   }
 
   h2 {
@@ -20,7 +20,13 @@
   }
 
   &--primary {
-    flex: 2;
+    flex: 1.1;
+
+    * {
+      font-family: 'Titillium Web', sans-serif !important;
+      letter-spacing: 0.7rem;
+      font-weight: 300;
+    }
   }
 
   &--align-left {

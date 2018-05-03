@@ -2,18 +2,22 @@
   display: block;
   background: linear-gradient(transparent, rgba($secondary, 0.05), rgba($secondary, 0.1));
   color: rgba($primary, 0.85);
-  text-transform: uppercase;
+  padding: 1.5rem 2rem;
+
   border-left: 0.5px solid rgba($secondary, 0.1);
   border-right: 0.5px solid rgba($secondary, 0.1);
   border-top: none;
   border-bottom: none;
-  padding: 1.5rem 2rem;
+
   cursor: pointer;
   font-size: 1.5rem;
+  text-align: center;
   text-decoration: none;
-  position: relative;
+  text-transform: uppercase;
+
   animation: typing 250ms ease-in;
   transition: color 250ms ease-in;
+  position: relative;
   outline: none;
 
   &:hover,
@@ -24,7 +28,7 @@
     &:after {
       left: 0;
       right: 0;
-      animation: expand 175ms linear;
+      animation: expand 300ms linear;
     }
   }
 
@@ -63,5 +67,10 @@
     &:after {
       visibility: hidden;
     }
+  }
+
+  &--detail {
+    // font-size: 0.8rem;
+    color: $secondary;
   }
 }

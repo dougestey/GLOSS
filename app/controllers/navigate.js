@@ -11,13 +11,23 @@ export default Controller.extend({
 
   notifications: service(),
 
+  tracker: service(),
+
   character: reads('location.character'),
 
   system: reads('location.system'),
 
   kills: reads('notifications.kills.[]'),
 
+  fleets: reads('notifications.fleets.[]'),
+
+  tracked: reads('tracker.fleets.[]'),
+
   isConnected: reads('arbiter.connected'),
+
+  showKillStream: false,
+
+  queryParams: ['showKillStream'],
 
   init() {
     this._super(...arguments);
@@ -29,6 +39,12 @@ export default Controller.extend({
     later(() => {
       this.set('loadNotifications', true);
     }, 5000);
+  },
+
+  actions: {
+    toggleKillStream() {
+      this.toggleProperty('showKillStream');
+    }
   }
 
 });

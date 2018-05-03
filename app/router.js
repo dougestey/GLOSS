@@ -12,6 +12,7 @@ Router.map(function() {
   this.route('navigate', function() {
     this.route('threats');
     this.route('tracker');
+    this.route('search');
   });
 });
 

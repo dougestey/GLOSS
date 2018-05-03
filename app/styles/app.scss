@@ -2,12 +2,13 @@ $viewport-y: 90vh;
 
 @import 'styles/odometer-theme-default.css';
 @import 'index';
+@import 'node_modules/sass-semantic-ui/src/semantic-ui';
 
 body {
   background: url(/assets/bg.jpg) center center no-repeat fixed #000;
   background-size: auto 80%;
   color: $primary;
-  font-family: 'Titillium Web', 'EVE Sans', sans-serif;
+  font-family: $font-family;
   letter-spacing: 1.4px;
   text-transform: uppercase;
   overflow: hidden;
@@ -18,11 +19,20 @@ p {
   color: $secondary;
 }
 
-.p0 { padding: 0; }
+ul {
+  list-style-type: none;
+  padding: 0;
+
+  li {
+    color: $secondary;
+  }
+}
+
+.p0 { padding: 0 !important; }
 
 .Gloss {
-  height: 98vh;
-  width: 98vw;
+  width: 100%;
+  margin: 0 auto;
   padding: 1vh 1vw;
   display: flex;
   flex-direction: column;
@@ -35,9 +45,40 @@ p {
   align-items: center;
 }
 
+.Gloss-sidebar {
+  position: fixed;
+  width: 300px;
+  right: -300px;
+  top: 7.25rem;
+  bottom: 2vh;
+  overflow: hidden;
+  // background: darken($secondary, 35) !important
+  background: rgba(black, 0.5);
+  opacity: 0;
+
+  transition:
+    opacity 250ms cubic-bezier(0.445, 0.05, 0.55, 0.95),
+    right 250ms cubic-bezier(0.445, 0.05, 0.55, 0.95)
+  ;
+
+  &--shown {
+    right: 0;
+    opacity: 1;
+  }
+}
+
 .Gloss-viewport {
   width: 98vw;
-  height: $viewport-y;
+  height: calc(100vh - 6rem);
+  overflow-y: auto;
+  flex: 2;
+
+  transition: width 250ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+
+  > div,
+  > div > div {
+    height: 100%;
+  }
 
   .Gloss-shard h2,
   .Gloss-shard h5,
@@ -47,6 +88,10 @@ p {
     @media screen and (max-width: 375px) {
       padding: 0;
     }
+  }
+
+  &--reduced {
+    width: calc(98vw - 300px);
   }
 }
 
@@ -139,8 +184,46 @@ p {
   font-size: 3.75rem;
   font-family: 'Titillium Web', sans-serif;
   letter-spacing: 0.7rem;
-  margin: 0 0 7rem 0;
+  margin: 0;
   height: 5.6875rem;
+
+  &--centered {
+    text-align: center;
+    margin-top: 4rem;
+    height: 4rem;
+  }
+
+  &--subtext {
+    font-size: 1.2rem;
+    text-align: center;
+    height: auto;
+    letter-spacing: 0.4rem;
+    color: darken($primary, 70);
+  }
+
+  &--container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.0);
+    height: 5.6875rem;
+  }
+}
+
+.Gloss-version {
+  text-transform: lowercase;
+  text-align: center;
+  font-weight: 300;
+  font-size: 1.5rem;
+  color: darken($primary, 60);
+}
+
+.Gloss-copyright {
+  color: darken($secondary, 15);
+  font-size: 0.85rem;
+  line-height: 1.4rem;
 }
 
 .Gloss--highlight,
@@ -155,9 +238,30 @@ strong {
 
 .Gloss-fixed {
   position: fixed;
-  width: 100%;
+  width: 98vw;
+  padding: 0 0 3vh;
 
   &--bottom {
     bottom: 0;
+  }
+}
+
+.Gloss-input {
+  &.ui.input input[type="text"] {
+    font-size: 2rem;
+    // text-transform: uppercase;
+    letter-spacing: 5px;
+    color: darken($secondary, 15);
+    padding-left: 2rem !important;
+
+    transition: color 175ms ease;
+
+    &::placeholder {
+      color: darken($secondary, 15);
+    }
+
+    &:focus {
+      color: $primary;
+    }
   }
 }

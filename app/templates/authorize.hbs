@@ -1,7 +1,17 @@
-<div class="Gloss-module Gloss-module--x">
-  <div class="Gloss-module Gloss-module--y Gloss-hud">
-    <div class="Gloss-module">
-      <a class="Gloss-button" href="{{authorizeUrl}}">Authorize</a>
+<div class="ui grid">
+
+  <div class="row centered mt4">    
+    <div class="ui segment">
+      <p>Gloss requires permission to track your live location through New Eden.</p>
+      <p>This information is not shared with anyone.</p>
     </div>
   </div>
+
+  <div class="row centered">
+    {{gloss-ui-button
+      href=authorizeUrl
+      label="Authorize"
+      }}
+  </div>
+
 </div>
