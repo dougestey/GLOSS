@@ -8,9 +8,9 @@ Purpose-built to work hand in hand with [Arbiter](https://github.com/dougestey/a
 Currently under heavy development. Not supported in any way by the author at this time.
 
 ## Screenshots ##
-![screen shot 2018-04-16 at 6 51 50 pm](https://user-images.githubusercontent.com/680366/38839358-3a7b34e2-41a8-11e8-8ddd-eba5c0ae1091.png)
-
-![screen shot 2018-04-16 at 6 52 55 pm](https://user-images.githubusercontent.com/680366/38839379-50961ba2-41a8-11e8-90b2-112978b7cd92.png)
+![gloss space_](https://user-images.githubusercontent.com/680366/39587843-805b8386-4ec8-11e8-8e78-cb612430ec6c.png)
+![gloss space_navigate_showkillstream true](https://user-images.githubusercontent.com/680366/39587862-887c6ddc-4ec8-11e8-94ab-0bff800a0d66.png)
+![gloss space_navigate_showkillstream true 1](https://user-images.githubusercontent.com/680366/39587847-829a81b0-4ec8-11e8-92d5-cf661bd47f85.png)
 
 
 ## Features ##
