@@ -29,9 +29,9 @@ export default Controller.extend({
     await this.get('session').initialize();
     this.get('arbiter').connect();
 
-    later(() => {
-      this.set('title', null);
-    }, 10000);
+    // later(() => {
+    //   this.set('title', null);
+    // }, 10000);
   }
 
 });

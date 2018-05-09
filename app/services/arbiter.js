@@ -47,6 +47,9 @@ export default Service.extend({
       if (character) {
         this.get('location').start(character.characterId);
         this.get('notifications').enable();
+        let myNotification = new Notification('GLOSS', {
+          body: 'Connection to Arbiter established'
+        });
       }
     }
   },

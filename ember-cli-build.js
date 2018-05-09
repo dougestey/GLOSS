@@ -20,6 +20,8 @@ module.exports = function(defaults) {
   // Use `app.import` to add additional libraries to the generated
   // output files.
   app.import('vendor/odometer.js');
+  app.import('vendor/socket.io.js');
+  app.import('vendor/sails.io.js');
   // If you need to use different assets in different
   // environments, specify an object as the first parameter. That
   // object's keys should be the environment name and the values

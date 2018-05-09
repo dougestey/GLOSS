@@ -10,7 +10,7 @@ export default Service.extend({
     let character;
 
     try {
-      let response = await this.get('ajax').request('/auth/whoami');
+      let response = await this.get('ajax').request('/auth/whoami', { xhrFields: { withCredentials: true } });
       character = response.character;
     } catch(e) {
       this.get('router').transitionTo('welcome');

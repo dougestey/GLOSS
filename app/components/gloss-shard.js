@@ -29,6 +29,8 @@ export default Component.extend({
 
     if (selectAction)
       return htmlSafe(`cursor: pointer;`);
+    else
+      return htmlSafe(`-webkit-app-region: drag;`);
   }),
 
   alignLeft: computed('align', function() {
