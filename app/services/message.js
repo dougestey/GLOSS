@@ -1,5 +1,4 @@
 import Service from '@ember/service';
-import { computed } from '@ember/object';
 import { later } from '@ember/runloop';
 
 export default Service.extend({

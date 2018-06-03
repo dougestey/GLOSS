@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import { later } from '@ember/runloop';
 import { computed} from '@ember/object';
 
 export default Component.extend({

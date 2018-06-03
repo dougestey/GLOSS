@@ -57,7 +57,7 @@ export default Service.extend({
     later(() => {
       this.get('message').dispatch(
         'Connection lost',
-        `Arbiter has gone offline`
+        `Arbiter cannot be reached`
       );
     }, 1000);
 

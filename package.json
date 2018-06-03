@@ -50,12 +50,10 @@
     "liquid-fire": "^0.29.1",
     "loader.js": "^4.2.3",
     "lodash": "3.10.1",
+    "sass-semantic-ui": "^2.2.12-3",
     "semantic-ui-ember": "2.1"
   },
   "engines": {
     "node": "^4.5 || 6.* || >= 7.*"
-  },
-  "dependencies": {
-    "sass-semantic-ui": "^2.2.12-3"
   }
 }

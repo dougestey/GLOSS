@@ -1,7 +1,6 @@
 import Controller from '@ember/controller';
-import { bind, later } from '@ember/runloop';
+import { later } from '@ember/runloop';
 import { inject as service } from '@ember/service';
-import arbiter from '../services/arbiter';
 
 export default Controller.extend({
 
@@ -40,14 +39,6 @@ export default Controller.extend({
         );
       }
     }, 4000);
-
-    // later(() => {
-    //   this.get('message').dispatch(null, 'System ready', null, true);
-    // }, 3000);
-
-    // later(() => {
-    //   this.transitionToRoute('authorize');
-    // }, 5000);
   }
 
 });

@@ -1,4 +1,3 @@
-/* global io */
 import Service, { inject as service } from '@ember/service';
 import { bind } from '@ember/runloop';
 

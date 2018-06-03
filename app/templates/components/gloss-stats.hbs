@@ -43,12 +43,21 @@
     loadOrder=5
     }}
 
-  {{gloss-shard
-    label="ESI"
-    value=(sub 60 (moment-diff system.updatedAt now precision='minutes' interval='60000'))
-    loaded=loadUiElements
-    loadOrder=6
-    }}
+  {{#if (not-eq system.updatedAt "?")}}
+    {{gloss-shard
+      label="ESI"
+      value=(sub 60 (moment-diff system.updatedAt now precision='minutes' interval='60000'))
+      loaded=loadUiElements
+      loadOrder=6
+      }}
+  {{else}}
+    {{gloss-shard
+      label="ESI"
+      value="?"
+      loaded=loadUiElements
+      loadOrder=6
+      }}
+  {{/if}}
 
   {{gloss-shard
     label="Arbiter"
