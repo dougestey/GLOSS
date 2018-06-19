@@ -9,10 +9,6 @@ export default Service.extend({
 
   arbiter: service(),
 
-  message: service(),
-
-  notifications: service(),
-
   firstCharacterLoad: true,
 
   start(characterId) {
@@ -37,27 +33,25 @@ export default Service.extend({
     this.set('character', data);
   },
 
-  updateSystem(data) {
+  updateSystem(system) {
     let characterLocation = this.get('character.system');
 
-    if (characterLocation.id === data.id) {
-      if (_isWormhole(data)) {
-        let system = data;
+    if (_isWormhole(system)) {
+      if (this.get('system.updatedAt'))
+        system.updatedAt = this.get('system.updatedAt');
+      else
+        system.updatedAt = '?';
 
-        if (this.get('system.updatedAt'))
-          system.updatedAt = this.get('system.updatedAt');
-        else
-          system.updatedAt = '?';
+      system.shipJumps = '?';
+      system.npcKills = '?';
+      system.shipKills = '?';
+      system.podKills = '?';
+    } else {
+      // const
+    }
 
-        system.shipJumps = '?';
-        system.npcKills = '?';
-        system.shipKills = '?';
-        system.podKills = '?';
-
-        this.set('system', system);
-      } else {
-        this.set('system', data);
-      }
+    if (characterLocation.id === system.id) {
+      this.set('system', system);
     }
   }
 

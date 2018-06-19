@@ -3,18 +3,18 @@ import { storageFor } from 'ember-local-storage';
 
 export default Service.extend({
 
-  notifications: service(),
+  intel: service(),
 
   fleets: storageFor('tracked-fleets'),
 
   add(fleet) {
     this.get('fleets').addObject(fleet);
-    this.get('notifications').subscribeFleet(fleet.id);
+    this.get('intel').subscribeFleet(fleet.id);
   },
 
   remove(fleet) {
     this.get('fleets').removeObject(fleet);
-    this.get('notifications').unsubscribeFleet(fleet.id);
+    this.get('intel').unsubscribeFleet(fleet.id);
   },
 
   evaluate(fleet) {

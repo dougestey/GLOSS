@@ -53,8 +53,9 @@ export default Service.extend({
         fleets.removeObject(existingFleet);
       } else {
         let suffix = fleet.characters.length > 1 ? 's' : '';
+        let charSuffix = fleet.kills.length > 1 ? 's' : '';
 
-        this.get('message').dispatch(`New threat in ${fleet.system.name}`, `${fleet.characters.length} pilot${suffix} with ${fleet.kills.length} kills`, 5);
+        this.get('message').dispatch(`New threat in ${fleet.system.name}`, `${fleet.characters.length} pilot${suffix} with ${fleet.kills.length} kill${charSuffix}`, 5);
       }
 
       fleets.pushObject(fleet);

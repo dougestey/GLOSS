@@ -9,7 +9,7 @@ export default Service.extend({
 
   location: service(),
 
-  notifications: service(),
+  intel: service(),
 
   session: service(),
 
@@ -46,7 +46,7 @@ export default Service.extend({
 
       if (character) {
         this.get('location').start(character.characterId);
-        this.get('notifications').enable();
+        this.get('intel').enable();
       }
     }
   },

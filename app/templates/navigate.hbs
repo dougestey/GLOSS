@@ -1,3 +1,72 @@
+{{#ui-modal name="threat" class="threat inverted" onApprove=(action 'trackThreat' this)}}
+  <div class="header">
+    {{selectedFaction.name}}
+  </div>
+
+  <div class="image content">
+    <div class="ui small image">
+      <img src={{threatImageUrl}} />
+    </div>
+
+    <div class="description">
+      <p>{{selectedFleet.characters.length}} pilots with {{selectedFleet.kills.length}} kills</p>
+
+      <p>{{selectedShipType.count}} {{selectedShipType.name}} {{#if selectedShipCount}} + {{selectedShipCount}} others {{/if}}</p>
+
+      <p>Last kill occurred {{moment-from-now selectedFleet.lastSeen}}</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="description">
+      <table class="ui celled table inverted" cellpadding="10">
+        <thead>
+          <th>Threat</th>
+          <th>Pilot</th>
+          <th>Ship</th>
+          <th>Corporation</th>
+          <th>Alliance</th>
+        </thead>
+
+        <tbody>
+          {{#each (sort-by 'dangerRatio:desc' selectedFleet.characters) as |character|}}
+            <tr class="Gloss-report--character">
+              <td>{{#if (eq character.dangerRatio 0)}}N/A{{else}}{{character.dangerRatio}}%{{/if}}</td>
+              <td><a href="{{zkill-character character}}" target="_blank">{{character.name}}</a></td>
+              <td class="Gloss-report--ship">
+                {{#if character.ship}}
+                  <img src="https://imageserver.eveonline.com/Type/{{character.ship.id}}_32.png" />
+                {{/if}}
+                {{character.ship.name}}
+              </td>
+              <td>{{character.corporation.name}}</td>
+              <td>{{if character.alliance character.alliance.name 'None'}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="actions ui grid">
+    <div class="two column row no-gutter">
+      <div class="column">
+        <div class="Gloss-button Gloss-button--frameless Gloss-button--small deny">
+          Close
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="Gloss-button Gloss-button--frameless Gloss-button--small positive">
+          <i class="power icon"></i>
+
+          Track fleet
+        </div>
+      </div>
+    </div>
+  </div>
+{{/ui-modal}}
+
 <div class="Gloss">
   {{gloss-stats
     system=system
@@ -6,10 +75,16 @@
     }}
 
   <div class="ui grid">
-    <div class="three column row no-gutter p0 mt2 mb1">
+    <div class="four column row no-gutter p0 mt2 mb1">
       <div class="column">
         {{#link-to 'navigate.index' class='Gloss-button Gloss-button--small'}}
           Local <span class="Gloss-button--detail">{{fleets.length}}</span>
+        {{/link-to}}
+      </div>
+
+      <div class="column">
+        {{#link-to 'navigate.constellation' class='Gloss-button Gloss-button--small'}}
+          Nearby
         {{/link-to}}
       </div>
 
@@ -18,12 +93,6 @@
           Tracker <span class="Gloss-button--detail">{{tracked.length}}</span>
         {{/link-to}}
       </div>
-
-      {{!-- <div class="column">
-        {{#link-to 'navigate.search' class='Gloss-button Gloss-button--small'}}
-          Search
-        {{/link-to}}
-      </div> --}}
 
       <div class="column">
         <a class="Gloss-button Gloss-button--small {{if showKillStream 'active'}}" {{action 'toggleKillStream' this}}>
@@ -34,11 +103,11 @@
   </div>
 
   <div class="Gloss-viewport {{if showKillStream 'Gloss-viewport--reduced'}}">
-    {{#unless (and loadNotifications (or fleets (eq fleets.length 0)))}}
+    {{#unless (and loadIntel (or fleets (eq fleets.length 0)))}}
       <div class="ui active inverted text loader">Loading</div>
     {{/unless}}
 
-    {{#liquid-if loadNotifications class="ui-fade"}}
+    {{#liquid-if loadIntel class="ui-fade"}}
         <div class="ui grid padded">
           <div class="row">
             {{outlet}}
@@ -50,7 +119,7 @@
   <div class="Gloss-sidebar {{if showKillStream 'Gloss-sidebar--shown'}}">
     <div class="Gloss-notifier Gloss-module">
       <div class="Gloss-stream Gloss-scroller">
-        {{#liquid-if loadNotifications class="ui-fade"}}
+        {{#liquid-if loadIntel class="ui-fade"}}
           {{#each (sort-by 'time:desc' kills) as |notification|}}
             {{gloss-notification
               model=notification}}

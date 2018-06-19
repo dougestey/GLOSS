@@ -109,8 +109,8 @@ a:hover {
   }
 
   &.modal {
-    top: 2rem !important;
-    max-height: 70vh !important;
+    top: -6vh !important;
+    max-height: 75vh !important;
     overflow-y: auto !important;
     z-index: 1001 !important;
     position: fixed !important;
