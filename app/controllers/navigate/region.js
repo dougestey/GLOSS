@@ -8,7 +8,7 @@ export default Controller.extend({
 
   intel: service(),
 
-  fleets: reads('intel.fleets.constellation.[]'),
+  fleets: reads('intel.region.fleets.[]'),
 
   actions: {
     selectThreat(threat) {

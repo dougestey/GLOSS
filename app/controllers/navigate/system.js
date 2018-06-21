@@ -1,8 +1,13 @@
 import Controller, { inject as controller } from '@ember/controller';
+import { inject as service } from '@ember/service';
 
 export default Controller.extend({
 
   navigate: controller(),
+
+  intel: service(),
+
+  fleets: reads('intel.fleets.system.[]'),
 
   actions: {
     selectThreat() {

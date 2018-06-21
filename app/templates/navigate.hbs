@@ -75,16 +75,22 @@
     }}
 
   <div class="ui grid">
-    <div class="four column row no-gutter p0 mt2 mb1">
+    <div class="five column row no-gutter p0 mt2 mb1">
       <div class="column">
-        {{#link-to 'navigate.index' class='Gloss-button Gloss-button--small'}}
-          Local <span class="Gloss-button--detail">{{fleets.length}}</span>
+        {{#link-to 'navigate.system' class='Gloss-button Gloss-button--small'}}
+          {{system.name}} <span class="Gloss-button--detail">{{systemFleets.length}}</span>
         {{/link-to}}
       </div>
 
       <div class="column">
         {{#link-to 'navigate.constellation' class='Gloss-button Gloss-button--small'}}
-          Nearby
+          {{system.constellation.name}} <span class="Gloss-button--detail">{{fleets.length}}</span>
+        {{/link-to}}
+      </div>
+
+      <div class="column">
+        {{#link-to 'navigate.region' class='Gloss-button Gloss-button--small'}}
+          {{system.region.name}} <span class="Gloss-button--detail">{{fleets.length}}</span>
         {{/link-to}}
       </div>
 
@@ -96,14 +102,14 @@
 
       <div class="column">
         <a class="Gloss-button Gloss-button--small {{if showKillStream 'active'}}" {{action 'toggleKillStream' this}}>
-          Killstream <span class="Gloss-button--detail">{{kills.length}}</span>
+          Kills <span class="Gloss-button--detail">{{kills.length}}</span>
         </a>
       </div>
     </div>
   </div>
 
   <div class="Gloss-viewport {{if showKillStream 'Gloss-viewport--reduced'}}">
-    {{#unless (and loadIntel (or fleets (eq fleets.length 0)))}}
+    {{#unless (and loadIntel (or systemFleets (eq systemFleets.length 0)))}}
       <div class="ui active inverted text loader">Loading</div>
     {{/unless}}
 

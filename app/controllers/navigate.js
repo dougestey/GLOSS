@@ -24,13 +24,17 @@ export default Controller.extend({
 
   kills: reads('intel.kills.[]'),
 
-  fleets: reads('intel.fleets.[]'),
-
   tracked: reads('tracker.fleets.[]'),
 
   isConnected: reads('arbiter.connected'),
 
-  showKillStream: false,
+  systemFleets: reads('intel.fleets.system.[]'),
+
+  constellationFleets: reads('intel.fleets.constellation.[]'),
+
+  regionFleets: reads('intel.fleets.region.[]'),
+
+  showKillStream: true,
 
   init() {
     this._super(...arguments);
@@ -53,6 +57,7 @@ export default Controller.extend({
       this.toggleProperty('detailMode');
 
       this.set('selectedFleet', fleet);
+      // TODO: move to helpers
       this.set('selectedFaction', faction);
       this.set('selectedShipType', shipType);
       this.set('selectedShipCount', otherShipCount);

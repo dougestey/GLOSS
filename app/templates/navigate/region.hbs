@@ -1,0 +1,12 @@
+<div class="ui link centered cards">
+  {{#each (sort-by 'lastSeen:desc' fleets) as |fleet|}}
+    {{gloss-threat
+      model=fleet
+      selectThreat=(action 'selectThreat')
+      }}
+  {{/each}}
+</div>
+
+{{#unless fleets.length}}
+  <p class="mt1 ml2">No threats reported in this region.</p>
+{{/unless}}

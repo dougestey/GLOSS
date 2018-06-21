@@ -1,5 +1,5 @@
-import Controller from '@ember/controller';
 import ENV from 'gloss/config/environment';
+import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 
 export default Controller.extend({
@@ -9,7 +9,7 @@ export default Controller.extend({
   authorizeUrl: computed('arbiterUrl', function() {
     let hostName = this.get('arbiterUrl');
 
-    return `${hostName}/auth/authorize`;
+    return `${hostName}/api/auth/authorize`;
   })
 
 });

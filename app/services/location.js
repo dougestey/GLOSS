@@ -21,14 +21,16 @@ export default Service.extend({
   },
 
   updateCharacter(data) {
-    let previousSystemId = this.get('system.systemId');
+    let previousSystemId = this.get('system.id');
     let socket = this.get('arbiter.socket');
-    let systemId = data.system.systemId;
+    let systemId = data.system.id;
+    let constellationId = data.system.constellation;
 
     socket.get(`/api/systems/${systemId}`, bind(this, this.updateSystem));
+    socket.get(`/api/constellations/${constellationId}`, bind(this, this.updateConstellation));
 
-    if (previousSystemId)
-      socket.get(`/api/systems/${previousSystemId}/untrack`);
+    // if (previousSystemId)
+    //   socket.get(`/api/systems/${previousSystemId}/untrack`);
 
     this.set('character', data);
   },
@@ -53,6 +55,10 @@ export default Service.extend({
     if (characterLocation.id === system.id) {
       this.set('system', system);
     }
+  },
+
+  updateConstellation(constellation) {
+    this.set('constellation', constellation);
   }
 
 });
