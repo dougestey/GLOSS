@@ -10,42 +10,42 @@
 
   {{gloss-shard
     label="Jumps"
-    value=system.shipJumps
+    value=stats.shipJumps
     loaded=loadUiElements
     loadOrder=2
     }}
 
   {{gloss-shard
     label="NPC"
-    value=system.npcKills
+    value=stats.npcKills
     loaded=loadUiElements
     loadOrder=3
     }}
 
   {{gloss-shard
     label="Ships"
-    value=system.shipKills
+    value=stats.shipKills
     loaded=loadUiElements
     loadOrder=4
     }}
 
   {{gloss-shard
     label="Capsules"
-    value=system.podKills
+    value=stats.podKills
     loaded=loadUiElements
     loadOrder=5
     }}
 
-  {{#if (not-eq system.updatedAt "?")}}
+  {{#if stats.createdAt}}
     {{gloss-shard
-      label="ESI"
-      value=(sub 60 (moment-diff system.updatedAt now precision='minutes' interval='60000'))
+      label="Refresh"
+      value=(sub 60 (moment-diff stats.createdAt now precision='minutes' interval='60000'))
       loaded=loadUiElements
       loadOrder=6
       }}
   {{else}}
     {{gloss-shard
-      label="ESI"
+      label="Refresh"
       value="?"
       loaded=loadUiElements
       loadOrder=6

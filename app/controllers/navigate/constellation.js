@@ -8,20 +8,20 @@ export default Controller.extend({
 
   intel: service(),
 
+  location: service(),
+
+  system: reads('location.system.id'),
+
   fleets: reads('intel.fleets.constellation.[]'),
 
   actions: {
-    selectThreat(threat) {
-      this.get('navigate').send('selectThreat', threat);
+    selectFleet(fleet) {
+      this.get('navigate').send('selectFleet', fleet);
     },
 
-    trackThreat(threat) {
-      this.get('navigate').send('trackThreat', threat);
+    toggleTracking(fleet) {
+      this.get('navigate').send('toggleTracking', fleet);
     },
-
-    untrackThreat(threat) {
-      this.get('navigate').send('untrackThreat', threat);
-    }
   }
 
 });

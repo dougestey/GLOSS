@@ -25,6 +25,10 @@ module.exports = function(environment) {
       import: {
         css: false
       }
+    },
+
+    moment: {
+      allowEmpty: true
     }
 
   };

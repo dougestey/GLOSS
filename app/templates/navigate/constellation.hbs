@@ -1,12 +1,13 @@
-<div class="ui link centered cards">
+<div class="ui link cards">
   {{#each (sort-by 'lastSeen:desc' fleets) as |fleet|}}
     {{gloss-threat
       model=fleet
-      selectThreat=(action 'selectThreat')
+      system=system
+      selectFleet=(action 'selectFleet')
       }}
   {{/each}}
 </div>
 
 {{#unless fleets.length}}
-  <p class="mt1 ml2">No threats reported in this constellation.</p>
+  <p class="mt1 ml2">No recent activity reported in this constellation.</p>
 {{/unless}}

@@ -11,7 +11,11 @@ export default Service.extend({
 
   tracker: service(),
 
-  kills: [],
+  kills: {
+    system: [],
+    constellation: [],
+    region: []
+  },
 
   fleets: {
     system: [],
@@ -19,41 +23,63 @@ export default Service.extend({
     region: []
   },
 
-  // TODO: Types will eventually be configurable in settings
   enable() {
     let socket = this.get('arbiter.socket');
 
-    socket.on('intel_system', bind(this, this.receiveSystem));
-    socket.on('intel_constellation', bind(this, this.receiveConstellation));
-    socket.on('intel_region', bind(this, this.receiveRegion));
+    socket.on('intel_system', bind(this, this.receiveSystemIntel));
+    socket.on('intel_constellation', bind(this, this.receiveConstellationIntel));
+    socket.on('intel_region', bind(this, this.receiveRegionIntel));
+
+    socket.on('fleet', bind(this, this.receiveFleet));
+    socket.on('fleet_update', bind(this, this.receiveFleetUpdate));
+    socket.on('fleet_expire', bind(this, this.destroyFleet));
 
     socket.on('kill', bind(this, this.receiveKill));
 
-    socket.on('fleet', bind(this, this.receiveFleet));
-    socket.on('fleet_expire', bind(this, this.destroyFleet));
+    this.subscribeFleets();
   },
 
   /* Socket.IO handlers */
 
-  async receiveKill(kill) {
-    let kills = this.get('kills');
-    let existingKill = kills.findBy('id', kill.id);
+  receiveKill(kill) {
+    let system = this.get('location.system');
+    let constellation = this.get('location.constellation');
+    let region = this.get('location.region');
 
-    if (existingKill) {
-      kills.removeObject(existingKill);
+    // System
+    if (kill.system.systemId === system.id) {
+      let kills = this.get('kills.system');
+
+      kills.pushObject(kill);
     }
 
-    kills.pushObject(kill);
+    // Constellation
+    if (constellation.systems.includes(kill.system.systemId)) {
+      let kills = this.get('kills.constellation');
+
+      kills.pushObject(kill);
+    }
+
+    // Region
+    if (region.systems.includes(kill.system.systemId)) {
+      let kills = this.get('kills.region');
+
+      kills.pushObject(kill);
+    }
   },
 
-  async receiveFleet(fleet) {
+  receiveFleet(fleet) {
+    let system = this.get('location.system');
+    let constellation = this.get('location.constellation');
+    let region = this.get('location.region');
+
     // Let tracker decide if it needs this data.
     this.get('tracker').evaluate(fleet);
 
     let notified = false;
 
     // System
-    if (fleet.system.systemId === location.system.id) {
+    if (fleet.system.systemId === system.id) {
       let systemFleets = this.get('fleets.system');
       let existingSystemFleet = systemFleets.findBy('id', fleet.id);
 
@@ -72,8 +98,8 @@ export default Service.extend({
       systemFleets.pushObject(fleet);
     }
 
-    // Constellation TODO
-    if (location.constellation.systems.includes(fleet.system.systemId)) {
+    // Constellation
+    if (constellation.systems.findBy('id', fleet.system.systemId)) {
       let constellationFleets = this.get('fleets.constellation');
       let existingConstellationFleet = constellationFleets.findBy('id', fleet.id);
 
@@ -93,8 +119,8 @@ export default Service.extend({
       constellationFleets.pushObject(fleet);
     }
 
-    // Region TODO
-    if (location.region.systems.includes(fleet.system.systemId)) {
+    // Region
+    if (region.systems.findBy('id', fleet.system.systemId)) {
       let regionFleets = this.get('fleets.region');
       let existingRegionFleet = regionFleets.findBy('id', fleet.id);
 
@@ -114,7 +140,14 @@ export default Service.extend({
     }
   },
 
-  async destroyFleet(fleet) {
+  receiveFleetUpdate(fleet) {
+    this.get('tracker').evaluate(fleet);
+  },
+
+  destroyFleet(fleet) {
+    // Let tracker decide if it needs this data.
+    this.get('tracker').evaluate(fleet);
+
     // System
     let systemFleets = this.get('fleets.system');
     let existingSystemFleet = systemFleets.findBy('id', fleet.id);
@@ -140,44 +173,51 @@ export default Service.extend({
     }
   },
 
-  // TODO
-  async receiveSystemIntel(data) {
-    let system = this.get('location.system');
-    let { fleets, kills, id } = data;
+  receiveSystemIntel(data) {
+    let { fleets, kills } = data;
+    let systemFleets = this.get('fleets.system');
+    let systemKills = this.get('kills.system');
 
-    if (id === system.id) {
-      if (this.get('fleets.system')) {
-        this.get('fleets.system').clear();
-      }
+    fleets.map((fleet) => systemFleets.pushObject(fleet));
+    kills.map((kill) => systemKills.pushObject(kill));
+  },
 
-      // this.get('kills').clear();
-      // this.set('fleets', []);
+  receiveConstellationIntel(data) {
+    let { fleets, kills } = data;
+    let constellationFleets = this.get('fleets.constellation');
+    let constellationKills = this.get('kills.constellation');
 
-      fleets.map((fleet) => this.get('fleets').pushObject(fleet));
-      kills.map((kill) => this.get('kills').pushObject(kill));
+    fleets.map((fleet) => constellationFleets.pushObject(fleet));
+    kills.map((kill) => constellationKills.pushObject(kill));    
+  },
+
+  receiveRegionIntel(data) {
+    let { fleets, kills } = data;
+    let regionFleets = this.get('fleets.region');
+    let regionKills = this.get('kills.region');
+
+    fleets.map((fleet) => regionFleets.pushObject(fleet));
+    kills.map((kill) => regionKills.pushObject(kill));
+  },
+
+  /* Methods */
+
+  subscribeFleets() {
+    let socket = this.get('arbiter.socket');
+    let fleets = this.get('tracker.fleets').toArray();
+
+    for (let fleet of fleets) {
+      socket.get(`/api/fleets/${fleet.id}/track`);
     }
   },
 
-  async receiveConstellationIntel(data) {
-    // let location = this.get('location');
-    let { fleets, kills, id } = data;
-
-    // this.get('constellation').clear();
-    // this.get('kills').clear();
-
-    fleets.map((fleet) => this.get('constellation.fleets').pushObject(fleet));
-    kills.map((kill) => this.get('constellation.kills').pushObject(kill));
-  },
-
-  // Methods
-
-  async subscribeFleet(id) {
+  subscribeFleet(id) {
     let socket = this.get('arbiter.socket');
 
     socket.get(`/api/fleets/${id}/track`);
   },
 
-  async unsubscribeFleet(id) {
+  unsubscribeFleet(id) {
     let socket = this.get('arbiter.socket');
 
     socket.get(`/api/fleets/${id}/untrack`);

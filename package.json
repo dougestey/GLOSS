@@ -1,6 +1,6 @@
 {
   "name": "gloss",
-  "version": "0.4.17",
+  "version": "1.0.0",
   "private": false,
   "description": "A heads up display for space travel.",
   "license": "MIT",
@@ -37,6 +37,7 @@
     "ember-cli-sri": "^2.1.0",
     "ember-cli-uglify": "^2.0.0",
     "ember-composable-helpers": "^2.1.0",
+    "ember-concurrency": "^0.8.19",
     "ember-data": "~2.18.0",
     "ember-export-application-global": "^2.0.0",
     "ember-load-initializers": "^1.0.0",

@@ -20,21 +20,26 @@ a:hover {
   background: transparent !important;
 
   &.cards {
+    > .title {
+      width: 100%;
+      margin: 1.5rem 0.6rem 0.5rem;
+    }
+
     > .card {
       padding-top: 0.5rem !important;
       padding-bottom: 0.5rem !important;
       margin-top: 0.25rem !important;
       background: transparent !important;
       box-shadow: none !important;
-      // overflow: hidden;
+      overflow: hidden;
 
       &:hover {
         transform: none !important;
         text-rendering: optimizeLegibility;
 
         > .background {
-          // transform: scale3d(1.1, 1.1, 1.1) !important;
-          opacity: 0.35;
+          transform: scale3d(1.05, 1.05, 1.05) !important;
+          opacity: 0.3;
         }
       }
 
@@ -47,7 +52,7 @@ a:hover {
         background-size: 140% !important;
         background-position-x: 0;
         background-repeat: no-repeat;
-        transition: opacity 175ms linear;
+        transition: opacity 175ms linear, transform 175ms linear;
       }
 
       > .image {
@@ -123,6 +128,24 @@ a:hover {
       background: darken($secondary, 35) !important;
       color: $primary !important;
       font-weight: 400 !important;
+
+      > span.type {
+        color: $secondary !important;
+      }
+    }
+
+    > .image.content {
+      padding: 1rem 1.5rem;
+
+      > .description {
+        span {
+          margin-right: 0.5rem;
+        }
+
+        p {
+          margin-top: 1rem;
+        }
+      }
     }
 
     > .actions {

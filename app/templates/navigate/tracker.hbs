@@ -1,8 +1,21 @@
-<div class="ui link centered cards">
-  {{#each (sort-by 'lastSeen:desc' fleets) as |fleet|}}
+<div class="ui link cards">
+  {{#each (sort-by 'lastSeen:desc' activeFleets) as |fleet index|}}
+    {{#if (eq index 0)}}<p class="title">Active</p>{{/if}}
+
     {{gloss-threat
       model=fleet
-      selectThreat=(action 'selectThreat')
+      system=system
+      selectFleet=(action 'selectFleet')
+      }}
+  {{/each}}
+
+  {{#each (sort-by 'lastSeen:desc' inactiveFleets) as |fleet index|}}
+    {{#if (eq index 0)}}<p class="title">Inactive</p>{{/if}}
+
+    {{gloss-threat
+      model=fleet
+      system=system
+      selectFleet=(action 'selectFleet')
       }}
   {{/each}}
 </div>
