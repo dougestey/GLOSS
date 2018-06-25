@@ -55,7 +55,7 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     // here you can enable a production-specific feature
-    ENV.ARBITER_URL = 'https://arbiter.gloss.space/api';
+    ENV.ARBITER_URL = 'https://arbiter.gloss.space';
   }
 
   return ENV;

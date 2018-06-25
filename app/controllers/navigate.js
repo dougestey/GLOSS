@@ -47,20 +47,23 @@ export default Controller.extend({
 
   trackedFleets: reads('tracker.fleets.[]'),
 
+  trackerKills: reads('tracker.kills.[]'),
+
   systemKills: reads('intel.kills.system.[]'),
 
   constellationKills: reads('intel.kills.constellation.[]'),
 
   regionKills: reads('intel.kills.region.[]'),
 
-  selectedFleetIsTracked: computed('selectedFleet', 'trackedFleets', function() {
+  selectedFleetIsTracked: computed('selectedFleet.id', 'trackedFleets.[]', function() {
     let fleet = this.get('selectedFleet');
     let fleets = this.get('trackedFleets');
 
     if (!fleet)
       return false;
 
-    return fleets.includes(fleet);
+    let existingTrackedFleet = fleets.findBy('id', fleet.id);
+    return !!existingTrackedFleet;
   }),
 
   latestBattleReport: computed('selectedFleet', function() {
@@ -83,18 +86,14 @@ export default Controller.extend({
     return context;
   }),
 
-  kills: computed('context', 'regionKills.[]', 'constellationKills.[]', 'systemKills.[]', function() {
+  kills: computed('context', 'regionKills.[]', 'constellationKills.[]', 'systemKills.[]', 'trackerKills.[]', function() {
     let context = this.get('context');
-
-    if (context === 'tracker') {
-      return [];
-    }
 
     return this.get(`${context}Kills`);
   }),
 
-  killsRenderable: computed('kills', function() {
-    let kills = this.get('regionKills');
+  killsRenderable: computed('kills', 'context', 'regionKills.[]', 'constellationKills.[]', 'systemKills.[]', function() {
+    let kills = this.get('kills');
 
     return kills.sortBy('time').reverse().slice(0, 200);
   }),

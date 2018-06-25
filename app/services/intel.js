@@ -54,14 +54,14 @@ export default Service.extend({
     }
 
     // Constellation
-    if (constellation.systems.includes(kill.system.systemId)) {
+    if (constellation.systems.findBy('id', kill.system.systemId)) {
       let kills = this.get('kills.constellation');
 
       kills.pushObject(kill);
     }
 
     // Region
-    if (region.systems.includes(kill.system.systemId)) {
+    if (region.systems.findBy('id', kill.system.systemId)) {
       let kills = this.get('kills.region');
 
       kills.pushObject(kill);
@@ -111,7 +111,7 @@ export default Service.extend({
           // New fleet
           let suffix = fleet.characters.length > 1 ? 's' : '';
           let charSuffix = fleet.kills.length > 1 ? 's' : '';
-          this.get('message').dispatch(`New threat in ${location.constellation.name}`, `${fleet.characters.length} pilot${suffix} with ${fleet.kills.length} kill${charSuffix}`, 5);
+          this.get('message').dispatch(`New threat in ${constellation.name}`, `${fleet.characters.length} pilot${suffix} with ${fleet.kills.length} kill${charSuffix}`, 5);
           notified = true;
         }
       }
@@ -132,7 +132,7 @@ export default Service.extend({
           // New fleet
           let suffix = fleet.characters.length > 1 ? 's' : '';
           let charSuffix = fleet.kills.length > 1 ? 's' : '';
-          this.get('message').dispatch(`New threat in ${location.region.name}`, `${fleet.characters.length} pilot${suffix} with ${fleet.kills.length} kill${charSuffix}`, 5);
+          this.get('message').dispatch(`New threat in ${region.name}`, `${fleet.characters.length} pilot${suffix} with ${fleet.kills.length} kill${charSuffix}`, 5);
         }
       }
 
@@ -165,7 +165,7 @@ export default Service.extend({
     }
 
     // Region
-    let regionFleets = this.get('fleets.constellation');
+    let regionFleets = this.get('fleets.region');
     let existingRegionFleet = regionFleets.findBy('id', fleet.id);
 
     if (existingRegionFleet) {

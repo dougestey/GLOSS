@@ -4,7 +4,7 @@ export default Service.extend({
 
   ajax: service(),
 
-  router: service('-routing'),
+  router: service(),
 
   async initialize() {
     let character;
@@ -15,7 +15,7 @@ export default Service.extend({
       }});
       character = response.character;
     } catch(e) {
-      this.get('router').transitionTo('welcome');
+      this.get('router').transitionTo('/');
     }
 
     if (character) {

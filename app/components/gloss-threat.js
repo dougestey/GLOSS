@@ -35,34 +35,17 @@ export default Component.extend({
     this.sendAction('selectFleet', { fleet, faction, shipType, otherShipCount });
   },
 
-  dominantShipType: computed('model.composition', 'model.characters', function() {
-    let composition = this.get('model.composition');
-    let characters = this.get('model.characters');
-    let counted = _.countBy(composition);
+  dominantShipType: computed('model.ships', function() {
+    let ships = this.get('model.ships');
+    let shipTotals = _.countBy(ships, 'id');
+    // results in { shipTypeId: 2, shipTypeId: 5 ... }
 
-    let count = parseInt(_.max(counted));
-    let min = parseInt(_.min(counted));
-    let name, shipId;
+    let count = _.max(shipTotals); // 5
+    let keysFromShipTotals = _.keys(shipTotals); // [ shipTypeId, shipTypeId... ]
+    let selector = parseInt(_.max(keysFromShipTotals, (s) => shipTotals[s])); // reference shipTotals to get the relevant key
+    let { id, name } = ships.findBy(selector, 'id');
 
-    if (count === min) {
-      let character = _.last(_.sortBy(characters, 'dangerRatio'));
-      shipId = composition[character.characterId];
-      name = character.ship.name;
-    } else {
-      let shipId = parseInt(_.max(_.keys(counted), (o) => counted[o]));
-      let characterId = parseInt(_.findKey(composition, function(typeId) {
-        return typeId === shipId;
-      }));
-      let character = _.findWhere(characters, { 'characterId': characterId });
-
-      if (!character || !character.ship || !character.ship.name) {
-        name = 'Unknown';
-      } else {
-        name = character.ship.name;
-      }
-    }
-
-    return { id: shipId, count, name };
+    return { id, name, count };
   }),
 
   dominantFaction: computed('model.characters', function() {

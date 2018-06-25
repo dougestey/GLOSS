@@ -114,13 +114,20 @@ a:hover {
   }
 
   &.modal {
-    top: 20% !important;
-    max-height: 75vh !important;
+    max-height: 90vh !important;
     overflow-y: auto !important;
     z-index: 1001 !important;
     position: fixed !important;
     border-radius: 0 !important;
     border: 2px rgba($secondary, 0.4) solid !important;
+
+    @media only screen and (min-width: 1920px) {
+      margin-top: -350px !important;
+    }
+
+    @media only screen and (min-width: 992px) {
+      margin-top: -250px !important;
+    }
 
     > .header,
     > .content,

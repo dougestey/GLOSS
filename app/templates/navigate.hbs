@@ -51,7 +51,7 @@
         </thead>
 
         <tbody>
-          {{#each (sort-by 'ship.name DESC' selectedFleet.characters) as |character|}}
+          {{#each (sort-by 'ship.name:DESC' selectedFleet.characters) as |character|}}
             <tr class="Gloss-report--character">
               <td>{{#if (eq character.dangerRatio 0)}}N/A{{else}}{{character.dangerRatio}}%{{/if}}</td>
               <td><a href="{{zkill-character character}}" target="_blank">{{character.name}}</a></td>
@@ -94,6 +94,7 @@
 <div class="Gloss">
   {{gloss-stats
     stats=stats
+    context=context
     loadUiElements=loadUiElements
     isConnected=isConnected
     }}
@@ -129,7 +130,7 @@
           Kills
 
           <span class="Gloss-button--detail">
-            {{unless (eq context 'tracker') kills.length 'N/A'}}
+            {{kills.length}}
           </span>
         </a>
       </div>

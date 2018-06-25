@@ -5,7 +5,7 @@ export default Route.extend({
 
   actions: {
     error() {
-      this.transitionTo('welcome');
+      this.transitionTo('/');
     }
   }
 

@@ -38,7 +38,7 @@
       {{#if (and (eq dominantShipType.count 1) (not otherShipCount))}}
         Solo <strong>{{dominantShipType.name}}</strong> pilot
       {{else}}
-        {{dominantShipType.count}} <strong>{{dominantShipType.name}}{{unless (eq dominantShipType.count 1) 's'}}</strong> {{#if otherShipCount}} and {{otherShipCount}} other{{unless (eq otherShipCount.count 1) 's'}} {{/if}}
+        {{dominantShipType.count}} <strong>{{dominantShipType.name}}{{unless (eq dominantShipType.count 1) 's'}}</strong> {{#if otherShipCount}} and {{otherShipCount}} other{{unless (eq otherShipCount 1) 's'}} {{/if}}
       {{/if}}
     </p>
 

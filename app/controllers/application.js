@@ -2,6 +2,7 @@ import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import { reads } from '@ember/object/computed';
 import { later } from '@ember/runloop';
+import { environment } from 'gloss/config/environment';
 
 export default Controller.extend({
 
@@ -20,6 +21,8 @@ export default Controller.extend({
   stopAnimating: reads('message.stopAnimating'),
 
   shouldNotOverlay: reads('message.shouldNotOverlay'),
+
+  environment,
 
   title: 'Gloss',
 

@@ -9,28 +9,28 @@
     }}
 
   {{gloss-shard
-    label="Jumps"
+    label=(if (not-eq context 'tracker') "Jumps")
     value=stats.shipJumps
     loaded=loadUiElements
     loadOrder=2
     }}
 
   {{gloss-shard
-    label="NPC"
+    label=(if (not-eq context 'tracker') "NPC")
     value=stats.npcKills
     loaded=loadUiElements
     loadOrder=3
     }}
 
   {{gloss-shard
-    label="Ships"
+    label=(if (not-eq context 'tracker') "Ships")
     value=stats.shipKills
     loaded=loadUiElements
     loadOrder=4
     }}
 
   {{gloss-shard
-    label="Capsules"
+    label=(if (not-eq context 'tracker') "Capsules")
     value=stats.podKills
     loaded=loadUiElements
     loadOrder=5
@@ -45,8 +45,8 @@
       }}
   {{else}}
     {{gloss-shard
-      label="Refresh"
-      value="?"
+      label=(if (not-eq context 'tracker') "Refresh")
+      value=(if (not-eq context 'tracker') "?")
       loaded=loadUiElements
       loadOrder=6
       }}
