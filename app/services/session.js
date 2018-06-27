@@ -1,10 +1,13 @@
 import Service, { inject as service } from '@ember/service';
+import ENV from 'gloss/config/environment';
 
 export default Service.extend({
 
   ajax: service(),
 
   router: service(),
+
+  raven: service(),
 
   async initialize() {
     let character;
@@ -20,6 +23,7 @@ export default Service.extend({
 
     if (character) {
       this.set('character', character);
+      this.get('raven').callRaven('setUserContext', { id: character.id, name: character.name, version: ENV.APP.version });
     } else {
       this.get('router').transitionTo('welcome');
     }

@@ -1,6 +1,3 @@
-// .liquid-container {
-//   z-index: 1;
-// }
 $body-bg-color:#001 !default;
 $teal: $secondary;
 $inverted-label: $primary;
@@ -71,6 +68,19 @@ a:hover {
         > .meta {
           color: $secondary !important;
           margin-bottom: 1rem;
+
+          > span {
+            margin-right: .3em !important;
+
+            .odometer.odometer-auto-theme,
+            .odometer.odometer-theme-default {
+              font-family: 'Titillium Web', sans-serif !important;
+
+              .odometer-digit-spacer {
+                margin-right: 0 !important;
+              }
+            }
+          }
         }
 
         > .description {
@@ -110,58 +120,6 @@ a:hover {
 
     &:after {
       border-top-color: $primary !important;
-    }
-  }
-
-  &.modal {
-    max-height: 90vh !important;
-    overflow-y: auto !important;
-    z-index: 1001 !important;
-    position: fixed !important;
-    border-radius: 0 !important;
-    border: 2px rgba($secondary, 0.4) solid !important;
-
-    @media only screen and (min-width: 1920px) {
-      margin-top: -350px !important;
-    }
-
-    @media only screen and (min-width: 992px) {
-      margin-top: -250px !important;
-    }
-
-    > .header,
-    > .content,
-    > .actions {
-      background: darken($secondary, 35) !important;
-      color: $primary !important;
-      font-weight: 400 !important;
-
-      > span.type {
-        color: $secondary !important;
-      }
-    }
-
-    > .image.content {
-      padding: 1rem 1.5rem;
-
-      > .description {
-        span {
-          margin-right: 0.5rem;
-        }
-
-        p {
-          margin-top: 1rem;
-        }
-      }
-    }
-
-    > .actions {
-      margin: 0 !important;
-      padding: 1rem !important;
-
-      > .column {
-        padding: 0 !important;
-      }
     }
   }
 }

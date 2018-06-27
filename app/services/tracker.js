@@ -6,7 +6,7 @@ export default Service.extend({
 
   intel: service(),
 
-  fleets: storageFor('tracked-fleets'),
+  fleets: storageFor('tracked-fleets-01'),
 
   kills: computed('fleets.[]', function() {
     let fleets = this.get('fleets').toArray();

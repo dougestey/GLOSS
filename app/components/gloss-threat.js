@@ -35,15 +35,16 @@ export default Component.extend({
     this.sendAction('selectFleet', { fleet, faction, shipType, otherShipCount });
   },
 
-  dominantShipType: computed('model.ships', function() {
+  dominantShipType: computed('model.ships', 'model.composition', function() {
     let ships = this.get('model.ships');
-    let shipTotals = _.countBy(ships, 'id');
+    let composition = this.get('model.composition');
+    let shipTotals = _.countBy(composition);
     // results in { shipTypeId: 2, shipTypeId: 5 ... }
 
     let count = _.max(shipTotals); // 5
     let keysFromShipTotals = _.keys(shipTotals); // [ shipTypeId, shipTypeId... ]
     let selector = parseInt(_.max(keysFromShipTotals, (s) => shipTotals[s])); // reference shipTotals to get the relevant key
-    let { id, name } = ships.findBy(selector, 'id');
+    let { id, name } = ships.findBy('id', selector);
 
     return { id, name, count };
   }),
@@ -63,8 +64,8 @@ export default Component.extend({
     let corpHash = _.countBy(corps, 'corporationId'),
         allHash = _.countBy(alls, 'allianceId');
 
-    let corpMaxKey = _.max(Object.keys(corpHash), (o) => corpHash[o]),
-        allMaxKey = _.max(Object.keys(allHash), (o) => allHash[o]);
+    let corpMaxKey = _.max(_.keys(corpHash), (o) => corpHash[o]),
+        allMaxKey = _.max(_.keys(allHash), (o) => allHash[o]);
 
     let corpMax = corpHash[corpMaxKey],
         allMax = allHash[allMaxKey];
@@ -97,8 +98,14 @@ export default Component.extend({
     let origin = this.get('system');
     let destination = this.get('model.system.systemId');
     let route = yield this.get('navigation').calculateRoute(origin, destination);
+    let jumpsAway = route.length - 1;
 
-    this.set('jumpsAway', route.length);
+    if (jumpsAway === 0)
+      jumpsAway = 'In-system';
+    else
+      jumpsAway = `${jumpsAway} jumps away`;
+
+    this.set('jumpsAway', jumpsAway);
   }).drop(),
 
 });

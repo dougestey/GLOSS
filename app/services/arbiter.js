@@ -61,8 +61,8 @@ export default Service.extend({
 
     later(() => {
       this.get('message').dispatch(
-        'Connection lost',
-        `Arbiter cannot be reached`
+        'Arbiter connection lost',
+        `Please wait a minute, then refresh GLOSS`
       );
     }, 1000);
 

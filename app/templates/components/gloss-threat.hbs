@@ -43,7 +43,7 @@
     </p>
 
     <p title="Jumps from your location">
-      <strong>{{model.system.name}}</strong> {{#if calculateRoute.isRunning}}Calculating...{{else}}{{jumpsAway}} jumps away{{/if}}
+      <strong>{{model.system.name}}</strong> {{#if calculateRoute.isRunning}}Calculating...{{else}}{{jumpsAway}}{{/if}}
     </p>
 
     <small title="Last seen">{{moment-from-now model.lastSeen interval=1000}}</small>

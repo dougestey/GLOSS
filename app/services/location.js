@@ -38,24 +38,24 @@ export default Service.extend({
 
     if (previousSystemId && previousSystemId !== data.system.id) {
       // System jump has occurred
-      this.set('intel.fleets.system', []);
-      this.set('intel.kills.system', []);
+      this.get('intel.fleets.system').clear();
+      this.get('intel.kills.system').clear();
       socket.get(`/api/systems/${previousSystemId}/untrack`, () => {
         socket.get(`/api/systems/${data.system.id}`, bind(this, this.updateSystem));
       });
 
       if (previousConstellationId && previousConstellationId !== data.system.constellation) {
         // Constellation jump has occurred
-        this.set('intel.fleets.constellation', []);
-        this.set('intel.kills.constellation', []);
+        this.get('intel.fleets.constellation').clear();
+        this.get('intel.kills.constellation').clear();
         socket.get(`/api/constellations/${previousConstellationId}/untrack`, () => {
           socket.get(`/api/constellations/${data.system.constellation}`, bind(this, this.updateConstellation));
         });
 
         if (previousRegionId && previousRegionId !== data.system.region) {
           // Region jump has occurred
-          this.set('intel.fleets.region', []);
-          this.set('intel.kills.region', []);
+          this.get('intel.fleets.region').clear();
+          this.get('intel.kills.region').clear();
           socket.get(`/api/regions/${previousRegionId}/untrack`, () => {
             socket.get(`/api/regions/${data.system.region}`, bind(this, this.updateRegion));
           });

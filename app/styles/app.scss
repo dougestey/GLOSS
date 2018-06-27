@@ -17,6 +17,25 @@ body {
 
 p {
   color: $secondary;
+
+  small {
+    color: $secondary;
+  }
+
+  &.copy {
+    white-space: pre-line;
+  }
+}
+
+p,
+span {
+  &.primary {
+    color: $primary !important;
+  }
+
+  &.secondary {
+    color: $secondary !important;
+  }
 }
 
 ul {
@@ -265,6 +284,54 @@ strong {
 
     &:focus {
       color: $primary;
+    }
+  }
+}
+
+body.ember-application > .ember-view > .liquid-container > .liquid-child {
+  > .ui.modal.about,
+  > .ui.modal.threat {
+    margin-top: -350px !important;
+    max-height: 70vh !important;
+    overflow-y: auto !important;
+    z-index: 1001 !important;
+    position: fixed !important;
+    border-radius: 0 !important;
+    border: 2px rgba($secondary, 0.4) solid !important;
+
+    @media screen and (max-width: 1024px) and (max-height: 768px) {
+      margin-top: -300px !important;
+    }
+
+    > .header,
+    > .content,
+    > .actions {
+      background: darken($secondary, 35) !important;
+      color: $primary !important;
+      font-weight: 400 !important;
+    }
+
+    > .image.content {
+      padding: 1rem 1.5rem;
+
+      > .description {
+        span {
+          margin-right: 0.5rem;
+        }
+
+        p {
+          margin-top: 1rem;
+        }
+      }
+    }
+
+    > .actions {
+      margin: 0 !important;
+      padding: 1rem !important;
+
+      > .column {
+        padding: 0 !important;
+      }
     }
   }
 }

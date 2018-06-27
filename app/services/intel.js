@@ -42,26 +42,26 @@ export default Service.extend({
   /* Socket.IO handlers */
 
   receiveKill(kill) {
-    let system = this.get('location.system');
-    let constellation = this.get('location.constellation');
-    let region = this.get('location.region');
+    let system = this.get('location.system.id');
+    let constellation = this.get('location.constellation.systems');
+    let region = this.get('location.region.systems');
 
     // System
-    if (kill.system.systemId === system.id) {
+    if (kill.system.systemId === system) {
       let kills = this.get('kills.system');
 
       kills.pushObject(kill);
     }
 
     // Constellation
-    if (constellation.systems.findBy('id', kill.system.systemId)) {
+    if (constellation.findBy('id', kill.system.systemId)) {
       let kills = this.get('kills.constellation');
 
       kills.pushObject(kill);
     }
 
     // Region
-    if (region.systems.findBy('id', kill.system.systemId)) {
+    if (region.findBy('id', kill.system.systemId)) {
       let kills = this.get('kills.region');
 
       kills.pushObject(kill);
@@ -70,13 +70,24 @@ export default Service.extend({
 
   receiveFleet(fleet) {
     let system = this.get('location.system');
-    let constellation = this.get('location.constellation');
-    let region = this.get('location.region');
+    let constellationName = this.get('location.constellation.name');
+    let constellationSystems = this.get('location.constellation.systems');
+    let regionName = this.get('location.region.name');
+    let regionSystems = this.get('location.region.systems');
 
     // Let tracker decide if it needs this data.
     this.get('tracker').evaluate(fleet);
 
     let notified = false;
+
+    // Sentinel has different jobs that occasionally overlap.
+    //
+    // In some cases it's possible for a fleet's threat level to be calculated, updated and sent
+    // (which triggers this method) immediately after a destroyFleet() has been triggered -
+    // which would re-add the fleet to the display incorrectly.
+    if (!fleet.isActive) {
+      return;
+    }
 
     // System
     if (fleet.system.systemId === system.id) {
@@ -99,7 +110,7 @@ export default Service.extend({
     }
 
     // Constellation
-    if (constellation.systems.findBy('id', fleet.system.systemId)) {
+    if (constellationSystems.findBy('id', fleet.system.systemId)) {
       let constellationFleets = this.get('fleets.constellation');
       let existingConstellationFleet = constellationFleets.findBy('id', fleet.id);
 
@@ -111,7 +122,8 @@ export default Service.extend({
           // New fleet
           let suffix = fleet.characters.length > 1 ? 's' : '';
           let charSuffix = fleet.kills.length > 1 ? 's' : '';
-          this.get('message').dispatch(`New threat in ${constellation.name}`, `${fleet.characters.length} pilot${suffix} with ${fleet.kills.length} kill${charSuffix}`, 5);
+
+          this.get('message').dispatch(`New threat in ${constellationName}`, `${fleet.characters.length} pilot${suffix} with ${fleet.kills.length} kill${charSuffix}`, 5);
           notified = true;
         }
       }
@@ -120,7 +132,7 @@ export default Service.extend({
     }
 
     // Region
-    if (region.systems.findBy('id', fleet.system.systemId)) {
+    if (regionSystems.findBy('id', fleet.system.systemId)) {
       let regionFleets = this.get('fleets.region');
       let existingRegionFleet = regionFleets.findBy('id', fleet.id);
 
@@ -132,7 +144,8 @@ export default Service.extend({
           // New fleet
           let suffix = fleet.characters.length > 1 ? 's' : '';
           let charSuffix = fleet.kills.length > 1 ? 's' : '';
-          this.get('message').dispatch(`New threat in ${region.name}`, `${fleet.characters.length} pilot${suffix} with ${fleet.kills.length} kill${charSuffix}`, 5);
+
+          this.get('message').dispatch(`New threat in ${regionName}`, `${fleet.characters.length} pilot${suffix} with ${fleet.kills.length} kill${charSuffix}`, 5);
         }
       }
 
