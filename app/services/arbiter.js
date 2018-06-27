@@ -1,4 +1,5 @@
 /* global io */
+import ENV from 'gloss/config/environment';
 import Service, { inject as service } from '@ember/service';
 import { bind, later } from '@ember/runloop';
 import { reads } from '@ember/object/computed';
@@ -9,19 +10,23 @@ export default Service.extend({
 
   location: service(),
 
-  notifications: service(),
+  intel: service(),
 
   session: service(),
 
   character: reads('session.character'),
+
+  arbiterUrl: ENV.ARBITER_URL,
 
   connected: false,
 
   firstConnect: true,
 
   connect() {
-    let connection = io.sails.connect();
+    let arbiterUrl = this.get('arbiterUrl');
+    io.sails.url = arbiterUrl;
 
+    let connection = io.sails.connect();
     connection.reconnection = true;
 
     connection.on('connect', bind(this, this._handleConnect));
@@ -45,8 +50,8 @@ export default Service.extend({
       let character = this.get('character');
 
       if (character) {
-        this.get('location').start(character.characterId);
-        this.get('notifications').enable();
+        this.get('location').start(character.id);
+        this.get('intel').enable();
       }
     }
   },
@@ -56,8 +61,8 @@ export default Service.extend({
 
     later(() => {
       this.get('message').dispatch(
-        'Connection lost',
-        `Arbiter cannot be reached`
+        'Arbiter connection lost',
+        `Please wait a minute, then refresh GLOSS`
       );
     }, 1000);
 

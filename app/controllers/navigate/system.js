@@ -1,22 +1,18 @@
 import Controller, { inject as controller } from '@ember/controller';
-import { reads, filterBy } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
+import { reads } from '@ember/object/computed';
 
 export default Controller.extend({
 
   navigate: controller(),
 
-  tracker: service(),
+  intel: service(),
 
   location: service(),
 
   system: reads('location.system.id'),
 
-  fleets: reads('tracker.fleets.[]'),
-
-  activeFleets: filterBy('fleets', 'isActive', true),
-
-  inactiveFleets: filterBy('fleets', 'isActive', false),
+  fleets: reads('intel.fleets.system.[]'),
 
   actions: {
     selectFleet(fleet) {

@@ -1,20 +1,32 @@
 import Service, { inject as service } from '@ember/service';
 import { storageFor } from 'ember-local-storage';
+import { computed } from '@ember/object';
 
 export default Service.extend({
 
-  notifications: service(),
+  intel: service(),
 
-  fleets: storageFor('tracked-fleets'),
+  fleets: storageFor('tracked-fleets-01'),
+
+  kills: computed('fleets.[]', function() {
+    let fleets = this.get('fleets').toArray();
+    let kills = [];
+
+    for (let fleet of fleets) {
+      kills = kills.concat(fleet.kills);
+    }
+
+    return kills;
+  }),
 
   add(fleet) {
     this.get('fleets').addObject(fleet);
-    this.get('notifications').subscribeFleet(fleet.id);
+    this.get('intel').subscribeFleet(fleet.id);
   },
 
   remove(fleet) {
     this.get('fleets').removeObject(fleet);
-    this.get('notifications').unsubscribeFleet(fleet.id);
+    this.get('intel').unsubscribeFleet(fleet.id);
   },
 
   evaluate(fleet) {

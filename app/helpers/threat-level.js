@@ -4,7 +4,7 @@ export function threatLevel(params/*, hash*/) {
   let dangerRatio = params[0];
 
   if (dangerRatio === 0) {
-    return 'unknown';
+    return 'n/a';
   }
 
   if (dangerRatio < 50) {
@@ -12,7 +12,7 @@ export function threatLevel(params/*, hash*/) {
   }
 
   if (dangerRatio < 69) {
-    return 'moderate';
+    return 'medium';
   } else {
     return 'high';
   }

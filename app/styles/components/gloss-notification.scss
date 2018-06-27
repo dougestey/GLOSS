@@ -5,7 +5,6 @@
 
   .Gloss-stream {
     position: relative;
-    // width: 100%;
     max-width: 300px;
     overflow-x: hidden !important;
 
@@ -71,8 +70,19 @@
     }
   }
 
+  .icon {
+    margin-left: 0.05rem;
+    color: $secondary;
+    opacity: 0;
+    transition: 175ms opacity linear;
+  }
+
   &:hover {
     background: linear-gradient(transparent, rgba($secondary, 0.1), rgba($secondary, 0.2));
+
+    .icon {
+      opacity: 1;
+    }
   }
 
   @media screen and (max-width: 1024px) {

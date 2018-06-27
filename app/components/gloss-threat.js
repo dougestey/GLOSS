@@ -1,20 +1,30 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
-import { storageFor } from 'ember-local-storage';
+import { inject as service } from '@ember/service';
+import { task } from 'ember-concurrency';
+
 import _ from 'npm:lodash';
 
 export default Component.extend({
 
-  trackedFleets: storageFor('tracked-fleets'),
+  navigation: service(),
+
+  location: service(),
+
+  tracker: service(),
 
   classNames: [
-    // 'Gloss-notification',
-    // 'Gloss-threat'
     'card',
     'ui',
     'raised'
   ],
+
+  didReceiveAttrs() {
+    this._super(...arguments);
+
+    this.get('calculateRoute').perform();
+  },
 
   click() {
     let fleet = this.get('model'),
@@ -22,28 +32,21 @@ export default Component.extend({
         shipType = this.get('dominantShipType'),
         otherShipCount = this.get('otherShipCount');
 
-    this.sendAction('selectThreat', { fleet, faction, shipType, otherShipCount });
+    this.sendAction('selectFleet', { fleet, faction, shipType, otherShipCount });
   },
 
-  isTracked: computed('model.id', function() {
-    return this.get('trackedFleets').includes(this.get('model.id'));
-  }),
-
-  dominantShipType: computed('model.composition', 'model.characters', function() {
+  dominantShipType: computed('model.ships', 'model.composition', function() {
+    let ships = this.get('model.ships');
     let composition = this.get('model.composition');
-    let characters = this.get('model.characters');
-    let counted = _.countBy(composition);
+    let shipTotals = _.countBy(composition);
+    // results in { shipTypeId: 2, shipTypeId: 5 ... }
 
-    let id = parseInt(_.max(_.keys(counted), (o) => counted[o]));
-    let count = parseInt(_.max(counted));
+    let count = _.max(shipTotals); // 5
+    let keysFromShipTotals = _.keys(shipTotals); // [ shipTypeId, shipTypeId... ]
+    let selector = parseInt(_.max(keysFromShipTotals, (s) => shipTotals[s])); // reference shipTotals to get the relevant key
+    let { id, name } = ships.findBy('id', selector);
 
-    let characterId = parseInt(_.findKey(composition, function(i) {
-      return i === id;
-    }));
-    let character = _.findWhere(characters, { 'characterId': parseInt(characterId) });
-    let { name } = character.ship;
-
-    return { id, count, name };
+    return { id, name, count };
   }),
 
   dominantFaction: computed('model.characters', function() {
@@ -61,8 +64,8 @@ export default Component.extend({
     let corpHash = _.countBy(corps, 'corporationId'),
         allHash = _.countBy(alls, 'allianceId');
 
-    let corpMaxKey = _.max(Object.keys(corpHash), (o) => corpHash[o]),
-        allMaxKey = _.max(Object.keys(allHash), (o) => allHash[o]);
+    let corpMaxKey = _.max(_.keys(corpHash), (o) => corpHash[o]),
+        allMaxKey = _.max(_.keys(allHash), (o) => allHash[o]);
 
     let corpMax = corpHash[corpMaxKey],
         allMax = allHash[allMaxKey];
@@ -85,22 +88,24 @@ export default Component.extend({
     return totalPilots - dominantShipType.count;
   }),
 
-  threatImageUrl: computed('dominantFaction', function() {
-    let faction = this.get('dominantFaction');
-
-    return `https://imageserver.eveonline.com/${faction.type}/${faction.id}_128.png`;
-  }),
-
   backgroundImage: computed('dominantShipType', function() {
     let { id } = this.get('dominantShipType');
 
     return htmlSafe(`background-image: url(https://imageserver.eveonline.com/Render/${id}_512.png) !important;`);
   }),
 
-  actions: {
-    track(id) {
-      this.get('trackedFleets').addObject(id);
-    }
-  }
+  calculateRoute: task(function * () {
+    let origin = this.get('system');
+    let destination = this.get('model.system.systemId');
+    let route = yield this.get('navigation').calculateRoute(origin, destination);
+    let jumpsAway = route.length - 1;
+
+    if (jumpsAway === 0)
+      jumpsAway = 'In-system';
+    else
+      jumpsAway = `${jumpsAway} jumps away`;
+
+    this.set('jumpsAway', jumpsAway);
+  }).drop(),
 
 });

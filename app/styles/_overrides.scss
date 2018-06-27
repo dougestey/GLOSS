@@ -1,6 +1,3 @@
-// .liquid-container {
-//   z-index: 1;
-// }
 $body-bg-color:#001 !default;
 $teal: $secondary;
 $inverted-label: $primary;
@@ -20,21 +17,26 @@ a:hover {
   background: transparent !important;
 
   &.cards {
+    > .title {
+      width: 100%;
+      margin: 1.5rem 0.6rem 0.5rem;
+    }
+
     > .card {
       padding-top: 0.5rem !important;
       padding-bottom: 0.5rem !important;
       margin-top: 0.25rem !important;
       background: transparent !important;
       box-shadow: none !important;
-      // overflow: hidden;
+      overflow: hidden;
 
       &:hover {
         transform: none !important;
         text-rendering: optimizeLegibility;
 
         > .background {
-          // transform: scale3d(1.1, 1.1, 1.1) !important;
-          opacity: 0.35;
+          transform: scale3d(1.05, 1.05, 1.05) !important;
+          opacity: 0.3;
         }
       }
 
@@ -47,7 +49,7 @@ a:hover {
         background-size: 140% !important;
         background-position-x: 0;
         background-repeat: no-repeat;
-        transition: opacity 175ms linear;
+        transition: opacity 175ms linear, transform 175ms linear;
       }
 
       > .image {
@@ -66,6 +68,19 @@ a:hover {
         > .meta {
           color: $secondary !important;
           margin-bottom: 1rem;
+
+          > span {
+            margin-right: .3em !important;
+
+            .odometer.odometer-auto-theme,
+            .odometer.odometer-theme-default {
+              font-family: 'Titillium Web', sans-serif !important;
+
+              .odometer-digit-spacer {
+                margin-right: 0 !important;
+              }
+            }
+          }
         }
 
         > .description {
@@ -105,33 +120,6 @@ a:hover {
 
     &:after {
       border-top-color: $primary !important;
-    }
-  }
-
-  &.modal {
-    top: 2rem !important;
-    max-height: 70vh !important;
-    overflow-y: auto !important;
-    z-index: 1001 !important;
-    position: fixed !important;
-    border-radius: 0 !important;
-    border: 2px rgba($secondary, 0.4) solid !important;
-
-    > .header,
-    > .content,
-    > .actions {
-      background: darken($secondary, 35) !important;
-      color: $primary !important;
-      font-weight: 400 !important;
-    }
-
-    > .actions {
-      margin: 0 !important;
-      padding: 1rem !important;
-
-      > .column {
-        padding: 0 !important;
-      }
     }
   }
 }

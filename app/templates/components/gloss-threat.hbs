@@ -1,7 +1,9 @@
 <div class="background" style={{backgroundImage}}></div>
 
 <div class="image">
-  <img src={{threatImageUrl}}>
+  {{#if dominantFaction}}
+    <img src={{threat-image-url dominantFaction}}>
+  {{/if}}
 </div>
 
 <div class="content">
@@ -11,25 +13,40 @@
 
   <div class="meta">
     <span title="Pilots">
-      <i class="user icon"></i>
+      <i class="rocket icon"></i>
       {{model.characters.length}}
     </span>
 
     <span title="Kills">
-      <i class="space shuttle icon" title="Kills"></i>
+      <i class="fire icon" title="Kills"></i>
       {{model.kills.length}}
     </span>
 
     <span title="Threat Level">
-      <i class="exclamation triangle icon"></i>
+      <i class="exclamation circle icon"></i>
       {{threat-level model.dangerRatio}}
+    </span>
+
+    <span title="Status">
+      <i class="{{if model.isActive 'play' 'stop'}} icon"></i>
+      {{if model.isActive 'Active' 'Expired'}}
     </span>
   </div>
 
   <div class="description">
-    <p>{{dominantShipType.count}} {{dominantShipType.name}} {{#if otherShipCount}} + {{otherShipCount}} others {{/if}}</p>
+    <p>
+      {{#if (and (eq dominantShipType.count 1) (not otherShipCount))}}
+        Solo <strong>{{dominantShipType.name}}</strong> pilot
+      {{else}}
+        {{dominantShipType.count}} <strong>{{dominantShipType.name}}{{unless (eq dominantShipType.count 1) 's'}}</strong> {{#if otherShipCount}} and {{otherShipCount}} other{{unless (eq otherShipCount 1) 's'}} {{/if}}
+      {{/if}}
+    </p>
 
-    <small>{{moment-from-now model.lastSeen interval=1000}}</small>
+    <p title="Jumps from your location">
+      <strong>{{model.system.name}}</strong> {{#if calculateRoute.isRunning}}Calculating...{{else}}{{jumpsAway}}{{/if}}
+    </p>
+
+    <small title="Last seen">{{moment-from-now model.lastSeen interval=1000}}</small>
   </div>
 
 </div>

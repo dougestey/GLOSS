@@ -1,6 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('service:notifications', 'Unit | Service | notifications', {
+moduleFor('service:navigation', 'Unit | Service | navigation', {
   // Specify the other units that are required for this test.
   // needs: ['service:foo']
 });

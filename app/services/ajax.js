@@ -1,5 +1,7 @@
 import AjaxService from 'ember-ajax/services/ajax';
+import ENV from 'gloss/config/environment';
 
 export default AjaxService.extend({
-  namespace: '/api'
+  host: ENV.ARBITER_URL,
+  namespace: '/api',
 });

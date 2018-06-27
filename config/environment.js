@@ -25,6 +25,10 @@ module.exports = function(environment) {
       import: {
         css: false
       }
+    },
+
+    moment: {
+      allowEmpty: true
     }
 
   };
@@ -35,7 +39,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
-    ENV.ARBITER_URL = 'http://gloss/api';
+    ENV.ARBITER_URL = 'http://arbiter.gloss.development';
   }
 
   if (environment === 'test') {
@@ -50,8 +54,10 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    // here you can enable a production-specific feature
-    ENV.ARBITER_URL = 'http://gloss.space/api';
+    ENV.ARBITER_URL = 'https://arbiter.gloss.space';
+    ENV.sentry = {
+      dsn: 'https://38965402c5b14f64ab7f2d4febe0c48a@app.getsentry.com/1232945'
+    };
   }
 
   return ENV;

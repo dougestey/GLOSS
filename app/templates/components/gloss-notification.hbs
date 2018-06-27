@@ -3,13 +3,14 @@
     <img src={{shipImageUrl}} class="Gloss-notification--image" />
 
     <span>
-      <strong>{{model.victim.name}}</strong>
+      <strong>{{model.victim.name}} <i class="external icon" title="View on zKill"></i></strong>
       <br>
       <span class="Gloss-notification--subjectContext">
         {{model.ship.name}}
       </span>
       <span class="Gloss-notification--time">
         <span>{{moment-from-now model.time interval=1000 hideSuffix=true}}</span>
+        {{#if (not-eq context 'system')}}<span>/ {{model.system.name}}</span>{{/if}}
         <span>/ {{model.positionName}}</span>
       </span>
     </span>

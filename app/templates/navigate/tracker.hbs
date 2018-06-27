@@ -1,79 +1,30 @@
-{{#ui-modal name="threat" class="threat inverted" onApprove=(action 'untrackThreat' this)}}
-  <div class="header">
-    {{selectedFaction.name}}
-  </div>
-  <div class="image content">
-    <div class="ui small image">
-      <img src={{threatImageUrl}} />
-    </div>
-    <div class="description">
-      <p>{{selectedFleet.characters.length}} pilots with {{selectedFleet.kills.length}} kills</p>
+<div class="ui link cards">
+  {{#each (sort-by 'lastSeen:desc' activeFleets) as |fleet index|}}
+    {{#if (eq index 0)}}<p class="title">Active</p>{{/if}}
 
-      <p>{{selectedShipType.count}} {{selectedShipType.name}} {{#if selectedShipCount}} + {{selectedShipCount}} others {{/if}}</p>
-
-      <p>Last kill occurred {{moment-from-now selectedFleet.lastSeen}}</p>
-    </div>
-  </div>
-
-  <div class="content">
-    <div class="description">
-      <table class="ui celled table inverted" cellpadding="10">
-        <thead>
-          <th>Threat</th>
-          <th>Pilot</th>
-          <th>Ship</th>
-          <th>Corporation</th>
-          <th>Alliance</th>
-        </thead>
-
-        <tbody>
-          {{#each (sort-by 'dangerRatio:desc' selectedFleet.characters) as |character|}}
-            <tr class="Gloss-report--character">
-              <td>{{#if (eq character.dangerRatio 0)}}N/A{{else}}{{character.dangerRatio}}%{{/if}}</td>
-              <td><a href="{{zkill-character character}}" target="_blank">{{character.name}}</a></td>
-              <td class="Gloss-report--ship">
-                {{#if character.ship}}
-                  <img src="https://imageserver.eveonline.com/Type/{{character.ship.id}}_32.png" />
-                {{/if}}
-                {{character.ship.name}}
-              </td>
-              <td>{{character.corporation.name}}</td>
-              <td>{{if character.alliance character.alliance.name 'None'}}</td>
-            </tr>
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="actions ui grid">
-    <div class="two column row no-gutter">
-      <div class="column">
-        <div class="Gloss-button Gloss-button--frameless Gloss-button--small deny">
-          Close
-        </div>
-      </div>
-
-      <div class="column">
-        <div class="Gloss-button Gloss-button--frameless Gloss-button--small positive">
-          <i class="power off icon"></i>
-
-          Stop tracking
-        </div>
-      </div>
-    </div>
-  </div>
-{{/ui-modal}}
-
-<div class="ui link centered cards">
-  {{#each (sort-by 'lastSeen:desc' fleets) as |fleet|}}
     {{gloss-threat
       model=fleet
-      selectThreat=(action 'selectThreat')
+      system=system
+      selectFleet=(action 'selectFleet')
+      }}
+  {{/each}}
+
+  {{#each (sort-by 'lastSeen:desc' inactiveFleets) as |fleet index|}}
+    {{#if (eq index 0)}}<p class="title">Inactive</p>{{/if}}
+
+    {{gloss-threat
+      model=fleet
+      system=system
+      selectFleet=(action 'selectFleet')
       }}
   {{/each}}
 </div>
 
 {{#unless fleets.length}}
-  <p class="mt1 ml2">You aren't tracking any fleet movement.</p>
+  <p class="copy mt1 ml2">You aren't tracking any fleet movement.
+
+  To get started, select a fleet from one of the other panes and hit <span class="primary">Track Fleet</span>.
+
+    <small>Fleets are tracked through New Eden as they amass kills, and expire after 30 minutes of inactivity.</small>
+  </p>
 {{/unless}}

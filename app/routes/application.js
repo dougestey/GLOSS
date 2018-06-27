@@ -5,8 +5,7 @@ export default Route.extend({
 
   actions: {
     error() {
-      // TODO: i.e. if (error instanceof UnauthorizedError || error instanceof NotFoundError)
-      this.transitionTo('welcome');
+      this.transitionTo('/');
     }
   }
 

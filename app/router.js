@@ -10,9 +10,10 @@ Router.map(function() {
   this.route('welcome', { path: '/' });
   this.route('authorize');
   this.route('navigate', function() {
-    this.route('threats');
+    this.route('system');
+    this.route('constellation');
+    this.route('region');
     this.route('tracker');
-    this.route('search');
   });
 });
 
