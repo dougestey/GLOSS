@@ -14,6 +14,8 @@ export default Controller.extend({
 
   fleets: reads('tracker.fleets.[]'),
 
+  deadFleetCount: reads('tracker.deadFleetCount'),
+
   activeFleets: filterBy('fleets', 'isActive', true),
 
   inactiveFleets: filterBy('fleets', 'isActive', false),
@@ -25,6 +27,10 @@ export default Controller.extend({
 
     toggleTracking(fleet) {
       this.get('navigate').send('toggleTracking', fleet);
+    },
+
+    resetDeadFleetCount() {
+      this.get('tracker').set('deadFleetCount', 0);
     },
   }
 

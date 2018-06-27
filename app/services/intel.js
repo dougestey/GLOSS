@@ -191,8 +191,15 @@ export default Service.extend({
     let systemFleets = this.get('fleets.system');
     let systemKills = this.get('kills.system');
 
-    fleets.map((fleet) => systemFleets.pushObject(fleet));
-    kills.map((kill) => systemKills.pushObject(kill));
+    fleets.map((fleet) => {
+      if (!systemFleets.findBy('id', fleet.id))
+        systemFleets.pushObject(fleet);
+    });
+
+    kills.map((kill) => {
+      if (!systemKills.findBy('id', kill.id))
+        systemKills.pushObject(kill);
+    });
   },
 
   receiveConstellationIntel(data) {
@@ -200,8 +207,15 @@ export default Service.extend({
     let constellationFleets = this.get('fleets.constellation');
     let constellationKills = this.get('kills.constellation');
 
-    fleets.map((fleet) => constellationFleets.pushObject(fleet));
-    kills.map((kill) => constellationKills.pushObject(kill));    
+    fleets.map((fleet) => {
+      if (!constellationFleets.findBy('id', fleet.id))
+        constellationFleets.pushObject(fleet);
+    });
+
+    kills.map((kill) => {
+      if (!constellationKills.findBy('id', kill.id))
+        constellationKills.pushObject(kill);
+    });
   },
 
   receiveRegionIntel(data) {
@@ -209,8 +223,15 @@ export default Service.extend({
     let regionFleets = this.get('fleets.region');
     let regionKills = this.get('kills.region');
 
-    fleets.map((fleet) => regionFleets.pushObject(fleet));
-    kills.map((kill) => regionKills.pushObject(kill));
+    fleets.map((fleet) => {
+      if (!regionFleets.findBy('id', fleet.id))
+        regionFleets.pushObject(fleet);
+    });
+
+    kills.map((kill) => {
+      if (!regionKills.findBy('id', kill.id))
+        regionKills.pushObject(kill);
+    });
   },
 
   /* Methods */

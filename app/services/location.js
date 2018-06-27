@@ -82,6 +82,9 @@ export default Service.extend({
   updateCurrentSystem(system) {
     let currentSystem = this.get('system');
 
+    if (!currentSystem || !currentSystem.id)
+      return;
+
     if (currentSystem.id === system.id) {
       if (_isWormhole(system)) {
         system.stats.npcKills = '?';

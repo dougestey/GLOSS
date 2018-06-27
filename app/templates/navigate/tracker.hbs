@@ -20,11 +20,22 @@
   {{/each}}
 </div>
 
-{{#unless fleets.length}}
+{{#if deadFleetCount}}
+  {{#gloss-message-disposable action=(action 'resetDeadFleetCount')}}
+    <p class="copy mt2 ml1">{{deadFleetCount}} fleet(s) GLOSS was tracking for you have expired.
+
+      This occurrs due to lack of combat activity or because all pilots are now part of another fleet.
+
+      <small>If you find this confusing, or wish to suggest an improvement to how GLOSS handles tracking, <a href="https://github.com/dougestey/gloss/issues" target="_blank">open a ticket</a>.</small>
+    </p>
+  {{/gloss-message-disposable}}
+{{/if}}
+
+{{#if (and (not deadFleetCount) (not fleets.length))}}
   <p class="copy mt1 ml2">You aren't tracking any fleet movement.
 
   To get started, select a fleet from one of the other panes and hit <span class="primary">Track Fleet</span>.
 
     <small>Fleets are tracked through New Eden as they amass kills, and expire after 30 minutes of inactivity.</small>
   </p>
-{{/unless}}
+{{/if}}

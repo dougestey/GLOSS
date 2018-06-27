@@ -95,6 +95,9 @@ export default Controller.extend({
   killsRenderable: computed('kills', 'context', 'regionKills.[]', 'constellationKills.[]', 'systemKills.[]', function() {
     let kills = this.get('kills');
 
+    if (!kills)
+      return [];
+
     return kills.sortBy('time').reverse().slice(0, 200);
   }),
 

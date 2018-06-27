@@ -8,6 +8,8 @@ export default Service.extend({
 
   fleets: storageFor('tracked-fleets-01'),
 
+  deadFleetCount: 0,
+
   kills: computed('fleets.[]', function() {
     let fleets = this.get('fleets').toArray();
     let kills = [];
@@ -35,7 +37,14 @@ export default Service.extend({
 
     if (existingFleet) {
       fleets.removeObject(existingFleet);
-      fleets.addObject(fleet);
+
+      if (fleet.characters.length) {
+        fleets.addObject(fleet);
+      } else {
+        let count = this.get('deadFleetCount');
+
+        this.set('deadFleetCount', count + 1);
+      }
     }
   }
 

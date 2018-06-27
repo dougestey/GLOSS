@@ -38,14 +38,14 @@
 
   {{#if stats.createdAt}}
     {{gloss-shard
-      label="Refresh"
+      label="Stat Refresh"
       value=(sub 60 (moment-diff stats.createdAt now precision='minutes' interval='60000'))
       loaded=loadUiElements
       loadOrder=6
       }}
   {{else}}
     {{gloss-shard
-      label=(if (not-eq context 'tracker') "Refresh")
+      label=(if (not-eq context 'tracker') "Stat Refresh")
       value=(if (not-eq context 'tracker') "?")
       loaded=loadUiElements
       loadOrder=6
