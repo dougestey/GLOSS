@@ -80,7 +80,7 @@ export default Service.extend({
 
     let notified = false;
 
-    // Sentinel has different jobs that occasionally overlap.
+    // Sentinel has different job types that occasionally overlap.
     //
     // In some cases it's possible for a fleet's threat level to be calculated, updated and sent
     // (which triggers this method) immediately after a destroyFleet() has been triggered -

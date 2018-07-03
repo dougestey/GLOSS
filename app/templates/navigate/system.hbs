@@ -3,11 +3,12 @@
     {{gloss-threat
       model=fleet
       system=system
+      context='system'
       selectFleet=(action 'selectFleet')
       }}
   {{/each}}
-</div>
 
-{{#unless fleets.length}}
-  <p class="mt1 ml2">No recent activity reported in this system.</p>
-{{/unless}}
+  {{#unless fleets.length}}
+    <p class="mt2 ml1">No active fleets in this system.</p>
+  {{/unless}}
+</div>

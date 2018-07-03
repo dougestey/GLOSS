@@ -7,7 +7,9 @@ export default Component.extend({
     'Gloss-notification'
   ],
 
-  click() {
+  click(e) {
+    e.stopPropagation();
+
     let killId = this.get('model.killId');
 
     window.open(`https://zkillboard.com/kill/${killId}/`,'_blank');

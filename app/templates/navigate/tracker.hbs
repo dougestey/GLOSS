@@ -1,28 +1,6 @@
-<div class="ui link cards">
-  {{#each (sort-by 'lastSeen:desc' activeFleets) as |fleet index|}}
-    {{#if (eq index 0)}}<p class="title">Active</p>{{/if}}
-
-    {{gloss-threat
-      model=fleet
-      system=system
-      selectFleet=(action 'selectFleet')
-      }}
-  {{/each}}
-
-  {{#each (sort-by 'lastSeen:desc' inactiveFleets) as |fleet index|}}
-    {{#if (eq index 0)}}<p class="title">Inactive</p>{{/if}}
-
-    {{gloss-threat
-      model=fleet
-      system=system
-      selectFleet=(action 'selectFleet')
-      }}
-  {{/each}}
-</div>
-
 {{#if deadFleetCount}}
   {{#gloss-message-disposable action=(action 'resetDeadFleetCount')}}
-    <p class="copy mt2 ml1">{{deadFleetCount}} fleet(s) GLOSS was tracking for you have expired.
+    <p class="copy mt1 ml1">{{deadFleetCount}} fleet(s) GLOSS was tracking for you have expired.
 
       This occurrs due to lack of combat activity or because all pilots are now part of another fleet.
 
@@ -32,10 +10,30 @@
 {{/if}}
 
 {{#if (and (not deadFleetCount) (not fleets.length))}}
-  <p class="copy mt1 ml2">You aren't tracking any fleet movement.
+  <p class="copy mt1 ml1">You aren't tracking any fleet movement.
 
   To get started, select a fleet from one of the other panes and hit <span class="primary">Track Fleet</span>.
 
     <small>Fleets are tracked through New Eden as they amass kills, and expire after 30 minutes of inactivity.</small>
   </p>
 {{/if}}
+
+<div class="ui link cards">
+  {{#each (sort-by 'lastSeen:desc' activeFleets) as |fleet|}}
+    {{gloss-threat
+      model=fleet
+      system=system
+      context='tracker'
+      selectFleet=(action 'selectFleet')
+      }}
+  {{/each}}
+
+  {{#each (sort-by 'lastSeen:desc' inactiveFleets) as |fleet|}}
+    {{gloss-threat
+      model=fleet
+      system=system
+      context='tracker'
+      selectFleet=(action 'selectFleet')
+      }}
+  {{/each}}
+</div>

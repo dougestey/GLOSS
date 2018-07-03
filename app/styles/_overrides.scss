@@ -46,28 +46,41 @@ a:hover {
         position: absolute;
         z-index: -1;
         opacity: 0.15;
-        background-size: 140% !important;
-        background-position-x: 0;
+        background-size: cover !important;
+        background-position-x: 50%;
+        background-position-y: 50%;
         background-repeat: no-repeat;
         transition: opacity 175ms linear, transform 175ms linear;
       }
 
-      > .image {
-        padding-top: 1rem !important;
-        max-width: 128px;
-        margin: 0 auto;
-      }
-
       > .content {
+        padding-left: 0.5rem;
+        display: flex;
+        flex-direction: column;
+
         > .header {
           color: $primary !important;
           font-weight: 400 !important;
-          margin-bottom: 0.5rem;
+          font-size: 1.85rem !important;
+          display: flex !important;
+          height: 3rem !important;
+          justify-content: space-between;
+          white-space: nowrap;
+
+          > .image {
+            max-width: 128px;
+            margin: 0;
+
+            > img.rounded {
+              border-radius: 5rem;
+            }
+          }
         }
 
         > .meta {
           color: $secondary !important;
           margin-bottom: 1rem;
+          margin-top: 1rem;
 
           > span {
             margin-right: .3em !important;
@@ -85,6 +98,17 @@ a:hover {
 
         > .description {
           color: $secondary !important;
+          margin-bottom: 1rem;
+        }
+
+        > .kills {
+          margin-top: auto;
+          overflow-y: auto;
+          overflow-x: hidden;
+
+          > div:nth-child(2) {
+            margin-top: 0.5rem;
+          }
         }
       }
     }

@@ -1,14 +1,14 @@
 <div class="background" style={{backgroundImage}}></div>
 
-<div class="image">
-  {{#if dominantFaction}}
-    <img src={{threat-image-url dominantFaction}}>
-  {{/if}}
-</div>
-
 <div class="content">
   <div class="header">
-    {{dominantFaction.name}}
+    <span>{{dominantFaction.name}}</span>
+
+    <div class="image">
+      {{#if dominantFaction}}
+        <img src={{threat-image-url dominantFaction}} class="{{if (eq dominantFaction.type 'Character') 'rounded'}}">
+      {{/if}}
+    </div>
   </div>
 
   <div class="meta">
@@ -47,6 +47,15 @@
     </p>
 
     <small title="Last seen">{{moment-from-now model.lastSeen interval=1000}}</small>
+  </div>
+
+  <div class="kills">
+    {{#each model.kills as |kill|}}
+      {{gloss-notification
+        model=kill
+        context=context
+        }}
+    {{/each}}
   </div>
 
 </div>

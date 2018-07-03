@@ -8,6 +8,7 @@ export default Component.extend({
     openAboutDialog() {
       $('.ui.about.modal').modal('show');
       $('.ui.about.modal').modal('hide dimmer');
+      $('.ui.about.modal').scrollTop(0);
     }
   }
 });

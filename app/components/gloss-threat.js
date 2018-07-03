@@ -52,6 +52,13 @@ export default Component.extend({
   dominantFaction: computed('model.characters', function() {
     let characters = this.get('model.characters');
 
+    if (characters.length === 1) {
+      let type = 'Character';
+      let { characterId: id, name } = characters[0];
+
+      return { id, name, type };
+    }
+
     let corps = [], alls = [];
 
     characters.map((character) => {

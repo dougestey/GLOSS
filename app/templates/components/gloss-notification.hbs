@@ -10,7 +10,6 @@
       </span>
       <span class="Gloss-notification--time">
         <span>{{moment-from-now model.time interval=1000 hideSuffix=true}}</span>
-        {{#if (not-eq context 'system')}}<span>/ {{model.system.name}}</span>{{/if}}
         <span>/ {{model.positionName}}</span>
       </span>
     </span>
