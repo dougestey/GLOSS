@@ -1,12 +1,14 @@
 {{#if deadFleetCount}}
-  {{#gloss-message-disposable action=(action 'resetDeadFleetCount')}}
-    <p class="copy mt1 ml1">{{deadFleetCount}} fleet(s) GLOSS was tracking for you have expired.
+  <p class="mb2">
+    {{#gloss-message-disposable action=(action 'resetDeadFleetCount')}}
+      <p class="copy mt1 ml1">{{deadFleetCount}} fleet(s) GLOSS was tracking for you have expired.
 
-      This occurrs due to lack of combat activity or because all pilots are now part of another fleet.
+        This occurrs due to lack of combat activity or because all pilots are now part of another fleet.
 
-      <small>If you find this confusing, or wish to suggest an improvement to how GLOSS handles tracking, <a href="https://github.com/dougestey/gloss/issues" target="_blank">open a ticket</a>.</small>
-    </p>
-  {{/gloss-message-disposable}}
+        <small>If you find this confusing, or wish to suggest an improvement to how GLOSS handles tracking, <a href="https://github.com/dougestey/gloss/issues" target="_blank">open a ticket</a>.</small>
+      </p>
+    {{/gloss-message-disposable}}
+  </p>
 {{/if}}
 
 {{#if (and (not deadFleetCount) (not fleets.length))}}

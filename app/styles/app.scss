@@ -113,6 +113,7 @@ ul {
             max-height: 520px;
             min-height: 300px !important;
 
+            &:first-child:nth-last-child(1),
             &:first-child:nth-last-child(2),
             &:first-child:nth-last-child(2) ~ .card,
             &:first-child:nth-last-child(3),

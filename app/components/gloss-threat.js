@@ -41,6 +41,9 @@ export default Component.extend({
     let shipTotals = _.countBy(composition);
     // results in { shipTypeId: 2, shipTypeId: 5 ... }
 
+    if (!ships.length)
+      return;
+
     let count = _.max(shipTotals); // 5
     let keysFromShipTotals = _.keys(shipTotals); // [ shipTypeId, shipTypeId... ]
     let selector = parseInt(_.max(keysFromShipTotals, (s) => shipTotals[s])); // reference shipTotals to get the relevant key
@@ -92,13 +95,31 @@ export default Component.extend({
     let dominantShipType = this.get('dominantShipType');
     let totalPilots = this.get('model.characters.length');
 
-    return totalPilots - dominantShipType.count;
+    if (!dominantShipType || !dominantShipType.count) {
+      if (!totalPilots)
+        return;
+
+      return `${totalPilots} pilots`;
+    }
+
+    let remaining = totalPilots - dominantShipType.count;
+
+    if (remaining <= 0)
+      return;
+
+    if (remaining === 1)
+      return `and ${remaining} other`;
+
+    return `and ${remaining} others`;
   }),
 
   backgroundImage: computed('dominantShipType', function() {
-    let { id } = this.get('dominantShipType');
+    let dominantShipType = this.get('dominantShipType');
 
-    return htmlSafe(`background-image: url(https://imageserver.eveonline.com/Render/${id}_512.png) !important;`);
+    if (!dominantShipType || !dominantShipType.id)
+      return;
+
+    return htmlSafe(`background-image: url(https://imageserver.eveonline.com/Render/${dominantShipType.id}_512.png) !important;`);
   }),
 
   calculateRoute: task(function * () {

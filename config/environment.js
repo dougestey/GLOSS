@@ -32,7 +32,7 @@ module.exports = function(environment) {
     },
 
     sentry: {
-      dsn: 'https://38965402c5b14f64ab7f2d4febe0c48a@app.getsentry.com/1232945'
+      dsn: 'https://38965402c5b14f64ab7f2d4febe0c48a@app.getsentry.com/1232945',
     }
   };
 
