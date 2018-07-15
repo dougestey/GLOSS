@@ -148,10 +148,10 @@ export default Controller.extend({
 
       if (fleetIsTracked) {
         this.get('tracker').remove(fleet);
-        this.get('message').dispatch(`Tracking disabled`, `${faction.name}`, 2);
+        this.get('message.dispatch').perform(`Tracking disabled`, `${faction.name}`, 2);
       } else {
         this.get('tracker').add(fleet);
-        this.get('message').dispatch(`Tracking enabled`, `${faction.name}`, 2);
+        this.get('message.dispatch').perform(`Tracking enabled`, `${faction.name}`, 2);
       }
     },
   }

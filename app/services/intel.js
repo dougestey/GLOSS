@@ -1,5 +1,7 @@
 import Service, { inject as service } from '@ember/service';
 import { bind } from '@ember/runloop';
+import { isArray } from '@ember/array';
+import { task, waitForProperty } from 'ember-concurrency';
 
 export default Service.extend({
 
@@ -42,43 +44,19 @@ export default Service.extend({
   /* Socket.IO handlers */
 
   receiveKill(kill) {
-    let system = this.get('location.system.id');
-    let constellation = this.get('location.constellation.systems');
-    let region = this.get('location.region.systems');
-
     // System
-    if (kill.system.systemId === system) {
-      let kills = this.get('kills.system');
-
-      kills.pushObject(kill);
-    }
+    this.get('queueKill').perform(kill, 'system');
 
     // Constellation
-    if (constellation.findBy('id', kill.system.systemId)) {
-      let kills = this.get('kills.constellation');
-
-      kills.pushObject(kill);
-    }
+    this.get('queueKill').perform(kill, 'constellation');
 
     // Region
-    if (region.findBy('id', kill.system.systemId)) {
-      let kills = this.get('kills.region');
-
-      kills.pushObject(kill);
-    }
+    this.get('queueKill').perform(kill, 'region');
   },
 
   receiveFleet(fleet) {
-    let system = this.get('location.system');
-    let constellationName = this.get('location.constellation.name');
-    let constellationSystems = this.get('location.constellation.systems');
-    let regionName = this.get('location.region.name');
-    let regionSystems = this.get('location.region.systems');
-
     // Let tracker decide if it needs this data.
     this.get('tracker').evaluate(fleet);
-
-    let notified = false;
 
     // Sentinel has different job types that occasionally overlap.
     //
@@ -90,67 +68,13 @@ export default Service.extend({
     }
 
     // System
-    if (fleet.system.systemId === system.id) {
-      let systemFleets = this.get('fleets.system');
-      let existingSystemFleet = systemFleets.findBy('id', fleet.id);
-
-      if (existingSystemFleet) {
-        // We already have the fleet, so update it (remove/add)
-        systemFleets.removeObject(existingSystemFleet);
-      } else {
-        // New fleet
-        let suffix = fleet.characters.length > 1 ? 's' : '';
-        let charSuffix = fleet.kills.length > 1 ? 's' : '';
-
-        this.get('message').dispatch(`New threat in ${fleet.system.name}`, `${fleet.characters.length} pilot${suffix} with ${fleet.kills.length} kill${charSuffix}`, 5);
-        notified = true;
-      }
-
-      systemFleets.pushObject(fleet);
-    }
+    this.get('queueFleet').perform(fleet, 'system');
 
     // Constellation
-    if (constellationSystems.findBy('id', fleet.system.systemId)) {
-      let constellationFleets = this.get('fleets.constellation');
-      let existingConstellationFleet = constellationFleets.findBy('id', fleet.id);
-
-      if (existingConstellationFleet) {
-        // We already have the fleet, so update it (remove/add)
-        constellationFleets.removeObject(existingConstellationFleet);
-      } else {
-        if (!notified) {
-          // New fleet
-          let suffix = fleet.characters.length > 1 ? 's' : '';
-          let charSuffix = fleet.kills.length > 1 ? 's' : '';
-
-          this.get('message').dispatch(`New threat in ${constellationName}`, `${fleet.characters.length} pilot${suffix} with ${fleet.kills.length} kill${charSuffix}`, 5);
-          notified = true;
-        }
-      }
-
-      constellationFleets.pushObject(fleet);
-    }
+    this.get('queueFleet').perform(fleet, 'constellation');
 
     // Region
-    if (regionSystems.findBy('id', fleet.system.systemId)) {
-      let regionFleets = this.get('fleets.region');
-      let existingRegionFleet = regionFleets.findBy('id', fleet.id);
-
-      if (existingRegionFleet) {
-        // We already have the fleet, so update it (remove/add)
-        regionFleets.removeObject(existingRegionFleet);
-      } else {
-        if (!notified) {
-          // New fleet
-          let suffix = fleet.characters.length > 1 ? 's' : '';
-          let charSuffix = fleet.kills.length > 1 ? 's' : '';
-
-          this.get('message').dispatch(`New threat in ${regionName}`, `${fleet.characters.length} pilot${suffix} with ${fleet.kills.length} kill${charSuffix}`, 5);
-        }
-      }
-
-      regionFleets.pushObject(fleet);
-    }
+    this.get('queueFleet').perform(fleet, 'region');
   },
 
   receiveFleetUpdate(fleet) {
@@ -162,76 +86,25 @@ export default Service.extend({
     this.get('tracker').evaluate(fleet);
 
     // System
-    let systemFleets = this.get('fleets.system');
-    let existingSystemFleet = systemFleets.findBy('id', fleet.id);
-
-    if (existingSystemFleet) {
-      systemFleets.removeObject(existingSystemFleet);
-    }
+    this.get('queueFleetRemoval').perform(fleet, 'system');
 
     // Constellation
-    let constellationFleets = this.get('fleets.constellation');
-    let existingConstellationFleet = constellationFleets.findBy('id', fleet.id);
-
-    if (existingConstellationFleet) {
-      constellationFleets.removeObject(existingConstellationFleet);
-    }
+    this.get('queueFleetRemoval').perform(fleet, 'constellation');
 
     // Region
-    let regionFleets = this.get('fleets.region');
-    let existingRegionFleet = regionFleets.findBy('id', fleet.id);
-
-    if (existingRegionFleet) {
-      regionFleets.removeObject(existingRegionFleet);
-    }
+    this.get('queueFleetRemoval').perform(fleet, 'region');
   },
 
   receiveSystemIntel(data) {
-    let { fleets, kills } = data;
-    let systemFleets = this.get('fleets.system');
-    let systemKills = this.get('kills.system');
-
-    fleets.map((fleet) => {
-      if (!systemFleets.findBy('id', fleet.id))
-        systemFleets.pushObject(fleet);
-    });
-
-    kills.map((kill) => {
-      if (!systemKills.findBy('id', kill.id))
-        systemKills.pushObject(kill);
-    });
+    this.get('queueIntel').perform(data, 'system');
   },
 
   receiveConstellationIntel(data) {
-    let { fleets, kills } = data;
-    let constellationFleets = this.get('fleets.constellation');
-    let constellationKills = this.get('kills.constellation');
-
-    fleets.map((fleet) => {
-      if (!constellationFleets.findBy('id', fleet.id))
-        constellationFleets.pushObject(fleet);
-    });
-
-    kills.map((kill) => {
-      if (!constellationKills.findBy('id', kill.id))
-        constellationKills.pushObject(kill);
-    });
+    this.get('queueIntel').perform(data, 'constellation');
   },
 
   receiveRegionIntel(data) {
-    let { fleets, kills } = data;
-    let regionFleets = this.get('fleets.region');
-    let regionKills = this.get('kills.region');
-
-    fleets.map((fleet) => {
-      if (!regionFleets.findBy('id', fleet.id))
-        regionFleets.pushObject(fleet);
-    });
-
-    kills.map((kill) => {
-      if (!regionKills.findBy('id', kill.id))
-        regionKills.pushObject(kill);
-    });
+    this.get('queueIntel').perform(data, 'region');
   },
 
   /* Methods */
@@ -255,6 +128,116 @@ export default Service.extend({
     let socket = this.get('arbiter.socket');
 
     socket.get(`/api/fleets/${id}/untrack`);
-  }
+  },
+
+  /* Tasks */
+
+  queueIntel: task(function * (payload, scope) {
+    yield waitForProperty(this, `kills.${scope}`, (store) => isArray(store));
+    yield waitForProperty(this, `fleets.${scope}`, (store) => isArray(store));
+
+    let { fleets, kills } = payload;
+    let fleetStore = this.get(`fleets.${scope}`);
+    let killStore = this.get(`kills.${scope}`);
+
+    fleets.map((fleet) => {
+      if (!fleetStore.findBy('id', fleet.id))
+        fleetStore.pushObject(fleet);
+    });
+
+    kills.map((kill) => {
+      if (!killStore.findBy('id', kill.id))
+        killStore.pushObject(kill);
+    });
+  }).maxConcurrency(20).enqueue(),
+
+  queueKill: task(function * (payload, scope) {
+    yield waitForProperty(this, `location.${scope}`, 'id');
+    yield waitForProperty(this, `kills.${scope}`, (store) => isArray(store));
+
+    if (scope === 'system') {
+      let system = this.get('location.system.id');
+
+      if (payload.system.systemId === system) {
+        this.get(`kills.${scope}`).pushObject(payload);
+      }
+    } else {
+      yield waitForProperty(this, `location.${scope}.systems`, (store) => isArray(store));
+
+      let systems = this.get(`location.${scope}.systems`);
+
+      if (systems.findBy('id', payload.system.systemId)) {
+        this.get(`kills.${scope}`).pushObject(payload);
+      }
+    }
+  }),
+
+  queueFleet: task(function * (payload, scope) {
+    yield waitForProperty(this, `location.${scope}`, 'id');
+    yield waitForProperty(this, `fleets.${scope}`, (store) => isArray(store));
+
+    // let system = this.get('location.system');
+    // if (fleet.system.systemId === system.id) {
+    if (scope === 'system') {
+      let system = this.get('location.system.id');
+
+      if (payload.system.systemId === system) {
+        let fleets = this.get(`fleets.${scope}`);
+        let existingFleet = fleets.findBy('id', payload.id);
+
+        if (existingFleet) {
+          // We already have the fleet, so update it (remove/add)
+          fleets.removeObject(existingFleet);
+        } else {
+          let suffix = payload.characters.length > 1 ? 's' : '';
+          let charSuffix = payload.kills.length > 1 ? 's' : '';
+          let name = this.get(`location.${scope}.name`);
+
+          this.get('message.dispatch').perform(
+            `New threat in ${name}`,
+            `${payload.characters.length} pilot${suffix} with ${payload.kills.length} kill${charSuffix}`,
+            5
+          );
+        }
+
+        fleets.pushObject(payload);
+      }
+    } else {
+      let systems = this.get(`location.${scope}.systems`);
+
+      if (systems.findBy('id', payload.system.systemId)) {
+        let fleets = this.get(`fleets.${scope}`);
+        let existingFleet = fleets.findBy('id', payload.id);
+
+        if (existingFleet) {
+          // We already have the fleet, so update it (remove/add)
+          fleets.removeObject(existingFleet);
+        } else {
+          let suffix = payload.characters.length > 1 ? 's' : '';
+          let charSuffix = payload.kills.length > 1 ? 's' : '';
+          let name = this.get(`location.${scope}.name`);
+
+          this.get('message.dispatch').perform(
+            `New threat in ${name}`,
+            `${payload.characters.length} pilot${suffix} with ${payload.kills.length} kill${charSuffix}`,
+            5
+          );
+        }
+
+        fleets.pushObject(payload);
+      }
+    }
+  }),
+
+  queueFleetRemoval: task(function * (payload, scope) {
+    yield waitForProperty(this, `fleets.${scope}`, (store) => isArray(store));
+
+    let fleets = this.get(`fleets.${scope}`);
+    let existingFleet = fleets.findBy('id', payload.id);
+
+    if (existingFleet) {
+      fleets.removeObject(existingFleet);
+    }
+  }),
 
 });

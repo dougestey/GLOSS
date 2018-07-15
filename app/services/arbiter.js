@@ -41,7 +41,7 @@ export default Service.extend({
     let firstConnect = this.get('firstConnect');
 
     if (!firstConnect) {
-      this.get('message').dispatch(
+      this.get('message.dispatch').perform(
         `Link re-established`,
         `Arbiter has come back online`,
         5
@@ -60,7 +60,7 @@ export default Service.extend({
     this.set('connected', false);
 
     later(() => {
-      this.get('message').dispatch(
+      this.get('message.dispatch').perform(
         'Arbiter connection lost',
         `Please wait a minute, then refresh GLOSS`
       );

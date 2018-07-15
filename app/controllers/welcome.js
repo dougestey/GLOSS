@@ -11,13 +11,13 @@ export default Controller.extend({
   init() {
     this._super(...arguments);
 
-    this.get('message').dispatch(null, 'Booting system...', undefined, true);
+    this.get('message.dispatch').perform(null, 'Booting system...', undefined, true);
 
     later(() => {
       let online = this.get('arbiter').get('connected');
 
       if (online) {
-        this.get('message').dispatch(
+        this.get('message.dispatch').perform(
           null,
           `System ready`,
           null,
@@ -31,7 +31,7 @@ export default Controller.extend({
           this.transitionToRoute('authorize');
         }, 2000);
       } else {
-        this.get('message').dispatch(
+        this.get('message.dispatch').perform(
           null,
           `System offline`,
           null,

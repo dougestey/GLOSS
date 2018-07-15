@@ -91,10 +91,10 @@ export default Service.extend({
         system.stats.shipKills = '?';
         system.stats.podKills = '?';
         system.stats.shipJumps = '?';
-  
+
         return this.set('system', system);
       }
-  
+
       this.set('system', system);
     }
   },
