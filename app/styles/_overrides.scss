@@ -55,8 +55,6 @@ a:hover {
 
       > .content {
         padding-left: 0.5rem;
-        display: flex;
-        flex-direction: column;
 
         > .header {
           color: $primary !important;
@@ -80,7 +78,6 @@ a:hover {
         > .meta {
           color: $secondary !important;
           margin-bottom: 1rem;
-          margin-top: 1rem;
 
           > span {
             margin-right: .3em !important;
