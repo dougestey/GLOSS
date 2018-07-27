@@ -86,6 +86,13 @@ export default Controller.extend({
     return context;
   }),
 
+  mode: computed('route', function() {
+    let route = this.get('route');
+    let mode = route.split('.')[0];
+
+    return mode;
+  }),
+
   kills: computed('context', 'regionKills.[]', 'constellationKills.[]', 'systemKills.[]', 'trackerKills.[]', function() {
     let context = this.get('context');
 

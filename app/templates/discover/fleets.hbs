@@ -1,0 +1,8 @@
+<div class="ui link cards">
+  {{#each (sort-by 'lastSeen:desc' fleets) as |fleet|}}
+    {{gloss-threat
+      model=fleet
+      selectFleet=(action 'selectFleet')
+      }}
+  {{/each}}
+</div>
