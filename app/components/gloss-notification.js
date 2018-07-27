@@ -15,10 +15,10 @@ export default Component.extend({
     window.open(`https://zkillboard.com/kill/${killId}/`,'_blank');
   },
 
-  shipImageUrl: computed('model.ship.typeId', function() {
-    let typeId = this.get('model.ship.typeId');
+  shipImageUrl: computed('model.ship.id', function() {
+    let id = this.get('model.ship.id');
 
-    return `https://imageserver.eveonline.com/Type/${typeId}_64.png`;
+    return `https://imageserver.eveonline.com/Type/${id}_64.png`;
   })
 
 });
