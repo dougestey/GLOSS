@@ -14,11 +14,28 @@ export default Controller.extend({
 
   discovery: service(),
 
+  tracker: service(),
+
+  message: service(),
+
   route: reads('application.currentPath'),
 
   character: reads('location.character'),
 
   fleets: reads('discovery.fleets.length'),
+
+  trackedFleets: reads('tracker.fleets.[]'),
+
+  selectedFleetIsTracked: computed('selectedFleet.id', 'trackedFleets.[]', function() {
+    let fleet = this.get('selectedFleet');
+    let fleets = this.get('trackedFleets');
+
+    if (!fleet)
+      return false;
+
+    let existingTrackedFleet = fleets.findBy('id', fleet.id);
+    return !!existingTrackedFleet;
+  }),
 
   context: computed('route', function() {
     let route = this.get('route');
@@ -48,11 +65,28 @@ export default Controller.extend({
 
   actions: {
     selectFleet(fleet) {
-      this.get('navigate').send('selectFleet', fleet);
+      this.set('selectedFleet', fleet);
+      // this.set('selectedFaction', faction);
+      // this.set('selectedShipType', shipType);
+      // this.set('selectedShipCount', otherShipCount);
+
+      $('.ui.threat.modal').modal('show');
+      $('.ui.threat.modal').modal('hide dimmer');
+      $('.ui.threat.modal').scrollTop(0);
     },
 
-    toggleTracking(fleet) {
-      this.get('navigate').send('toggleTracking', fleet);
+    toggleTracking() {
+      let fleet = this.get('selectedFleet');
+      // let faction = this.get('selectedFaction');
+      let fleetIsTracked = this.get('selectedFleetIsTracked');
+
+      if (fleetIsTracked) {
+        this.get('tracker').remove(fleet);
+        this.get('message.dispatch').perform(`Tracking disabled`, undefined, 2);
+      } else {
+        this.get('tracker').add(fleet);
+        this.get('message.dispatch').perform(`Tracking enabled`, undefined, 2);
+      }
     },
   }
 

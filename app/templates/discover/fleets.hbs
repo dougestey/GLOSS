@@ -1,12 +1,12 @@
-{{#unless fleetsLoaded}}
-  <div class="ui active inverted text loader">Retrieving active fleets</div>
+{{#unless fleets.length}}
+  <div class="ui active inverted text loader">Waiting for fleet activity</div>
 {{else}}
   <div class="ui link cards">
       {{!-- {{gloss-threat
         model=fleet
         selectFleet=(action 'selectFleet')
         }} --}}
-      <table class="ui celled table inverted" cellpadding="10">
+      <table class="ui table inverted" cellpadding="10">
         <thead>
           <th>ID</th>
           <th>Region</th>
@@ -21,17 +21,10 @@
 
         <tbody>
           {{#each (sort-by 'lastSeen:desc' fleets) as |fleet|}}
-            <tr class="Gloss-report--character">
-              <th>{{fleet.id}}</th>
-              <th>{{fleet.system.region.name}}</th>
-              <th>{{fleet.system.name}}</th>
-              <th>{{fleet.characters.length}}</th>
-              <th>{{fleet.kills.length}}</th>
-              <th>{{moment-from-now fleet.startTime interval=1000}}</th>
-              <th>{{moment-from-now fleet.lastSeen interval=1000}}</th>
-              <th>{{moment-from-now fleet.updatedAt interval=1000}}</th>
-              <td>{{threat-level fleet.dangerRatio}}</td>
-            </tr>
+            {{gloss-threat-line
+              fleet=fleet
+              selectFleet=(action 'selectFleet')
+              }}
           {{/each}}
         </tbody>
       </table>

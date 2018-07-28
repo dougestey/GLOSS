@@ -386,3 +386,19 @@ strong {
     }
   }
 }
+
+.ui.table {
+  tbody > tr {
+    cursor: pointer;
+
+    td {
+      transition: color 175ms linear;
+    }
+
+    &:hover {
+      td {
+        color: $secondary !important;
+      }
+    }
+  }
+}

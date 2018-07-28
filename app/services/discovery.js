@@ -10,42 +10,40 @@ export default Service.extend({
 
   // fleets: storageFor('active-fleets'),
 
-  loaded: false,
-
   fleets: [],
 
   enable() {
     let socket = this.get('arbiter.socket');
 
-    socket.on('fleet_report', (fleets) => {
-      this.get('receiveFleetReport').perform(fleets);
-    });
+    // socket.on('fleet_report', (fleets) => {
+    //   this.get('receiveFleetReport').perform(fleets);
+    // });
 
     socket.on('active_fleet_update', (fleet) => {
       this.get('evaluateFleet').perform(fleet);
     });
 
-    socket.get(`/api/fleets/active`);
+    // socket.get(`/api/fleets/active`);
   },
 
-  receiveFleetReport: task(function * (fleets) {
-    this.get('fleets').pushObjects(fleets);
+  // receiveFleetReport: task(function * (fleets) {
+  //   this.get('fleets').pushObjects(fleets);
 
-    this.toggleProperty('loaded');
-  }),
+  //   this.toggleProperty('loaded');
+  // }),
 
   evaluateFleet: task(function * (fleet) {
-    yield waitForProperty(this, `loaded`, true);
+    // yield waitForProperty(this, `loaded`, true);
 
     let fleets = this.get('fleets');
     let existingFleet = fleets.findBy('id', fleet.id);
 
     if (existingFleet) {
       fleets.removeObject(existingFleet);
+    }
 
-      if (fleet.isActive) {
-        fleets.addObject(fleet);
-      }
+    if (fleet.isActive) {
+      fleets.addObject(fleet);
     }
   }),
 

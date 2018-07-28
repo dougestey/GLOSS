@@ -1,12 +1,12 @@
 {{#ui-modal data-select="threat" name="threat" class="threat inverted" onApprove=(action toggleTracking selectedFleet)}}
   <div class="header">
-    {{selectedFaction.name}} <span class="secondary">{{selectedFaction.type}}</span>
+    {{dominantFaction.name}} <span class="secondary">{{dominantFaction.type}}</span>
   </div>
 
   <div class="image content">
     <div class="ui tiny image">
-      {{#if selectedFaction}}
-        <img src={{threat-image-url selectedFaction}}>
+      {{#if dominantFaction}}
+        <img src={{threat-image-url dominantFaction}}>
       {{/if}}
     </div>
 
