@@ -17,6 +17,7 @@ Router.map(function() {
   });
   this.route('discover', function() {
     this.route('fleets');
+    this.route('map');
   });
 });
 

@@ -57,7 +57,7 @@ export default Component.extend({
 
     if (characters.length === 1) {
       let type = 'Character';
-      let { characterId: id, name } = characters[0];
+      let { id, name } = characters[0];
 
       return { id, name, type };
     }
@@ -71,8 +71,8 @@ export default Component.extend({
         alls.push(character.alliance);
     });
 
-    let corpHash = _.countBy(corps, 'corporationId'),
-        allHash = _.countBy(alls, 'allianceId');
+    let corpHash = _.countBy(corps, 'id'),
+        allHash = _.countBy(alls, 'id');
 
     let corpMaxKey = _.max(_.keys(corpHash), (o) => corpHash[o]),
         allMaxKey = _.max(_.keys(allHash), (o) => allHash[o]);
@@ -81,11 +81,11 @@ export default Component.extend({
         allMax = allHash[allMaxKey];
 
     if (!allMax || corpMax > allMax) {
-      let { corporationId: id, name } = _.find(corps, (c) => c.corporationId === parseInt(corpMaxKey));
+      let { id, name } = _.find(corps, (c) => c.id === parseInt(corpMaxKey));
 
       return { id, name, type: 'Corporation' };
     } else {
-      let { allianceId: id, name } = _.find(alls, (a) => a.allianceId === parseInt(allMaxKey));
+      let { id, name } = _.find(alls, (a) => a.id === parseInt(allMaxKey));
 
       return { id, name, type: 'Alliance' };
     }
@@ -124,7 +124,7 @@ export default Component.extend({
 
   calculateRoute: task(function * () {
     let origin = this.get('system');
-    let destination = this.get('model.system.systemId');
+    let destination = this.get('model.system.id');
     let route = yield this.get('navigation').calculateRoute(origin, destination);
     let jumpsAway = route.length - 1;
 

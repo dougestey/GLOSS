@@ -5,7 +5,6 @@ import { inject as controller } from '@ember/controller';
 import { reads } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { later } from '@ember/runloop';
-import moment from 'moment';
 
 export default Controller.extend({
 
@@ -64,19 +63,6 @@ export default Controller.extend({
 
     let existingTrackedFleet = fleets.findBy('id', fleet.id);
     return !!existingTrackedFleet;
-  }),
-
-  latestBattleReport: computed('selectedFleet', function() {
-    let selectedFleet = this.get('selectedFleet');
-
-    if (!selectedFleet || !selectedFleet.kills.length)
-      return null;
-
-    let { systemId } = selectedFleet.system;
-    let { time } = selectedFleet.kills.get('lastObject');
-    let timestamp = moment(time).utc().format('YYYYMMDDHHmm');
-
-    return `https://zkillboard.com/related/${systemId}/${timestamp}/`;
   }),
 
   context: computed('route', function() {

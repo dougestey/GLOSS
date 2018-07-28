@@ -334,8 +334,8 @@ strong {
   }
 }
 
-.ui.modal.about[data-select="about"],
-.ui.modal.threat[data-select="threat"] {
+.ember-application > .ember-view > .ember-view > .ember-view > .ember-view > .ui.modal.about,
+.ember-application > .ember-view > .ember-view > .ember-view > .ember-view > .ui.modal.threat {
   max-height: 70vh !important;
   overflow-y: auto !important;
   z-index: 1001 !important;

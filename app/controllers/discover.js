@@ -18,7 +18,7 @@ export default Controller.extend({
 
   character: reads('location.character'),
 
-  fleets: reads('discovery.fleets'),
+  fleets: reads('discovery.fleets.length'),
 
   context: computed('route', function() {
     let route = this.get('route');

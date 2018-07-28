@@ -1,4 +1,4 @@
-{{#ui-modal data-select="threat" name="threat" class="threat inverted" onApprove=(action 'toggleTracking' this)}}
+{{#ui-modal data-select="threat" name="threat" class="threat inverted" onApprove=(action toggleTracking selectedFleet)}}
   <div class="header">
     {{selectedFaction.name}} <span class="secondary">{{selectedFaction.type}}</span>
   </div>

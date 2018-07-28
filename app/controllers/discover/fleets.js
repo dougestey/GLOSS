@@ -4,27 +4,21 @@ import { reads } from '@ember/object/computed';
 
 export default Controller.extend({
 
-  navigate: controller(),
+  discover: controller(),
 
   discovery: service(),
 
-  // intel: service(),
-
   fleets: reads('discovery.fleets.[]'),
 
-  init() {
-    this._super(...arguments);
-
-    this.get('discovery').enable();
-  },
+  fleetsLoaded: reads('discovery.loaded'),
 
   actions: {
     selectFleet(fleet) {
-      this.get('navigate').send('selectFleet', fleet);
+      this.get('discover').send('selectFleet', fleet);
     },
 
     toggleTracking(fleet) {
-      this.get('navigate').send('toggleTracking', fleet);
+      this.get('discover').send('toggleTracking', fleet);
     },
   }
 
