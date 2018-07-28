@@ -15,16 +15,22 @@
     }}
 
   <div class="ui grid">
-    <div class="two columns row no-gutter p0 mt2 mb1">
+    <div class="three columns row no-gutter p0 mt2 mb1">
       <div class="column">
-        {{#link-to 'discover.map' class='Gloss-button Gloss-button--small'}}
-          Map
+        {{#link-to 'discover.fleets' class='Gloss-button Gloss-button--small'}}
+          Fleets <span class="Gloss-button--detail">{{fleets}}</span>
         {{/link-to}}
       </div>
 
       <div class="column">
-        {{#link-to 'discover.fleets' class='Gloss-button Gloss-button--small'}}
-          Fleets <span class="Gloss-button--detail">{{fleets}}</span>
+        {{#link-to 'discover.kills' class='Gloss-button Gloss-button--small'}}
+          Kills <span class="Gloss-button--detail">Not yet</span>
+        {{/link-to}}
+      </div>
+
+      <div class="column">
+        {{#link-to 'discover.map' class='Gloss-button Gloss-button--small'}}
+          Map <span class="Gloss-button--detail">Not yet</span>
         {{/link-to}}
       </div>
 
