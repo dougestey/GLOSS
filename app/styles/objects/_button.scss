@@ -62,6 +62,7 @@
   &--mini {
     padding: 0.5rem 0.75rem;
     font-size: 0.8rem;
+    margin: -0.25rem;
   }
 
   &--frameless {
@@ -71,7 +72,6 @@
   }
 
   &--detail {
-    // font-size: 0.8rem;
     color: $secondary;
   }
 }

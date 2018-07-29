@@ -18,6 +18,12 @@
   <div class="ui grid">
     <div class="three columns row no-gutter p0 mt2 mb1">
       <div class="column">
+        {{#link-to 'discover.map' class='Gloss-button Gloss-button--small'}}
+          Map
+        {{/link-to}}
+      </div>
+
+      <div class="column">
         {{#link-to 'discover.fleets' class='Gloss-button Gloss-button--small'}}
           Fleets <span class="Gloss-button--detail">{{fleets}}</span>
         {{/link-to}}
@@ -28,48 +34,10 @@
           Kills <span class="Gloss-button--detail">{{kills}}</span>
         {{/link-to}}
       </div>
-
-      <div class="column">
-        {{#link-to 'discover.map' class='Gloss-button Gloss-button--small'}}
-          Map <span class="Gloss-button--detail">Not yet</span>
-        {{/link-to}}
-      </div>
-
-      {{!-- <div class="column">
-        {{#link-to 'navigate.constellation' class='Gloss-button Gloss-button--small'}}
-          {{constellation.name}} <span class="Gloss-button--detail">{{constellationFleets.length}}</span>
-        {{/link-to}}
-      </div>
-
-      <div class="column">
-        {{#link-to 'navigate.region' class='Gloss-button Gloss-button--small'}}
-          {{region.name}} <span class="Gloss-button--detail">{{regionFleets.length}}</span>
-        {{/link-to}}
-      </div>
-
-      <div class="column">
-        {{#link-to 'navigate.tracker' class='Gloss-button Gloss-button--small'}}
-          Tracker <span class="Gloss-button--detail">{{trackedFleets.length}}</span>
-        {{/link-to}}
-      </div>
-
-      <div class="column">
-        <a class="Gloss-button Gloss-button--small {{if showKillStream 'active'}}" {{action 'toggleKillStream' this}}>
-          Kills
-
-          <span class="Gloss-button--detail">
-            {{kills.length}}
-          </span>
-        </a>
-      </div> --}}
     </div>
   </div>
 
   <div class="Gloss-viewport">
-    {{!-- {{#unless (and loadIntel (or systemFleets (eq systemFleets.length 0)))}}
-      <div class="ui active inverted text loader">Connecting to Sentinel</div>
-    {{/unless}} --}}
-
     {{#liquid-if loadIntel class="ui-fade"}}
       <div class="ui grid padded">
         <div class="row">
@@ -79,26 +47,7 @@
     {{/liquid-if}}
   </div>
 
-  {{!-- <div class="Gloss-sidebar {{if showKillStream 'Gloss-sidebar--shown'}}">
-    <div class="Gloss-notifier Gloss-module">
-      <div class="Gloss-stream Gloss-scroller">
-        {{#liquid-if loadIntel class="ui-fade"}}
-          {{#each killsRenderable as |notification|}}
-            {{gloss-notification
-              model=notification
-              context=context
-              }}
-          {{/each}}
-
-          {{#if (not-eq killsRenderable.length kills.length)}}
-            <small>In your GLOSS display's interest of performance, only the last 200 kills are shown.</small>
-          {{/if}}
-        {{/liquid-if}}
-      </div>
-    </div>
-  </div> --}}
-
-  <div class="Gloss-module Gloss-module--x Gloss-flex--end Gloss-fixed Gloss-fixed--bottom">
+  <div class="Gloss-navigation Gloss-module Gloss-module--x Gloss-flex--end Gloss-fixed Gloss-fixed--bottom">
     {{gloss-shard
       label=(app-version hideSha=true)
       loaded=loadUiElements

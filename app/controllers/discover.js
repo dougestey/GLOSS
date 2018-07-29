@@ -72,9 +72,17 @@ export default Controller.extend({
   actions: {
     selectFleet(fleet) {
       this.set('selectedFleet', fleet);
-      // this.set('selectedFaction', faction);
-      // this.set('selectedShipType', shipType);
-      // this.set('selectedShipCount', otherShipCount);
+
+      $('.ui.threat.modal').modal('show');
+      $('.ui.threat.modal').modal('hide dimmer');
+      $('.ui.threat.modal').scrollTop(0);
+    },
+
+    selectFleetById(id) {
+      let fleets = this.get('discovery.fleets');
+      let fleetToSelect = fleets.findBy('id', id);
+
+      this.set('selectedFleet', fleetToSelect);
 
       $('.ui.threat.modal').modal('show');
       $('.ui.threat.modal').modal('hide dimmer');

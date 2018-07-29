@@ -9,12 +9,14 @@
       <th>Position</th>
       <th>Victim</th>
       <th>Ship</th>
+      <th>Fleet</th>
     </thead>
 
     <tbody>
       {{#each (sort-by 'time:desc' kills) as |kill|}}
         {{gloss-kill-line
           kill=kill
+          selectFleetById=(action 'selectFleetById')
           }}
       {{/each}}
     </tbody>
