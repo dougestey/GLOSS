@@ -28,6 +28,8 @@ export default Controller.extend({
 
   fleets: reads('discovery.fleets.length'),
 
+  kills: reads('discovery.kills.length'),
+
   trackedFleets: reads('tracker.fleets.[]'),
 
   selectedFleetIsTracked: computed('selectedFleet.id', 'trackedFleets.[]', function() {

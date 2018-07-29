@@ -12,6 +12,7 @@
     loadUiElements=loadUiElements
     isConnected=isConnected
     fleets=fleets
+    kills=kills
     }}
 
   <div class="ui grid">
@@ -24,7 +25,7 @@
 
       <div class="column">
         {{#link-to 'discover.kills' class='Gloss-button Gloss-button--small'}}
-          Kills <span class="Gloss-button--detail">Not yet</span>
+          Kills <span class="Gloss-button--detail">{{kills}}</span>
         {{/link-to}}
       </div>
 

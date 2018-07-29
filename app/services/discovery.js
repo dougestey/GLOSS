@@ -6,31 +6,21 @@ export default Service.extend({
 
   arbiter: service(),
 
-  // intel: service(),
-
-  // fleets: storageFor('active-fleets'),
-
   fleets: [],
+
+  kills: [],
 
   enable() {
     let socket = this.get('arbiter.socket');
-
-    // socket.on('fleet_report', (fleets) => {
-    //   this.get('receiveFleetReport').perform(fleets);
-    // });
 
     socket.on('active_fleet_update', (fleet) => {
       this.get('evaluateFleet').perform(fleet);
     });
 
-    // socket.get(`/api/fleets/active`);
+    socket.on('active_kill_update', (fleet) => {
+      this.get('evaluateKill').perform(fleet);
+    });
   },
-
-  // receiveFleetReport: task(function * (fleets) {
-  //   this.get('fleets').pushObjects(fleets);
-
-  //   this.toggleProperty('loaded');
-  // }),
 
   evaluateFleet: task(function * (fleet) {
     // yield waitForProperty(this, `loaded`, true);
@@ -45,6 +35,10 @@ export default Service.extend({
     if (fleet.isActive) {
       fleets.addObject(fleet);
     }
+  }),
+
+  evaluateKill: task(function * (kill) {
+    this.get('kills').addObject(kill);
   }),
 
 });

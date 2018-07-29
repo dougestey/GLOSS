@@ -1,1 +1,23 @@
-{{outlet}}
+{{#unless kills.length}}
+  <div class="ui active inverted text loader">Waiting for kill activity</div>
+{{else}}
+  <div class="ui link cards">
+    <table class="ui table inverted" cellpadding="10">
+    <thead>
+      <th>Time</th>
+      <th>System</th>
+      <th>Position</th>
+      <th>Victim</th>
+      <th>Ship</th>
+    </thead>
+
+    <tbody>
+      {{#each (sort-by 'time:desc' kills) as |kill|}}
+        {{gloss-kill-line
+          kill=kill
+          }}
+      {{/each}}
+    </tbody>
+    </table>
+  </div>
+{{/unless}}
