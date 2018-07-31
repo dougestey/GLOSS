@@ -9,4 +9,7 @@ export default Controller.extend({
   regions: reads('discovery.regions'),
 
   systems: reads('discovery.systems'),
+
+  fleets: reads('discovery.fleets.[]'),
+
 });

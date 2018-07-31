@@ -11,20 +11,13 @@ import { transition } from 'd3-transition';
 import { easeCubicInOut } from 'd3-ease';
 
 import { task, waitForProperty } from 'ember-concurrency';
+import _ from 'npm:lodash';
 
 export default Component.extend(ResizeAware, {
 
   tagName: 'svg',
-  // classNames: ['awesome-d3-widget'],
 
   attributeBindings: ['width', 'height'],
-
-  // Array of points to render as circles in a line, spaced by time.
-  //  [ {value: Number, timestamp: Number } ];
-  init() {
-    this._super()
-    this.data = []
-  },
 
   debouncedDidResize(width, height) {
     this.set('width', width);
@@ -35,6 +28,9 @@ export default Component.extend(ResizeAware, {
 
   didInsertElement() {
     this._super(...arguments);
+
+    select(this.element)
+      .append('g');
 
     let viewport = document.querySelector('.Gloss-viewport');
 
@@ -73,13 +69,31 @@ export default Component.extend(ResizeAware, {
       .range([0, height / 13])
   },
 
+  // drawFleets: task(function * () {
+  //   yield waitForProperty(this, 'fleets.length', val => val !== 0);
+  //   yield waitForProperty(this, 'systems.length', val => val !== 0);
+
+  //   let fleets = get(this, fleets);
+  //   let systems = get(this, 'systems');
+  //   let data = _.countBy(fleets, 'system.id');
+
+  //   for (let system of systems) {
+  //     select(`[data-id="${system.id}"]`)
+  //       .attr(r, data[system.id]);
+  //   }
+  // }),
+
   drawSystems: task(function * () {
     yield waitForProperty(this, 'systems.length', val => val !== 0);
+    yield waitForProperty(this, 'fleets.length', val => val !== 0);
 
     let data = get(this, 'systems');
     let regions = get(this, 'regions');
     let width = get(this, 'width') - 160;
     let height = get(this, 'height') - 160;
+
+    let fleets = get(this, 'fleets');
+    let fleetData = _.countBy(fleets, 'system.id');
 
     for (let region of regions) {
       let plot = select(`[data-id="${region.id}"]`);
@@ -88,7 +102,7 @@ export default Component.extend(ResizeAware, {
       let systems = plot.selectAll('circle').data(dataSlice);
 
       // Enter
-      let enter = systems
+      systems
         .enter()
         .append('circle')
           .attr('fill', '#3c9a95')
@@ -96,10 +110,19 @@ export default Component.extend(ResizeAware, {
           .attr('r', 1)
           .attr('data-id', d => d.id)
           .attr('data-name', d => d.name)
+
+          // Update
           .merge(systems)
+            .attr('r', (d) => {
+              if (fleetData[d.id])
+                return fleetData[d.id];
+
+              return 1;
+            })
             .attr('cy', d => this._systemY(dataSlice, height)(d.y))
             .attr('cx', d => this._systemX(dataSlice, width)(d.x))
 
+      // Exit
       systems
         .exit()
         .remove();
@@ -118,9 +141,6 @@ export default Component.extend(ResizeAware, {
     let width = get(this, 'width') - 160;
     let height = get(this, 'height') - 160;
     let centered;
-
-    let plot = select(this.element)
-      .append('g');
 
     let _selectRegion = (d) => {
       let x, y, k;
@@ -161,6 +181,9 @@ export default Component.extend(ResizeAware, {
       .duration(250)
       .ease(easeCubicInOut)
 
+    let plot = select(this.element)
+      .select('g');
+
     // UPDATE EXISTING
     let regions = plot
       .selectAll('g')
@@ -194,6 +217,7 @@ export default Component.extend(ResizeAware, {
           .attr('text-anchor', 'middle')
           .attr('dominant-baseline', 'central')
 
+    // Update
     enter
       .merge(regions)
         .attr('transform', (d) => {
@@ -207,7 +231,7 @@ export default Component.extend(ResizeAware, {
             return (this.parentNode.getBBox().height / 2) + 10
           })
 
-    // EXIT
+    // Exit
     regions
       .exit()
       .transition(t)
