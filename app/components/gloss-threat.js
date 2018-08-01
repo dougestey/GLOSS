@@ -14,12 +14,6 @@ export default Component.extend({
 
   tracker: service(),
 
-  classNames: [
-    'card',
-    'ui',
-    'raised'
-  ],
-
   didReceiveAttrs() {
     this._super(...arguments);
 

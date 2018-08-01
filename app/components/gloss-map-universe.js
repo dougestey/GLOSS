@@ -60,7 +60,7 @@ export default Component.extend(ResizeAware, {
   _systemX(data, width) {
     return scaleLinear()
       .domain(extent(data.map(d => d.x)))
-      .range([0, width / 11])
+      .range([0, width / 13])
   },
 
   _systemY(data, height) {
@@ -68,20 +68,6 @@ export default Component.extend(ResizeAware, {
       .domain(extent(data.map(d => d.y)))
       .range([0, height / 13])
   },
-
-  // drawFleets: task(function * () {
-  //   yield waitForProperty(this, 'fleets.length', val => val !== 0);
-  //   yield waitForProperty(this, 'systems.length', val => val !== 0);
-
-  //   let fleets = get(this, fleets);
-  //   let systems = get(this, 'systems');
-  //   let data = _.countBy(fleets, 'system.id');
-
-  //   for (let system of systems) {
-  //     select(`[data-id="${system.id}"]`)
-  //       .attr(r, data[system.id]);
-  //   }
-  // }),
 
   drawSystems: task(function * () {
     yield waitForProperty(this, 'systems.length', val => val !== 0);
@@ -101,26 +87,50 @@ export default Component.extend(ResizeAware, {
 
       let systems = plot.selectAll('circle').data(dataSlice);
 
+      let t = transition()
+        .duration(750)
+        .ease(easeCubicInOut)
+
       // Enter
       systems
         .enter()
         .append('circle')
-          .attr('fill', '#3c9a95')
-          .attr('opacity', 0.5)
-          .attr('r', 1)
           .attr('data-id', d => d.id)
           .attr('data-name', d => d.name)
+          .attr('opacity', 0.1)
+          .attr('r', 1)
 
           // Update
           .merge(systems)
-            .attr('r', (d) => {
-              if (fleetData[d.id])
-                return fleetData[d.id];
-
-              return 1;
+            .classed('has-fleets', (d) => {
+              return !!fleetData[d.id]
             })
-            .attr('cy', d => this._systemY(dataSlice, height)(d.y))
-            .attr('cx', d => this._systemX(dataSlice, width)(d.x))
+            .transition(t)
+              .attr('r', (d) => {
+                if (fleetData[d.id])
+                  return fleetData[d.id] * 7
+
+                return 1
+              })
+              .attr('opacity', (d) => {
+                if (fleetData[d.id]) {
+                  return 0.75
+                }
+
+                return 0.5;
+              })
+              .attr('fill', (d) => {
+                if (fleetData[d.id]) {
+                  if (fleetData[d.id] > 1)
+                    return 'rgb(255, 90, 139)'
+
+                  return 'rgb(245, 212, 129)'
+                }
+
+                return 'rgb(60, 154, 149)';
+              })
+              .attr('cy', d => this._systemY(dataSlice, height)(d.y))
+              .attr('cx', d => this._systemX(dataSlice, width)(d.x))
 
       // Exit
       systems
@@ -128,13 +138,14 @@ export default Component.extend(ResizeAware, {
         .remove();
     }
 
-  }),
+  }).restartable(),
 
   drawRegions() {
     this.get('drawRegionsTask').perform();
   },
 
   drawRegionsTask: task(function * () {
+    yield waitForProperty(this, 'fleets.length', val => val !== 0);
     yield waitForProperty(this, 'regions.length', val => val !== 0);
 
     let data = get(this, 'regions');
@@ -150,11 +161,15 @@ export default Component.extend(ResizeAware, {
         y = this._regionY(data, height)(d.z);
         k = 5;
         centered = d;
+
+        this.sendAction('selectRegion', d);
       } else {
         x = width / 2;
         y = height / 2;
         k = 1;
         centered = null;
+
+        this.sendAction('selectRegion', null);
       }
 
       plot.selectAll('g')
@@ -162,12 +177,6 @@ export default Component.extend(ResizeAware, {
         .select('text')
           .attr('style', () => {
             return centered ? 'font-size: 4px' : 'font-size: 9px';
-          });
-
-      plot.selectAll('g')
-        .selectAll('circle')
-          .attr('r', () => {
-            return centered ? 0.5 : 1;
           });
 
       plot
@@ -178,7 +187,7 @@ export default Component.extend(ResizeAware, {
 
     // Create a transition to use later
     let t = transition()
-      .duration(250)
+      .duration(750)
       .ease(easeCubicInOut)
 
     let plot = select(this.element)
@@ -196,17 +205,6 @@ export default Component.extend(ResizeAware, {
         .attr('class', 'Gloss-map--region')
         .attr('data-id', d => d.id)
         .attr('data-name', d => d.name)
-        .attr('opacity', 0.7)
-        .on('mouseover', function(d) {
-          select(`[data-id="${d.id}"]`)
-            .attr('opacity', 1)
-            .selectAll('circle').attr('opacity', 0.9)
-        })
-        .on('mouseout', function(d) {
-          select(`[data-id="${d.id}"]`)
-            .attr('opacity', 0.7)
-            .selectAll('circle').attr('opacity', 0.5)
-        })
         .on('click', _selectRegion)          
 
     enter
@@ -216,6 +214,7 @@ export default Component.extend(ResizeAware, {
           .attr('style', 'font-size: 9px;')
           .attr('text-anchor', 'middle')
           .attr('dominant-baseline', 'central')
+          .attr('opacity', 0)
 
     // Update
     enter
@@ -228,8 +227,11 @@ export default Component.extend(ResizeAware, {
             return this.parentNode.getBBox().width / 2
           })
           .attr('y', function() {
-            return (this.parentNode.getBBox().height / 2) + 10
+            return this.parentNode.getBBox().height / 2
           })
+          .transition(t)
+            .delay((d, i) => 2000 + i * 100)
+            .attr('opacity', 1)
 
     // Exit
     regions
@@ -239,5 +241,5 @@ export default Component.extend(ResizeAware, {
       .remove()
 
     yield this.get('drawSystems').perform();
-  }),
+  }).restartable(),
 })

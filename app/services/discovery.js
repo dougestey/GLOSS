@@ -14,6 +14,8 @@ export default Service.extend({
 
   systems: [],
 
+  loaded: false,
+
   _filterRegions(data) {
     data = data.filter(region => 
       region.name.indexOf('ADR') === -1 &&
@@ -25,6 +27,10 @@ export default Service.extend({
 
   enable() {
     let socket = this.get('arbiter.socket');
+
+    socket.on('active_fleets', (fleets) => {
+      this.get('loadActiveFleets').perform(fleets);
+    });
 
     socket.on('active_fleet_update', (fleet) => {
       this.get('evaluateFleet').perform(fleet);
@@ -43,10 +49,18 @@ export default Service.extend({
     socket.get('/api/systems?limit=9000', (systems) => {
       this.get('systems').pushObjects(systems);
     });
+
+    socket.get('/api/fleets/active');
   },
 
+  loadActiveFleets: task(function * (fleets) {
+    this.get('fleets').pushObjects(fleets);
+
+    this.toggleProperty('loaded');
+  }),
+
   evaluateFleet: task(function * (fleet) {
-    // yield waitForProperty(this, `loaded`, true);
+    yield waitForProperty(this, `loaded`, true);
 
     let fleets = this.get('fleets');
     let existingFleet = fleets.findBy('id', fleet.id);

@@ -73,9 +73,11 @@ export default Controller.extend({
     selectFleet(fleet) {
       this.set('selectedFleet', fleet);
 
-      $('.ui.threat.modal').modal('show');
-      $('.ui.threat.modal').modal('hide dimmer');
-      $('.ui.threat.modal').scrollTop(0);
+      if (fleet) {
+        $('.ui.threat.modal').modal('show');
+        $('.ui.threat.modal').modal('hide dimmer');
+        $('.ui.threat.modal').scrollTop(0);
+      }
     },
 
     selectFleetById(id) {
