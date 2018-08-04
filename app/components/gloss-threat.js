@@ -32,7 +32,7 @@ export default Component.extend({
     let shipTotals = _.countBy(composition);
     // results in { shipTypeId: 2, shipTypeId: 5 ... }
 
-    if (!ships.length)
+    if (!ships || ships.length)
       return;
 
     let count = _.max(shipTotals); // 5
