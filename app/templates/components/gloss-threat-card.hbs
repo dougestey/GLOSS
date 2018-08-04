@@ -1,0 +1,63 @@
+<div class="background" style={{backgroundImage}}></div>
+
+<div class="content">
+  <div class="header">
+    <span>{{dominantFaction.name}}</span>
+
+    <div class="image">
+      {{#if dominantFaction}}
+        <img src={{threat-image-url dominantFaction}} class="{{if (eq dominantFaction.type 'Character') 'rounded'}}">
+      {{/if}}
+    </div>
+  </div>
+
+  <div class="meta">
+    <span title="Pilots">
+      <i class="rocket icon"></i>
+      {{model.characters.length}}
+    </span>
+
+    <span title="Kills">
+      <i class="fire icon" title="Kills"></i>
+      {{model.kills.length}}
+    </span>
+
+    <span title="Threat Level">
+      <i class="exclamation circle icon"></i>
+      {{threat-level model.dangerRatio}}
+    </span>
+
+    <span title="Status">
+      <i class="{{if model.isActive 'play' 'stop'}} icon"></i>
+      {{if model.isActive 'Active' 'Expired'}}
+    </span>
+  </div>
+
+  <div class="description">
+    <p>
+      {{#if (and (eq dominantShipType.count 1) (not otherShipCount))}}
+        Solo <strong>{{dominantShipType.name}}</strong> pilot
+      {{else if (and dominantShipType dominantShipType.count)}}
+        {{dominantShipType.count}} <strong>{{dominantShipType.name}}{{unless (eq dominantShipType.count 1) 's'}}</strong> {{otherShipCount}}
+      {{else}}
+        {{otherShipCount}}
+      {{/if}}
+    </p>
+
+    <p title="Jumps from your location">
+      <strong>{{model.system.name}}</strong> {{#if calculateRoute.isRunning}}Calculating...{{else}}{{jumpsAway}}{{/if}}
+    </p>
+
+    <small title="Last seen">{{moment-from-now model.lastSeen interval=1000}}</small>
+  </div>
+
+  <div class="kills">
+    {{#each model.kills as |kill|}}
+      {{gloss-notification
+        model=kill
+        context=context
+        }}
+    {{/each}}
+  </div>
+
+</div>

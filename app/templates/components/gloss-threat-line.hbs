@@ -1,0 +1,9 @@
+{{!-- <td>{{fleet.id}}</td> --}}
+<td>{{fleet.system.region.name}}</td>
+<td>{{fleet.system.name}}</td>
+<td>{{fleet.characters.length}}</td>
+<td>{{fleet.kills.length}}</td>
+<td>{{moment-from-now fleet.startTime interval=1000}}</td>
+<td>{{moment-from-now fleet.lastSeen interval=1000}}</td>
+<td>{{moment-from-now fleet.updatedAt interval=1000}}</td>
+<td>{{threat-level fleet.dangerRatio}}</td>

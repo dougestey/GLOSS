@@ -5,7 +5,6 @@ import { inject as controller } from '@ember/controller';
 import { reads } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { later } from '@ember/runloop';
-import moment from 'moment';
 
 export default Controller.extend({
 
@@ -55,35 +54,18 @@ export default Controller.extend({
 
   regionKills: reads('intel.kills.region.[]'),
 
-  selectedFleetIsTracked: computed('selectedFleet.id', 'trackedFleets.[]', function() {
-    let fleet = this.get('selectedFleet');
-    let fleets = this.get('trackedFleets');
-
-    if (!fleet)
-      return false;
-
-    let existingTrackedFleet = fleets.findBy('id', fleet.id);
-    return !!existingTrackedFleet;
-  }),
-
-  latestBattleReport: computed('selectedFleet', function() {
-    let selectedFleet = this.get('selectedFleet');
-
-    if (!selectedFleet || !selectedFleet.kills.length)
-      return null;
-
-    let { systemId } = selectedFleet.system;
-    let { time } = selectedFleet.kills.get('lastObject');
-    let timestamp = moment(time).utc().format('YYYYMMDDHHmm');
-
-    return `https://zkillboard.com/related/${systemId}/${timestamp}/`;
-  }),
-
   context: computed('route', function() {
     let route = this.get('route');
     let context = route.split('.')[1];
 
     return context;
+  }),
+
+  mode: computed('route', function() {
+    let route = this.get('route');
+    let mode = route.split('.')[0];
+
+    return mode;
   }),
 
   kills: computed('context', 'regionKills.[]', 'constellationKills.[]', 'systemKills.[]', 'trackerKills.[]', function() {
@@ -111,6 +93,17 @@ export default Controller.extend({
     return this.get(`${context}.stats`);
   }),
 
+  selectedFleetIsTracked: computed('selectedFleet.id', 'trackedFleets.[]', function() {
+    let fleet = this.get('selectedFleet');
+    let fleets = this.get('trackedFleets');
+
+    if (!fleet)
+      return false;
+
+    let existingTrackedFleet = fleets.findBy('id', fleet.id);
+    return !!existingTrackedFleet;
+  }),
+
   init() {
     this._super(...arguments);
 
@@ -128,13 +121,11 @@ export default Controller.extend({
       this.toggleProperty('showKillStream');
     },
 
-    selectFleet({ fleet, faction, shipType, otherShipCount }) {
-      this.toggleProperty('detailMode');
-
+    selectFleet(fleet) {
       this.set('selectedFleet', fleet);
-      this.set('selectedFaction', faction);
-      this.set('selectedShipType', shipType);
-      this.set('selectedShipCount', otherShipCount);
+      // this.set('selectedFaction', faction);
+      // this.set('selectedShipType', shipType);
+      // this.set('selectedShipCount', otherShipCount);
 
       $('.ui.threat.modal').modal('show');
       $('.ui.threat.modal').modal('hide dimmer');
@@ -143,15 +134,15 @@ export default Controller.extend({
 
     toggleTracking() {
       let fleet = this.get('selectedFleet');
-      let faction = this.get('selectedFaction');
+      // let faction = this.get('selectedFaction');
       let fleetIsTracked = this.get('selectedFleetIsTracked');
 
       if (fleetIsTracked) {
         this.get('tracker').remove(fleet);
-        this.get('message.dispatch').perform(`Tracking disabled`, `${faction.name}`, 2);
+        this.get('message.dispatch').perform(`Tracking disabled`, undefined, 2);
       } else {
         this.get('tracker').add(fleet);
-        this.get('message.dispatch').perform(`Tracking enabled`, `${faction.name}`, 2);
+        this.get('message.dispatch').perform(`Tracking enabled`, undefined, 2);
       }
     },
   }

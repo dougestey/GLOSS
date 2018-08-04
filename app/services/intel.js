@@ -158,7 +158,7 @@ export default Service.extend({
     if (scope === 'system') {
       let system = this.get('location.system.id');
 
-      if (payload.system.systemId === system) {
+      if (payload.system.id === system) {
         this.get(`kills.${scope}`).pushObject(payload);
       }
     } else {
@@ -166,7 +166,7 @@ export default Service.extend({
 
       let systems = this.get(`location.${scope}.systems`);
 
-      if (systems.findBy('id', payload.system.systemId)) {
+      if (systems.findBy('id', payload.system.id)) {
         this.get(`kills.${scope}`).pushObject(payload);
       }
     }
@@ -176,12 +176,10 @@ export default Service.extend({
     yield waitForProperty(this, `location.${scope}`, 'id');
     yield waitForProperty(this, `fleets.${scope}`, (store) => isArray(store));
 
-    // let system = this.get('location.system');
-    // if (fleet.system.systemId === system.id) {
     if (scope === 'system') {
       let system = this.get('location.system.id');
 
-      if (payload.system.systemId === system) {
+      if (payload.system.id === system) {
         let fleets = this.get(`fleets.${scope}`);
         let existingFleet = fleets.findBy('id', payload.id);
 
@@ -205,7 +203,7 @@ export default Service.extend({
     } else {
       let systems = this.get(`location.${scope}.systems`);
 
-      if (systems.findBy('id', payload.system.systemId)) {
+      if (systems.findBy('id', payload.system.id)) {
         let fleets = this.get(`fleets.${scope}`);
         let existingFleet = fleets.findBy('id', payload.id);
 

@@ -15,6 +15,11 @@ Router.map(function() {
     this.route('region');
     this.route('tracker');
   });
+  this.route('discover', function() {
+    this.route('fleets');
+    this.route('map');
+    this.route('kills');
+  });
 });
 
 export default Router;

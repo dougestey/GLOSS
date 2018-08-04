@@ -1,0 +1,70 @@
+{{gloss-threat-display
+  selectedFleet=selectedFleet
+  toggleTracking=(action 'toggleTracking')
+  }}
+
+{{gloss-about-display}}
+
+<div class="Gloss">
+  {{gloss-stats
+    mode=mode
+    context=context
+    loadUiElements=loadUiElements
+    isConnected=isConnected
+    fleets=fleets
+    kills=kills
+    }}
+
+  <div class="ui grid">
+    <div class="three columns row no-gutter p0 mt2 mb1">
+      <div class="column">
+        {{#link-to 'discover.map' class='Gloss-button Gloss-button--small'}}
+          Map
+        {{/link-to}}
+      </div>
+
+      <div class="column">
+        {{#link-to 'discover.fleets' class='Gloss-button Gloss-button--small'}}
+          Fleets <span class="Gloss-button--detail">{{fleets}}</span>
+        {{/link-to}}
+      </div>
+
+      <div class="column">
+        {{#link-to 'discover.kills' class='Gloss-button Gloss-button--small'}}
+          Kills <span class="Gloss-button--detail">{{kills}}</span>
+        {{/link-to}}
+      </div>
+    </div>
+  </div>
+
+  <div class="Gloss-viewport">
+    {{#liquid-if loadIntel class="ui-fade"}}
+      <div class="ui grid padded">
+        <div class="row">
+          {{outlet}}
+        </div>
+      </div>
+    {{/liquid-if}}
+  </div>
+
+  <div class="Gloss-navigation Gloss-module Gloss-module--x Gloss-flex--end Gloss-fixed Gloss-fixed--bottom">
+    {{gloss-shard
+      label=(app-version hideSha=true)
+      loaded=loadUiElements
+      loadOrder=5
+      align="left"
+      }}
+
+    {{gloss-nav-switch
+      loaded=loadUiElements
+      loadOrder=6
+      }}
+
+    {{gloss-shard
+      label=character.name
+      loaded=loadUiElements
+      loadOrder=7
+      align="right"
+      }}
+  </div>
+</div>

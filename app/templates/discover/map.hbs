@@ -1,0 +1,40 @@
+{{#if loading}}
+  <div class="ui active inverted text loader">Visualizing New Eden</div>
+{{else}}
+  {{gloss-map-universe
+    regions=regions
+    systems=systems
+    fleets=fleets
+    selectRegion=(action 'selectRegion')
+    selectedRegion=selectedRegion
+    }}
+{{/if}}
+
+{{#if (and selectedRegion fleetDisplay.length)}}
+  <div class="Gloss-sidebar Gloss-sidebar--map Gloss-sidebar--shown">
+    <div class="Gloss-notifier Gloss-module">
+      <div class="Gloss-stream Gloss-scroller">
+        <div class="Gloss-notification--line">
+          <span class="Gloss-notification--flex">
+            <span>
+              <strong>{{selectedRegion.name}}</strong>
+              <br>
+            </span>
+          </span>
+        </div>
+        {{#each (sort-by 'lastSeen:desc' fleetDisplay) as |fleet|}}
+          {{#if fleet.characters.length}}
+            {{gloss-threat-map
+              model=fleet
+              selectFleet=(action 'selectFleet')
+              }}
+            {{/if}}
+        {{/each}}
+      </div>
+    </div>
+
+    {{!-- <button class="Gloss-button Gloss-button--small" {{action 'resetMap' this}}>
+      Return
+    </button> --}}
+  </div>
+{{/if}}

@@ -1,0 +1,25 @@
+.Gloss-map {
+  &--region {
+    opacity: 0.7;
+    cursor: pointer;
+
+    text {
+      letter-spacing: 3px;
+    }
+
+    &:hover, &.active {
+      opacity: 1;
+    }
+
+    &.active {
+      text {
+        fill: white !important;
+      }
+
+      circle:not(.has-fleets) {
+        fill: $primary !important;
+        opacity: 0.9;
+      }
+    }
+  }
+}

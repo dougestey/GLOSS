@@ -1,0 +1,65 @@
+.Gloss-navSwitch {
+  padding: 1.75rem 0.75rem 1rem;
+  max-width: 350px;
+  transition: border 175ms linear;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  cursor: pointer;
+
+  a {
+    color: transparent !important;
+    font-family: 'Titillium Web';
+    line-height: 1.5rem;
+    display: inline-flex;
+    padding: 0;
+
+    transition: transform 175ms linear, color 175ms linear;
+
+    &.active {
+      &:nth-child(1) {
+        transform: translateX(50%);
+      }
+
+      &:nth-child(2) {
+        transform: translateX(-50%);
+      }
+    }
+
+    &:not(.active) {
+      &:nth-child(1) {
+        transform: translateX(100%);
+      }
+
+      &:nth-child(2) {
+        transform: translateX(-100%);
+      }
+    }
+
+    &.active {
+      color: $primary !important;
+    }
+  }
+
+  &:hover {
+    border-color: transparentize($secondary, 0.8);
+
+    a {
+      &:not(.active) {
+        color: $secondary !important;
+      }
+
+      &:nth-child(1) {
+        transform: translateX(0);
+      }
+
+      &:nth-child(2) {
+        transform: translateX(0);
+      }
+
+      &:hover {
+        color: $primary !important;
+      }
+    }
+  }
+}

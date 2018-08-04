@@ -22,7 +22,7 @@
 
 <div class="ui link cards">
   {{#each (sort-by 'lastSeen:desc' activeFleets) as |fleet|}}
-    {{gloss-threat
+    {{gloss-threat-card
       model=fleet
       system=system
       context='tracker'
@@ -31,7 +31,7 @@
   {{/each}}
 
   {{#each (sort-by 'lastSeen:desc' inactiveFleets) as |fleet|}}
-    {{gloss-threat
+    {{gloss-threat-card
       model=fleet
       system=system
       context='tracker'
