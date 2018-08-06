@@ -5,7 +5,7 @@ import { inject as controller } from '@ember/controller';
 import { reads } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { later } from '@ember/runloop';
-import { task, waitForProperty } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 
 export default Controller.extend({
 

@@ -1,5 +1,4 @@
 import Service, { inject as service } from '@ember/service';
-import { bind } from '@ember/runloop';
 import { task, waitForProperty } from 'ember-concurrency';
 
 export default Service.extend({

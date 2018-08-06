@@ -3,14 +3,13 @@ import { run } from '@ember/runloop';
 import { get } from '@ember/object';
 import ResizeAware from 'ember-resize/mixins/resize-aware';
 
-// Import the D3 packages we want to use
 import { select } from 'd3-selection';
 import { scaleLinear } from 'd3-scale';
 import { extent } from 'd3-array';
 import { transition } from 'd3-transition';
 import { easeCubicInOut } from 'd3-ease';
 
-import { task, waitForProperty } from 'ember-concurrency';
+import { task, waitForProperty, timeout } from 'ember-concurrency';
 import _ from 'npm:lodash';
 
 export default Component.extend(ResizeAware, {
@@ -18,6 +17,8 @@ export default Component.extend(ResizeAware, {
   tagName: 'svg',
 
   attributeBindings: ['width', 'height'],
+
+  hasNotCompletedInitialRender: true,
 
   debouncedDidResize(width, height) {
     this.set('width', width);
@@ -70,6 +71,7 @@ export default Component.extend(ResizeAware, {
   },
 
   drawSystems: task(function * () {
+    yield waitForProperty(this, 'regions.length', val => val !== 0);
     yield waitForProperty(this, 'systems.length', val => val !== 0);
     yield waitForProperty(this, 'fleets.length', val => val !== 0);
 
@@ -136,9 +138,11 @@ export default Component.extend(ResizeAware, {
       systems
         .exit()
         .remove();
+
+      this.sendAction('notifyMapHasLoaded');
     }
 
-  }).keepLatest(),
+  }).restartable(),
 
   drawRegions() {
     this.get('drawRegionsTask').perform();
@@ -239,6 +243,9 @@ export default Component.extend(ResizeAware, {
       .transition(t)
       .attr('r', 0)
       .remove()
+
+    // Unblock the runtime
+    yield timeout(2000);
 
     yield this.get('drawSystems').perform();
   }).restartable(),

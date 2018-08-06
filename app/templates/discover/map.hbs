@@ -4,12 +4,19 @@
 
 {{else}}
 
+  {{#if hasNotCompletedInitialRender}}
+
+    <div class="ui active inverted text loader">Visualizing New Eden</div>
+
+  {{/if}}
+
   {{gloss-map-universe
     regions=regions
     systems=systems
     fleets=fleets
     selectRegion=(action 'selectRegion')
     selectedRegion=selectedRegion
+    notifyMapHasLoaded=(action 'notifyMapHasLoaded')
     }}
 
 {{/if}}

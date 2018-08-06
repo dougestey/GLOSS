@@ -19,10 +19,12 @@
 
       <tbody>
         {{#each (sort-by 'lastSeen:desc' fleets) as |fleet|}}
-          {{gloss-threat-line
-            fleet=fleet
-            selectFleet=(action 'selectFleet')
-            }}
+          {{#if fleet.characters.length}}
+            {{gloss-threat-line
+              fleet=fleet
+              selectFleet=(action 'selectFleet')
+              }}
+          {{/if}}
         {{/each}}
       </tbody>
     </table>

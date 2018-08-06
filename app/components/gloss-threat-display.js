@@ -3,6 +3,7 @@ import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import _ from 'npm:lodash';
+import moment from 'moment';
 
 export default Component.extend({
 

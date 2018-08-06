@@ -46,7 +46,7 @@
           Fleet {{if selectedFleet.isActive 'is active' 'has expired'}}
         </span>
 
-        <p>Last reported {{moment-from-now selectedFleet.lastSeen}} in <strong>{{selectedFleet.system.name}}</strong> ({{selectedFleet.system.region.name}})</p>
+        <p>Last reported {{moment-from-now selectedFleet.lastSeen interval=1000}} in <strong>{{selectedFleet.system.name}}</strong> ({{selectedFleet.system.region.name}})</p>
 
         {{#if latestBattleReport}}
           <a href="{{latestBattleReport}}" target="_blank" title="View on zKill">Latest battle report <i class="external icon"></i></a>
