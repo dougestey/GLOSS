@@ -63,9 +63,10 @@ a:hover {
           font-weight: 400 !important;
           font-size: 1.85rem !important;
           display: flex !important;
-          height: 3rem !important;
+          height: 2rem !important;
           justify-content: space-between;
           white-space: nowrap;
+          flex-shrink: 0;
 
           > .image {
             max-width: 128px;

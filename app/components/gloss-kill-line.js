@@ -14,7 +14,7 @@ export default Component.extend({
     viewAssociatedFleet() {
       let id = this.get('kill.fleet.id');
 
-      this.sendAction('selectFleetById', id);
+      this.sendAction('selectFleet', id);
     }
   },
 

@@ -1,33 +1,31 @@
 {{#unless fleets.length}}
-  <div class="ui active inverted text loader">Waiting for fleet activity</div>
+
+  <div class="ui active inverted text loader">Downloading initial fleet data from Sentinel<br><small>This only happens once</small></div>
+
 {{else}}
+
   <div class="ui link cards">
-      {{!-- {{gloss-threat
-        model=fleet
-        selectFleet=(action 'selectFleet')
-        }} --}}
-      <table class="ui table inverted" cellpadding="10">
-        <thead>
-          {{!-- <th>ID</th> --}}
-          <th>Region</th>
-          <th>System</th>
-          <th>Pilots</th>
-          <th>Kills</th>
-          <th>First kill</th>
-          <th>Last Seen</th>
-          <th>Updated</th>
-          <th>Threat level</th>
-        </thead>
+    <table class="ui table inverted" cellpadding="10">
+      <thead>
+        <th>Region</th>
+        <th>System</th>
+        <th>Pilots</th>
+        <th>Kills</th>
+        <th>First kill</th>
+        <th>Last Seen</th>
+        <th>Updated</th>
+        <th>Threat level</th>
+      </thead>
 
-        <tbody>
-          {{#each (sort-by 'lastSeen:desc' fleets) as |fleet|}}
-            {{gloss-threat-line
-              fleet=fleet
-              selectFleet=(action 'selectFleet')
-              }}
-          {{/each}}
-        </tbody>
-      </table>
-
+      <tbody>
+        {{#each (sort-by 'lastSeen:desc' fleets) as |fleet|}}
+          {{gloss-threat-line
+            fleet=fleet
+            selectFleet=(action 'selectFleet')
+            }}
+        {{/each}}
+      </tbody>
+    </table>
   </div>
+
 {{/unless}}

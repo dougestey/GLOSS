@@ -21,12 +21,12 @@ export default Controller.extend({
   inactiveFleets: filterBy('fleets', 'isActive', false),
 
   actions: {
-    selectFleet(fleet) {
-      this.get('navigate').send('selectFleet', fleet);
+    selectFleet(id) {
+      this.get('navigate').send('selectFleet', id);
     },
 
-    toggleTracking(fleet) {
-      this.get('navigate').send('toggleTracking', fleet);
+    toggleTracking() {
+      this.get('navigate').send('toggleTracking');
     },
 
     resetDeadFleetCount() {

@@ -13,12 +13,16 @@
     </thead>
 
     <tbody>
-      {{#each (sort-by 'time:desc' kills) as |kill|}}
+      {{#each killsRenderable as |kill|}}
         {{gloss-kill-line
           kill=kill
-          selectFleetById=(action 'selectFleetById')
+          selectFleet=(action 'selectFleet')
           }}
       {{/each}}
+
+      {{#if (not-eq killsRenderable.length kills.length)}}
+        <small>In the interest of performance, only the last 500 kills are shown.</small>
+      {{/if}}
     </tbody>
     </table>
   </div>

@@ -30,11 +30,20 @@ export default Controller.extend({
 
   kills: reads('discovery.kills.length'),
 
-  trackedFleets: reads('tracker.fleets.[]'),
+  trackerFleets: reads('tracker.fleets.[]'),
 
-  selectedFleetIsTracked: computed('selectedFleet.id', 'trackedFleets.[]', function() {
+  selectedFleet: computed('selectedFleetId', 'discovery.fleets.[]', function() {
+    let id = this.get('selectedFleetId');
+
+    if (!id)
+      return;
+
+    return this.get('discovery.fleets').findBy('id', id);
+  }),
+
+  selectedFleetIsTracked: computed('selectedFleetId', 'trackerFleets.[]', function() {
     let fleet = this.get('selectedFleet');
-    let fleets = this.get('trackedFleets');
+    let fleets = this.get('trackerFleets');
 
     if (!fleet)
       return false;
@@ -70,21 +79,8 @@ export default Controller.extend({
   },
 
   actions: {
-    selectFleet(fleet) {
-      this.set('selectedFleet', fleet);
-
-      if (fleet) {
-        $('.ui.threat.modal').modal('show');
-        $('.ui.threat.modal').modal('hide dimmer');
-        $('.ui.threat.modal').scrollTop(0);
-      }
-    },
-
-    selectFleetById(id) {
-      let fleets = this.get('discovery.fleets');
-      let fleetToSelect = fleets.findBy('id', id);
-
-      this.set('selectedFleet', fleetToSelect);
+    selectFleet(id) {
+      this.set('selectedFleetId', id);
 
       $('.ui.threat.modal').modal('show');
       $('.ui.threat.modal').modal('hide dimmer');
@@ -93,7 +89,6 @@ export default Controller.extend({
 
     toggleTracking() {
       let fleet = this.get('selectedFleet');
-      // let faction = this.get('selectedFaction');
       let fleetIsTracked = this.get('selectedFleetIsTracked');
 
       if (fleetIsTracked) {

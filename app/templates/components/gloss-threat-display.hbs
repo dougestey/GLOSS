@@ -1,92 +1,110 @@
-{{#ui-modal data-select="threat" name="threat" class="threat inverted" onApprove=(action toggleTracking selectedFleet)}}
-  <div class="header">
-    {{dominantFaction.name}} <span class="secondary">{{dominantFaction.type}}</span>
-  </div>
-
-  <div class="image content">
-    <div class="ui tiny image">
-      {{#if dominantFaction}}
-        <img src={{threat-image-url dominantFaction}}>
-      {{/if}}
+{{#ui-modal data-select="threat" name="threat" class="threat inverted" onApprove=(action toggleTracking)}}
+  {{#if (not selectedFleet.id)}}
+    <div class="content">
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="ui active inverted text loader">Downloading initial fleet data from Sentinel<br><small>This only happens once</small></div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+    </div>
+  {{else}}
+    <div class="header">
+      {{dominantFaction.name}} <span class="secondary">{{dominantFaction.type}}</span>
     </div>
 
-    <div class="description">
-      <span title="Pilots">
-        <i class="rocket icon"></i>
-        {{selectedFleet.characters.length}} pilot{{unless (eq selectedFleet.characters.length 1) 's'}}
-      </span>
-
-      <span title="Kills">
-        <i class="fire icon" title="Kills"></i>
-        {{selectedFleet.kills.length}} kill{{unless (eq selectedFleet.kills.length 1) 's'}}
-      </span>
-
-      <span title="Threat Level">
-        <i class="exclamation circle icon"></i>
-        Threat level {{threat-level selectedFleet.dangerRatio}}
-      </span>
-
-      <span title="Status">
-        <i class="{{if selectedFleet.isActive 'play' 'stop'}} icon"></i>
-        Fleet {{if selectedFleet.isActive 'is active' 'has expired'}}
-      </span>
-
-      <p>Last kill occurred {{moment-from-now selectedFleet.lastSeen}}</p>
-
-      {{#if latestBattleReport}}
-        <a href="{{latestBattleReport}}" target="_blank" title="View on zKill">Latest battle report <i class="external icon"></i></a>
-      {{/if}}
-    </div>
-  </div>
-
-  <div class="content">
-    <div class="description">
-      <table class="ui celled table inverted" cellpadding="10">
-        <thead>
-          <th>Threat</th>
-          <th>Pilot</th>
-          <th>Ship</th>
-          <th>Corporation</th>
-          <th>Alliance</th>
-        </thead>
-
-        <tbody>
-          {{#each (sort-by 'ship.name:DESC' selectedFleet.characters) as |character|}}
-            <tr class="Gloss-report--character">
-              <td>{{#if (eq character.dangerRatio 0)}}N/A{{else}}{{character.dangerRatio}}%{{/if}}</td>
-              <td><a href="{{zkill-character character}}" target="_blank">{{character.name}}</a></td>
-              <td class="Gloss-report--ship">
-                {{#if character.ship}}
-                  <img src="https://imageserver.eveonline.com/Type/{{character.ship.id}}_32.png" />
-                  {{character.ship.name}}
-                {{else}}
-                  Unknown vessel
-                {{/if}}
-              </td>
-              <td>{{character.corporation.name}}</td>
-              <td>{{if character.alliance character.alliance.name 'None'}}</td>
-            </tr>
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="actions ui grid">
-    <div class="two column row no-gutter">
-      <div class="column">
-        <div class="Gloss-button Gloss-button--frameless Gloss-button--small deny">
-          Close
-        </div>
+    <div class="image content">
+      <div class="ui tiny image">
+        {{#if dominantFaction}}
+          <img src={{threat-image-url dominantFaction}}>
+        {{/if}}
       </div>
 
-      <div class="column">
-        <div class="Gloss-button Gloss-button--frameless Gloss-button--small positive">
-          <i class="power icon"></i>
+      <div class="description">
+        <span title="Pilots">
+          <i class="rocket icon"></i>
+          {{selectedFleet.characters.length}} pilot{{unless (eq selectedFleet.characters.length 1) 's'}}
+        </span>
 
-          {{if selectedFleetIsTracked 'Stop tracking' 'Track fleet'}}
+        <span title="Kills">
+          <i class="fire icon" title="Kills"></i>
+          {{selectedFleet.kills.length}} kill{{unless (eq selectedFleet.kills.length 1) 's'}}
+        </span>
+
+        <span title="Threat Level">
+          <i class="exclamation circle icon"></i>
+          Threat level {{threat-level selectedFleet.dangerRatio}}
+        </span>
+
+        <span title="Status">
+          <i class="{{if selectedFleet.isActive 'play' 'stop'}} icon"></i>
+          Fleet {{if selectedFleet.isActive 'is active' 'has expired'}}
+        </span>
+
+        <p>Last reported {{moment-from-now selectedFleet.lastSeen}} in <strong>{{selectedFleet.system.name}}</strong> ({{selectedFleet.system.region.name}})</p>
+
+        {{#if latestBattleReport}}
+          <a href="{{latestBattleReport}}" target="_blank" title="View on zKill">Latest battle report <i class="external icon"></i></a>
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="description">
+        <table class="ui celled table inverted" cellpadding="10">
+          <thead>
+            <th>Threat</th>
+            <th>Pilot</th>
+            <th>Ship</th>
+            <th>Corporation</th>
+            <th>Alliance</th>
+          </thead>
+
+          <tbody>
+            {{#each (sort-by 'ship.name:DESC' selectedFleet.characters) as |character|}}
+              <tr class="Gloss-report--character">
+                <td>{{#if (eq character.dangerRatio 0)}}N/A{{else}}{{character.dangerRatio}}%{{/if}}</td>
+                <td><a href="{{zkill-character character}}" target="_blank">{{character.name}}</a></td>
+                <td class="Gloss-report--ship">
+                  {{#if character.ship}}
+                    <img src="https://imageserver.eveonline.com/Type/{{character.ship.id}}_32.png" />
+                    {{character.ship.name}}
+                  {{else}}
+                    Unknown vessel
+                  {{/if}}
+                </td>
+                <td>{{character.corporation.name}}</td>
+                <td>{{if character.alliance character.alliance.name 'None'}}</td>
+              </tr>
+            {{else}}
+              No pilot data. Pilots likely became associated with a bigger fleet.
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="actions ui grid">
+      <div class="two column row no-gutter">
+        <div class="column">
+          <div class="Gloss-button Gloss-button--frameless Gloss-button--small deny">
+            Close
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="Gloss-button Gloss-button--frameless Gloss-button--small positive">
+            <i class="power icon"></i>
+
+            {{if selectedFleetIsTracked 'Stop tracking' 'Track fleet'}}
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  {{/if}}
 {{/ui-modal}}

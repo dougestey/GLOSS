@@ -27,7 +27,11 @@ export default Service.extend({
   },
 
   remove(fleet) {
-    this.get('fleets').removeObject(fleet);
+    let existingFleet = this.get('fleets').findBy('id', fleet.id);
+
+    if (existingFleet)
+      this.get('fleets').removeObject(existingFleet);
+
     this.get('intel').unsubscribeFleet(fleet.id);
   },
 

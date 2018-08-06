@@ -12,7 +12,7 @@
 {{/if}}
 
 {{#if (and (not deadFleetCount) (not fleets.length))}}
-  <p class="copy mt1 ml1">You aren't tracking any fleet movement.
+  <p class="copy mt1 ml1">You aren't tracking any fleet activity.
 
   To get started, select a fleet from one of the other panes and hit <span class="primary">Track Fleet</span>.
 
@@ -23,7 +23,7 @@
 <div class="ui link cards">
   {{#each (sort-by 'lastSeen:desc' activeFleets) as |fleet|}}
     {{gloss-threat-card
-      model=fleet
+      fleet=fleet
       system=system
       context='tracker'
       selectFleet=(action 'selectFleet')
@@ -32,7 +32,7 @@
 
   {{#each (sort-by 'lastSeen:desc' inactiveFleets) as |fleet|}}
     {{gloss-threat-card
-      model=fleet
+      fleet=fleet
       system=system
       context='tracker'
       selectFleet=(action 'selectFleet')

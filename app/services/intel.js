@@ -1,3 +1,4 @@
+
 import Service, { inject as service } from '@ember/service';
 import { bind } from '@ember/runloop';
 import { isArray } from '@ember/array';
@@ -6,6 +7,8 @@ import { task, waitForProperty } from 'ember-concurrency';
 export default Service.extend({
 
   arbiter: service(),
+
+  discovery: service(),
 
   message: service(),
 
@@ -52,11 +55,15 @@ export default Service.extend({
 
     // Region
     this.get('queueKill').perform(kill, 'region');
+
+    // Discovery
+    this.get('discovery.evaluateKill').perform(kill);
   },
 
   receiveFleet(fleet) {
-    // Let tracker decide if it needs this data.
+    // Notify tracker and discovery.
     this.get('tracker').evaluate(fleet);
+    this.get('discovery.evaluateFleet').perform(fleet);
 
     // Sentinel has different job types that occasionally overlap.
     //

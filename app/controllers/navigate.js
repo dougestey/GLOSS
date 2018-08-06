@@ -5,6 +5,7 @@ import { inject as controller } from '@ember/controller';
 import { reads } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { later } from '@ember/runloop';
+import { task, waitForProperty } from 'ember-concurrency';
 
 export default Controller.extend({
 
@@ -17,6 +18,8 @@ export default Controller.extend({
   application: controller(),
 
   arbiter: service(),
+
+  discovery: service(),
 
   location: service(),
 
@@ -44,7 +47,7 @@ export default Controller.extend({
 
   regionFleets: reads('intel.fleets.region.[]'),
 
-  trackedFleets: reads('tracker.fleets.[]'),
+  trackerFleets: reads('tracker.fleets.[]'),
 
   trackerKills: reads('tracker.kills.[]'),
 
@@ -80,7 +83,7 @@ export default Controller.extend({
     if (!kills)
       return [];
 
-    return kills.sortBy('time').reverse().slice(0, 200);
+    return kills.sortBy('time').reverse().slice(0, 500);
   }),
 
   stats: computed('context', 'system', 'constellation', 'region', function() {
@@ -93,16 +96,56 @@ export default Controller.extend({
     return this.get(`${context}.stats`);
   }),
 
-  selectedFleetIsTracked: computed('selectedFleet.id', 'trackedFleets.[]', function() {
-    let fleet = this.get('selectedFleet');
-    let fleets = this.get('trackedFleets');
+  selectedFleet: computed('selectedFleetId', 'discovery.fleets.[]', 'systemFleets', 'constellationFleets', 'regionFleets', 'trackerFleets', function() {
+    let id = this.get('selectedFleetId');
 
-    if (!fleet)
+    if (!id) {
+      this.set('selectedFleetCache', null);
+      return null;
+    }
+
+    let discoveryFleets = this.get('discovery.fleets');
+    let selected;
+
+    if (discoveryFleets)
+      selected = discoveryFleets.findBy('id', id);
+
+    if (selected) {
+      return selected;
+    }
+
+    let context = this.get('context');
+    let fleetsFromIntel = this.get(`${context}Fleets`);
+    let backup = this.get('selectedFleetCache');
+    selected = fleetsFromIntel.findBy('id', id);
+
+    if (!selected && backup) {
+      return backup;
+    } else if (selected) {
+      this.set('selectedFleetCache', selected);
+    }
+
+    return selected;
+  }),
+
+  selectedFleetIsTracked: computed('selectedFleetId', 'trackerFleets.[]', function() {
+    let id = this.get('selectedFleetId');
+    let fleets = this.get('trackerFleets');
+
+    if (!id)
       return false;
 
-    let existingTrackedFleet = fleets.findBy('id', fleet.id);
+    let existingTrackedFleet = fleets.findBy('id', id);
     return !!existingTrackedFleet;
   }),
+
+  selectFleet: task(function * (id) {
+    this.set('selectedFleetId', id);
+
+    $('.ui.threat.modal').modal('show');
+    $('.ui.threat.modal').modal('hide dimmer');
+    $('.ui.threat.modal').scrollTop(0);
+  }).drop(),
 
   init() {
     this._super(...arguments);
@@ -121,20 +164,12 @@ export default Controller.extend({
       this.toggleProperty('showKillStream');
     },
 
-    selectFleet(fleet) {
-      this.set('selectedFleet', fleet);
-      // this.set('selectedFaction', faction);
-      // this.set('selectedShipType', shipType);
-      // this.set('selectedShipCount', otherShipCount);
-
-      $('.ui.threat.modal').modal('show');
-      $('.ui.threat.modal').modal('hide dimmer');
-      $('.ui.threat.modal').scrollTop(0);
+    selectFleet(id) {
+      this.get('selectFleet').perform(id);
     },
 
     toggleTracking() {
       let fleet = this.get('selectedFleet');
-      // let faction = this.get('selectedFaction');
       let fleetIsTracked = this.get('selectedFleetIsTracked');
 
       if (fleetIsTracked) {

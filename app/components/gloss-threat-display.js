@@ -8,7 +8,7 @@ export default Component.extend({
 
   tracker: service(),
 
-  trackedFleets: reads('tracker.fleets.[]'),
+  trackerFleets: reads('tracker.fleets.[]'),
 
   dominantFaction: computed('selectedFleet.id', 'selectedFleet.characters', function() {
     let characters = this.get('selectedFleet.characters');
@@ -91,9 +91,9 @@ export default Component.extend({
     return `and ${remaining} others`;
   }),
 
-  selectedFleetIsTracked: computed('selectedFleet.id', 'trackedFleets.[]', function() {
+  selectedFleetIsTracked: computed('selectedFleet.id', 'trackerFleets.[]', function() {
     let fleet = this.get('selectedFleet');
-    let fleets = this.get('trackedFleets');
+    let fleets = this.get('trackerFleets');
 
     if (!fleet)
       return false;

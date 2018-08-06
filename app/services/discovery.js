@@ -32,14 +32,6 @@ export default Service.extend({
       this.get('loadActiveFleets').perform(fleets);
     });
 
-    socket.on('active_fleet_update', (fleet) => {
-      this.get('evaluateFleet').perform(fleet);
-    });
-
-    socket.on('active_kill_update', (fleet) => {
-      this.get('evaluateKill').perform(fleet);
-    });
-
     socket.get('/api/regions?limit=105', (regions) => {
       regions = this._filterRegions(regions);
 

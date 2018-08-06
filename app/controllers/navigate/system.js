@@ -15,12 +15,12 @@ export default Controller.extend({
   fleets: reads('intel.fleets.system.[]'),
 
   actions: {
-    selectFleet(fleet) {
-      this.get('navigate').send('selectFleet', fleet);
+    selectFleet(id) {
+      this.get('navigate').send('selectFleet', id);
     },
 
-    toggleTracking(fleet) {
-      this.get('navigate').send('toggleTracking', fleet);
+    toggleTracking() {
+      this.get('navigate').send('toggleTracking');
     },
   }
 

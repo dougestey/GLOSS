@@ -14,22 +14,22 @@
   <div class="meta">
     <span title="Pilots">
       <i class="rocket icon"></i>
-      {{model.characters.length}}
+      {{fleet.characters.length}}
     </span>
 
     <span title="Kills">
       <i class="fire icon" title="Kills"></i>
-      {{model.kills.length}}
+      {{fleet.kills.length}}
     </span>
 
     <span title="Threat Level">
       <i class="exclamation circle icon"></i>
-      {{threat-level model.dangerRatio}}
+      {{threat-level fleet.dangerRatio}}
     </span>
 
     <span title="Status">
-      <i class="{{if model.isActive 'play' 'stop'}} icon"></i>
-      {{if model.isActive 'Active' 'Expired'}}
+      <i class="{{if fleet.isActive 'play' 'stop'}} icon"></i>
+      {{if fleet.isActive 'Active' 'Expired'}}
     </span>
   </div>
 
@@ -45,14 +45,14 @@
     </p>
 
     <p title="Jumps from your location">
-      <strong>{{model.system.name}}</strong> {{#if calculateRoute.isRunning}}Calculating...{{else}}{{jumpsAway}}{{/if}}
+      <strong>{{fleet.system.name}}</strong> {{#if calculateRoute.isRunning}}Calculating...{{else}}{{jumpsAway}}{{/if}}
     </p>
 
-    <small title="Last seen">{{moment-from-now model.lastSeen interval=1000}}</small>
+    <small title="Last seen">{{moment-from-now fleet.lastSeen interval=1000}}</small>
   </div>
 
   <div class="kills">
-    {{#each model.kills as |kill|}}
+    {{#each fleet.kills as |kill|}}
       {{gloss-notification
         model=kill
         context=context

@@ -18,25 +18,25 @@
     <div class="five column row no-gutter p0 mt2 mb1">
       <div class="column">
         {{#link-to 'navigate.system' class='Gloss-button Gloss-button--small'}}
-          {{system.name}} <span class="Gloss-button--detail">{{systemFleets.length}}</span>
+          {{if system.name system.name 'System'}} <span class="Gloss-button--detail">{{systemFleets.length}}</span>
         {{/link-to}}
       </div>
 
       <div class="column">
         {{#link-to 'navigate.constellation' class='Gloss-button Gloss-button--small'}}
-          {{constellation.name}} <span class="Gloss-button--detail">{{constellationFleets.length}}</span>
+          {{if constellation.name constellation.name 'Constellation'}} <span class="Gloss-button--detail">{{constellationFleets.length}}</span>
         {{/link-to}}
       </div>
 
       <div class="column">
         {{#link-to 'navigate.region' class='Gloss-button Gloss-button--small'}}
-          {{region.name}} <span class="Gloss-button--detail">{{regionFleets.length}}</span>
+          {{if region.name region.name 'Region'}} <span class="Gloss-button--detail">{{regionFleets.length}}</span>
         {{/link-to}}
       </div>
 
       <div class="column">
         {{#link-to 'navigate.tracker' class='Gloss-button Gloss-button--small'}}
-          Tracker <span class="Gloss-button--detail">{{trackedFleets.length}}</span>
+          Tracker <span class="Gloss-button--detail">{{trackerFleets.length}}</span>
         {{/link-to}}
       </div>
 
@@ -78,7 +78,7 @@
           {{/each}}
 
           {{#if (not-eq killsRenderable.length kills.length)}}
-            <small>In your GLOSS display's interest of performance, only the last 200 kills are shown.</small>
+            <small>In the interest of performance, only the last 500 kills are shown.</small>
           {{/if}}
         {{/liquid-if}}
       </div>

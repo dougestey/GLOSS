@@ -32,7 +32,7 @@ export default Controller.extend({
 
   init() {
     this._super(...arguments);
-    
+
     this.get('initializeMap').perform();
   },
 
@@ -49,8 +49,8 @@ export default Controller.extend({
       this.set('selectedRegion', region);
     },
 
-    selectFleet(fleet) {
-      this.get('discover').send('selectFleet', fleet);
+    selectFleet(id) {
+      this.get('discover').send('selectFleet', id);
     },
 
     resetMap() {

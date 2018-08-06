@@ -13,12 +13,12 @@ export default Controller.extend({
   fleetsLoaded: reads('discovery.loaded'),
 
   actions: {
-    selectFleet(fleet) {
-      this.get('discover').send('selectFleet', fleet);
+    selectFleet(id) {
+      this.get('discover').send('selectFleet', id);
     },
 
-    toggleTracking(fleet) {
-      this.get('discover').send('toggleTracking', fleet);
+    toggleTracking() {
+      this.get('discover').send('toggleTracking');
     },
   }
 

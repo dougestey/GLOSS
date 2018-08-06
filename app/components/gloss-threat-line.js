@@ -1,13 +1,5 @@
-import Component from '@ember/component';
+import GlossThreat from './gloss-threat';
 
-export default Component.extend({
-
+export default GlossThreat.extend({
   tagName: 'tr',
-
-  click() {
-    let fleet = this.get('fleet');
-
-    this.sendAction('selectFleet', fleet);
-  },
-
 });

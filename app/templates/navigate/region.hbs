@@ -1,7 +1,7 @@
 <div class="ui link cards">
   {{#each (sort-by 'lastSeen:desc' fleets) as |fleet|}}
     {{gloss-threat-card
-      model=fleet
+      fleet=fleet
       system=system
       context='region'
       selectFleet=(action 'selectFleet')

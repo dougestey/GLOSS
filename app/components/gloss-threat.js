@@ -17,18 +17,19 @@ export default Component.extend({
   didReceiveAttrs() {
     this._super(...arguments);
 
-    this.get('calculateRoute').perform();
+    if (this.get('system'))
+      this.get('calculateRoute').perform();
   },
 
   click() {
-    let fleet = this.get('model');
+    let id = this.get('fleet.id');
 
-    this.sendAction('selectFleet', fleet);
+    this.sendAction('selectFleet', id);
   },
 
-  dominantShipType: computed('model.ships', 'model.composition', function() {
-    let ships = this.get('model.ships');
-    let composition = this.get('model.composition');
+  dominantShipType: computed('fleet.ships', 'fleet.composition', function() {
+    let ships = this.get('fleet.ships');
+    let composition = this.get('fleet.composition');
     let shipTotals = _.countBy(composition);
     // results in { shipTypeId: 2, shipTypeId: 5 ... }
 
@@ -43,8 +44,11 @@ export default Component.extend({
     return { id, name, count };
   }),
 
-  dominantFaction: computed('model.characters', function() {
-    let characters = this.get('model.characters');
+  dominantFaction: computed('fleet.characters', function() {
+    let characters = this.get('fleet.characters');
+
+    if (!characters.length)
+      return {};
 
     if (characters.length === 1) {
       let type = 'Character';
@@ -84,7 +88,7 @@ export default Component.extend({
 
   otherShipCount: computed('model', 'dominantShipType', function() {
     let dominantShipType = this.get('dominantShipType');
-    let totalPilots = this.get('model.characters.length');
+    let totalPilots = this.get('fleet.characters.length');
 
     if (!dominantShipType || !dominantShipType.count) {
       if (!totalPilots)
@@ -115,7 +119,11 @@ export default Component.extend({
 
   calculateRoute: task(function * () {
     let origin = this.get('system');
-    let destination = this.get('model.system.id');
+    let destination = this.get('fleet.system.id');
+
+    if (!origin || !destination)
+      return;
+
     let route = yield this.get('navigation').calculateRoute(origin, destination);
     let jumpsAway = route.length - 1;
 

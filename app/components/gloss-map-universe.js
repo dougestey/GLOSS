@@ -138,7 +138,7 @@ export default Component.extend(ResizeAware, {
         .remove();
     }
 
-  }).restartable(),
+  }).keepLatest(),
 
   drawRegions() {
     this.get('drawRegionsTask').perform();
