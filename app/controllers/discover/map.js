@@ -16,7 +16,7 @@ export default Controller.extend({
 
   fleets: reads('discovery.fleets.[]'),
 
-  fleetDisplay: computed('selectedRegion', function() {
+  fleetDisplay: computed('selectedRegion', 'fleets', function() {
     let region = this.get('selectedRegion');
 
     if (!region)
