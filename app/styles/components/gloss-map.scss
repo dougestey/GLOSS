@@ -11,6 +11,10 @@
       opacity: 1;
     }
 
+    circle.has-fleets {
+      animation: blink-animation 250ms steps(5, start) 3;
+    }
+
     &.active {
       text {
         fill: white !important;

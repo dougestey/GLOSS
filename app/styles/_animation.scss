@@ -48,3 +48,9 @@
   from, to { border-color: transparent }
   50% { border-color: $secondary; }
 }
+
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}

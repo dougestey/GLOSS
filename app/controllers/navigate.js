@@ -116,11 +116,11 @@ export default Controller.extend({
 
     let context = this.get('context');
     let fleetsFromIntel = this.get(`${context}Fleets`);
-    let backup = this.get('selectedFleetCache');
+    let cache = this.get('selectedFleetCache');
     selected = fleetsFromIntel.findBy('id', id);
 
-    if (!selected && backup) {
-      return backup;
+    if (!selected && cache) {
+      return cache;
     } else if (selected) {
       this.set('selectedFleetCache', selected);
     }

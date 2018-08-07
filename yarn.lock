@@ -1230,6 +1230,10 @@ bower-endpoint-parser@0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/bower-endpoint-parser/-/bower-endpoint-parser-0.2.2.tgz#00b565adbfab6f2d35addde977e97962acbcb3f6"
 
+bowser@^1.4.0:
+  version "1.9.4"
+  resolved "https://registry.yarnpkg.com/bowser/-/bowser-1.9.4.tgz#890c58a2813a9d3243704334fa81b96a5c150c9a"
+
 brace-expansion@^1.0.0:
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.11.tgz#3c7fcbf529d87226f3d2f52b966ff5271eb441dd"
@@ -3024,6 +3028,15 @@ ember-ajax@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/ember-ajax/-/ember-ajax-3.0.0.tgz#8f21e9da0c1d433cf879aa855fce464d517e9ab5"
   dependencies:
+    ember-cli-babel "^6.0.0"
+
+ember-bowser@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/ember-bowser/-/ember-bowser-0.0.3.tgz#6ab952c37992192db94b900f6ded33f5a7e0a8ae"
+  dependencies:
+    bowser "^1.4.0"
+    broccoli-funnel "^2.0.0"
+    broccoli-merge-trees "^3.0.0"
     ember-cli-babel "^6.0.0"
 
 ember-browserify@^1.2.1:

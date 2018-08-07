@@ -89,8 +89,9 @@ export default Service.extend({
   },
 
   destroyFleet(fleet) {
-    // Let tracker decide if it needs this data.
+    // Notify tracker and discovery.
     this.get('tracker').evaluate(fleet);
+    this.get('discovery.evaluateFleet').perform(fleet);
 
     // System
     this.get('queueFleetRemoval').perform(fleet, 'system');

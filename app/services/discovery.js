@@ -15,6 +15,9 @@ export default Service.extend({
 
   loaded: false,
 
+  // For now, we don't render wormhole regions because
+  // they're very distanced from the New Eden universe and
+  // skew the map as such.
   _filterRegions(data) {
     data = data.filter(region => 
       region.name.indexOf('ADR') === -1 &&

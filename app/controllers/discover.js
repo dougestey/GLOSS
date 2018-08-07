@@ -36,20 +36,31 @@ export default Controller.extend({
   selectedFleet: computed('selectedFleetId', 'discovery.fleets.[]', function() {
     let id = this.get('selectedFleetId');
 
-    if (!id)
-      return;
+    if (!id) {
+      this.set('selectedFleetCache', null);
+      return null;
+    }
 
-    return this.get('discovery.fleets').findBy('id', id);
+    let cache = this.get('selectedFleetCache');
+    let selected = this.get('discovery.fleets').findBy('id', id);
+
+    if (!selected && cache) {
+      return cache;
+    } else if (selected) {
+      this.set('selectedFleetCache', selected);
+    }
+
+    return selected;
   }),
 
   selectedFleetIsTracked: computed('selectedFleetId', 'trackerFleets.[]', function() {
-    let fleet = this.get('selectedFleet');
+    let id = this.get('selectedFleetId');
     let fleets = this.get('trackerFleets');
 
-    if (!fleet)
+    if (!id)
       return false;
 
-    let existingTrackedFleet = fleets.findBy('id', fleet.id);
+    let existingTrackedFleet = fleets.findBy('id', id);
     return !!existingTrackedFleet;
   }),
 

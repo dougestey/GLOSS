@@ -1,8 +1,11 @@
 {{#unless kills.length}}
+
   <div class="ui active inverted text loader">Waiting for kill activity</div>
+
 {{else}}
+
   <div class="ui link cards">
-    <table class="ui table inverted" cellpadding="10">
+    <table class="ui table inverted mb2" cellpadding="10">
     <thead>
       <th>Time</th>
       <th>System</th>
@@ -26,4 +29,5 @@
     </tbody>
     </table>
   </div>
+
 {{/unless}}

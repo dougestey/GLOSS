@@ -18,8 +18,6 @@ export default Component.extend(ResizeAware, {
 
   attributeBindings: ['width', 'height'],
 
-  hasNotCompletedInitialRender: true,
-
   debouncedDidResize(width, height) {
     this.set('width', width);
     this.set('height', height);
@@ -43,31 +41,31 @@ export default Component.extend(ResizeAware, {
     // Schedule a call to our `drawRegions` method on Ember's "render" queue, which will
     // happen after the component has been placed in the DOM, and subsequently
     // each time data is changed.
-    run.scheduleOnce('render', this, this.drawRegions)
+    run.scheduleOnce('render', this, this.drawRegions);
   },
 
   _regionX(data, width) {
     return scaleLinear()
       .domain(extent(data.map(d => d.x)))
-      .range([0, width])
+      .range([0, width]);
   },
 
   _regionY(data, height) {
     return scaleLinear()
       .domain(extent(data.map(d => d.z)))
-      .range([height, 0])
+      .range([height, 0]);
   },
 
   _systemX(data, width) {
     return scaleLinear()
       .domain(extent(data.map(d => d.x)))
-      .range([0, width / 13])
+      .range([0, width / 13]);
   },
 
   _systemY(data, height) {
     return scaleLinear()
       .domain(extent(data.map(d => d.y)))
-      .range([0, height / 13])
+      .range([0, height / 13]);
   },
 
   drawSystems: task(function * () {
@@ -81,7 +79,16 @@ export default Component.extend(ResizeAware, {
     let height = get(this, 'height') - 160;
 
     let fleets = get(this, 'fleets');
-    let fleetData = _.countBy(fleets, 'system.id');
+    let fleetSize = {};
+    let fleetKills = {};
+
+    fleets.map((fleet) => {
+      let sizeCount = fleetSize[fleet.system.id] = 0;
+      let killCount = fleetKills[fleet.system.id] = 0;
+
+      fleetSize[fleet.system.id] = sizeCount + fleet.characters.length;
+      fleetKills[fleet.system.id] = killCount + fleet.kills.length;
+    });
 
     for (let region of regions) {
       let plot = select(`[data-id="${region.id}"]`);
@@ -91,7 +98,7 @@ export default Component.extend(ResizeAware, {
 
       let t = transition()
         .duration(750)
-        .ease(easeCubicInOut)
+        .ease(easeCubicInOut);
 
       // Enter
       systems
@@ -105,34 +112,36 @@ export default Component.extend(ResizeAware, {
           // Update
           .merge(systems)
             .classed('has-fleets', (d) => {
-              return !!fleetData[d.id]
+              return !!fleetSize[d.id]
             })
             .transition(t)
               .attr('r', (d) => {
-                if (fleetData[d.id])
-                  return fleetData[d.id] * 7
+                if (fleetSize[d.id])
+                  return fleetSize[d.id];
 
-                return 1
+                return 1;
               })
               .attr('opacity', (d) => {
-                if (fleetData[d.id]) {
-                  return 0.75
-                }
-
-                return 0.5;
+                return 0.7;
               })
               .attr('fill', (d) => {
-                if (fleetData[d.id]) {
-                  if (fleetData[d.id] > 1)
-                    return 'rgb(255, 90, 139)'
+                if (fleetKills[d.id]) {
+                  let g = 255;
+                  let modifier = fleetKills[d.id] * 12;
 
-                  return 'rgb(245, 212, 129)'
+                  if (modifier > 255) {
+                    g = 0;
+                  } else {
+                    g = g - modifier;
+                  }
+
+                  return `rgb(250, ${g}, 130)`;
                 }
 
                 return 'rgb(60, 154, 149)';
               })
               .attr('cy', d => this._systemY(dataSlice, height)(d.y))
-              .attr('cx', d => this._systemX(dataSlice, width)(d.x))
+              .attr('cx', d => this._systemX(dataSlice, width)(d.x));
 
       // Exit
       systems
@@ -186,13 +195,13 @@ export default Component.extend(ResizeAware, {
       plot
         .transition()
           .duration(750)
-          .attr('transform', "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+          .attr('transform', "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")");
     };
 
     // Create a transition to use later
     let t = transition()
       .duration(750)
-      .ease(easeCubicInOut)
+      .ease(easeCubicInOut);
 
     let plot = select(this.element)
       .select('g');
@@ -200,7 +209,7 @@ export default Component.extend(ResizeAware, {
     // UPDATE EXISTING
     let regions = plot
       .selectAll('g')
-      .data(data)
+      .data(data);
 
     // Enter
     let enter = regions
@@ -209,7 +218,7 @@ export default Component.extend(ResizeAware, {
         .attr('class', 'Gloss-map--region')
         .attr('data-id', d => d.id)
         .attr('data-name', d => d.name)
-        .on('click', _selectRegion)          
+        .on('click', _selectRegion);
 
     enter
       .append('text')
@@ -218,7 +227,7 @@ export default Component.extend(ResizeAware, {
           .attr('style', 'font-size: 9px;')
           .attr('text-anchor', 'middle')
           .attr('dominant-baseline', 'central')
-          .attr('opacity', 0)
+          .attr('opacity', 0);
 
     // Update
     enter
@@ -235,18 +244,21 @@ export default Component.extend(ResizeAware, {
           })
           .transition(t)
             .delay((d, i) => 2000 + i * 100)
-            .attr('opacity', 1)
+            .attr('opacity', 1);
 
     // Exit
     regions
       .exit()
       .transition(t)
       .attr('r', 0)
-      .remove()
+      .remove();
 
-    // Unblock the runtime
+    // Unblock the runtime briefly. When we're receiving a lot
+    // of fleets over the socket, a lot of redraws will be queued,
+    // leaving little time for DOM interaction otherwise.
     yield timeout(2000);
 
     yield this.get('drawSystems').perform();
   }).restartable(),
-})
+
+});
