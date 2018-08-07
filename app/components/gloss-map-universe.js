@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { run } from '@ember/runloop';
+import { run, later } from '@ember/runloop';
 import { get } from '@ember/object';
 import ResizeAware from 'ember-resize/mixins/resize-aware';
 
@@ -8,7 +8,7 @@ import { scaleLinear } from 'd3-scale';
 import { extent } from 'd3-array';
 import { transition } from 'd3-transition';
 import { easeCubicInOut } from 'd3-ease';
-
+import bowser from 'ember-bowser';
 import { task, waitForProperty, timeout } from 'ember-concurrency';
 import _ from 'npm:lodash';
 
@@ -17,6 +17,8 @@ export default Component.extend(ResizeAware, {
   tagName: 'svg',
 
   attributeBindings: ['width', 'height'],
+
+  pauseFleetUpdates: false,
 
   debouncedDidResize(width, height) {
     this.set('width', width);
@@ -69,6 +71,7 @@ export default Component.extend(ResizeAware, {
   },
 
   drawSystems: task(function * () {
+    yield waitForProperty(this, 'pauseFleetUpdates', false);
     yield waitForProperty(this, 'regions.length', val => val !== 0);
     yield waitForProperty(this, 'systems.length', val => val !== 0);
     yield waitForProperty(this, 'fleets.length', val => val !== 0);
@@ -106,8 +109,8 @@ export default Component.extend(ResizeAware, {
         .append('circle')
           .attr('data-id', d => d.id)
           .attr('data-name', d => d.name)
-          .attr('opacity', 0.1)
-          .attr('r', 1)
+          .attr('opacity', 0)
+          .attr('r', 0.5)
 
           // Update
           .merge(systems)
@@ -119,10 +122,10 @@ export default Component.extend(ResizeAware, {
                 if (fleetSize[d.id])
                   return fleetSize[d.id];
 
-                return 1;
+                return 0.5;
               })
               .attr('opacity', (d) => {
-                return 0.7;
+                return 0.5;
               })
               .attr('fill', (d) => {
                 if (fleetKills[d.id]) {
@@ -148,7 +151,9 @@ export default Component.extend(ResizeAware, {
         .exit()
         .remove();
 
-      this.sendAction('notifyMapHasLoaded');
+      if (region.id === regions[regions.length - 1].id) {
+        this.sendAction('notifyMapHasLoaded');
+      }
     }
 
   }).restartable(),
@@ -158,6 +163,7 @@ export default Component.extend(ResizeAware, {
   },
 
   drawRegionsTask: task(function * () {
+    yield waitForProperty(this, 'pauseFleetUpdates', false);
     yield waitForProperty(this, 'fleets.length', val => val !== 0);
     yield waitForProperty(this, 'regions.length', val => val !== 0);
 
@@ -166,7 +172,13 @@ export default Component.extend(ResizeAware, {
     let height = get(this, 'height') - 160;
     let centered;
 
+    let isMobile = bowser.tablet || bowser.mobile;
+    let pauseDuration = isMobile ? 4000 : 2000;
+
     let _selectRegion = (d) => {
+      this.set('pauseFleetUpdates', true);
+      later(() => this.set('pauseFleetUpdates', false), pauseDuration / 2);
+
       let x, y, k;
 
       if (d && centered !== d) {
@@ -220,6 +232,8 @@ export default Component.extend(ResizeAware, {
         .attr('data-name', d => d.name)
         .on('click', _selectRegion);
 
+    yield this.get('drawSystems').perform();
+
     enter
       .append('text')
         .text(d => d.name)
@@ -249,16 +263,12 @@ export default Component.extend(ResizeAware, {
     // Exit
     regions
       .exit()
-      .transition(t)
-      .attr('r', 0)
       .remove();
 
     // Unblock the runtime briefly. When we're receiving a lot
     // of fleets over the socket, a lot of redraws will be queued,
     // leaving little time for DOM interaction otherwise.
-    yield timeout(2000);
-
-    yield this.get('drawSystems').perform();
+    yield timeout(pauseDuration);
   }).restartable(),
 
 });
