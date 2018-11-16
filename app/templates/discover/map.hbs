@@ -1,49 +1,66 @@
-{{#if loading}}
+{{!-- {{#if loading}} --}}
 
-  <div class="ui active inverted text loader">Downloading initial fleet data from Sentinel<br><small>This only happens once</small></div>
+  {{!-- <div class="ui active inverted text loader">Visualizing {{selectedRegion}}</div> --}}
 
-{{else}}
-
-  {{#if hasNotCompletedInitialRender}}
-
-    <div class="ui active inverted text loader">Visualizing New Eden</div>
-
-  {{/if}}
+{{#if selectedRegion}}
 
   {{gloss-map-universe
     regions=regions
     systems=systems
     fleets=fleets
-    selectRegion=(action 'selectRegion')
     selectedRegion=selectedRegion
-    notifyMapHasLoaded=(action 'notifyMapHasLoaded')
+    selectRegion=(action 'selectRegion')
     }}
 
-{{/if}}
-
-{{#if (and selectedRegion fleetDisplay.length)}}
-
-  <div class="Gloss-sidebar Gloss-sidebar--map Gloss-sidebar--shown">
-    <div class="Gloss-notifier Gloss-module">
-      <div class="Gloss-stream Gloss-scroller">
-        <div class="Gloss-notification--line">
-          <span class="Gloss-notification--flex">
-            <span>
-              <strong>{{selectedRegion.name}}</strong>
-              <br>
+    <div class="Gloss-sidebar Gloss-sidebar--map Gloss-sidebar--shown">
+      <div class="Gloss-notifier Gloss-module">
+        <div class="Gloss-stream Gloss-scroller">
+          <div class="Gloss-notification--line">
+            <span class="Gloss-notification--flex">
+              <span>
+                <strong>
+                  {{#if fleetDisplay.length}}
+                    Active fleets in {{selectedRegion.name}}
+                  {{else if fleets.length}}
+                    No recent fleet activity.
+                  {{else}}
+                    Waiting for fleet data...
+                  {{/if}}
+                </strong>
+                <br>
+              </span>
             </span>
-          </span>
+          </div>
+
+          {{#each (sort-by 'lastSeen:desc' fleetDisplay) as |fleet|}}
+            {{#if fleet.characters.length}}
+              {{gloss-threat-map
+                fleet=fleet
+                selectFleet=(action 'selectFleet')
+                }}
+              {{/if}}
+          {{/each}}
         </div>
-        {{#each (sort-by 'lastSeen:desc' fleetDisplay) as |fleet|}}
-          {{#if fleet.characters.length}}
-            {{gloss-threat-map
-              fleet=fleet
-              selectFleet=(action 'selectFleet')
-              }}
-            {{/if}}
-        {{/each}}
       </div>
     </div>
-  </div>
+
+{{else}}
+
+  {{#if (and regions regions.length)}}
+
+    {{gloss-map-regions
+      regions=(sort-by 'name' regions)
+      selectRegion=(action 'selectRegion')
+      }}
+
+  {{else}}
+
+    <div class="ui active inverted text loader">
+      Loading regions
+    </div>
+
+  {{/if}}
 
 {{/if}}
+
+{{!-- <div class="ui active inverted text loader">Map interface is currently being rewritten<br><small>It will come back some day soon</small></div> --}}

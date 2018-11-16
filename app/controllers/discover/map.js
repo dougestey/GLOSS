@@ -16,8 +16,6 @@ export default Controller.extend({
 
   fleets: reads('discovery.fleets.[]'),
 
-  hasNotCompletedInitialRender: true,
-
   fleetDisplay: computed('selectedRegion', 'fleets', function() {
     let region = this.get('selectedRegion');
 
@@ -58,10 +56,6 @@ export default Controller.extend({
     resetMap() {
       this.get('discover').send('selectFleet', null);
       this.set('selectedRegion', null);
-    },
-
-    notifyMapHasLoaded() {
-      this.set('hasNotCompletedInitialRender', false);
     },
   }
 

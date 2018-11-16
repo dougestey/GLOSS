@@ -89,6 +89,17 @@ ul {
     right: unset;
     left: 0;
     background: linear-gradient(90deg, black, transparent);
+    overflow: visible;
+    width: auto;
+
+    .Gloss-stream {
+      max-width: none;
+      overflow-x: visible !important;
+
+      .Gloss-notification {
+        padding-right: 0.75rem;
+      }
+    }
   }
 }
 

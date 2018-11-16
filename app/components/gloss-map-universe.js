@@ -74,7 +74,6 @@ export default Component.extend(ResizeAware, {
     yield waitForProperty(this, 'pauseFleetUpdates', false);
     yield waitForProperty(this, 'regions.length', val => val !== 0);
     yield waitForProperty(this, 'systems.length', val => val !== 0);
-    yield waitForProperty(this, 'fleets.length', val => val !== 0);
 
     let data = get(this, 'systems');
     let regions = get(this, 'regions');
@@ -93,122 +92,80 @@ export default Component.extend(ResizeAware, {
       fleetKills[fleet.system.id] = killCount + fleet.kills.length;
     });
 
-    for (let region of regions) {
-      let plot = select(`[data-id="${region.id}"]`);
-      let dataSlice = data.filterBy('region.id', region.id);
+    let region = this.get('selectedRegion');
+    let plot = select(`[data-id="${region.id}"]`);
+    let dataSlice = data.filterBy('region.id', region.id);
 
-      let systems = plot.selectAll('circle').data(dataSlice);
+    let systems = plot.selectAll('circle').data(dataSlice);
 
-      let t = transition()
-        .duration(750)
-        .ease(easeCubicInOut);
+    let t = transition()
+      .duration(750)
+      .ease(easeCubicInOut);
 
-      // Enter
-      systems
-        .enter()
-        .append('circle')
-          .attr('data-id', d => d.id)
-          .attr('data-name', d => d.name)
-          .attr('opacity', 0)
-          .attr('r', 0.5)
+    // Enter
+    systems
+      .enter()
+      .append('circle')
+        .attr('data-id', d => d.id)
+        .attr('data-name', d => d.name)
+        .attr('opacity', 0)
+        .attr('r', 0.5)
 
-          // Update
-          .merge(systems)
-            .classed('has-fleets', (d) => {
-              return !!fleetSize[d.id]
+        // Update
+        .merge(systems)
+          .classed('has-fleets', (d) => {
+            return !!fleetSize[d.id]
+          })
+          .transition(t)
+            .attr('r', (d) => {
+              if (fleetSize[d.id])
+                return fleetSize[d.id];
+
+              return 0.5;
             })
-            .transition(t)
-              .attr('r', (d) => {
-                if (fleetSize[d.id])
-                  return fleetSize[d.id];
+            .attr('opacity', (d) => {
+              return 0.5;
+            })
+            .attr('fill', (d) => {
+              if (fleetKills[d.id]) {
+                let g = 255;
+                let modifier = fleetKills[d.id] * 12;
 
-                return 0.5;
-              })
-              .attr('opacity', (d) => {
-                return 0.5;
-              })
-              .attr('fill', (d) => {
-                if (fleetKills[d.id]) {
-                  let g = 255;
-                  let modifier = fleetKills[d.id] * 12;
-
-                  if (modifier > 255) {
-                    g = 0;
-                  } else {
-                    g = g - modifier;
-                  }
-
-                  return `rgb(250, ${g}, 130)`;
+                if (modifier > 255) {
+                  g = 0;
+                } else {
+                  g = g - modifier;
                 }
 
-                return 'rgb(60, 154, 149)';
-              })
-              .attr('cy', d => this._systemY(dataSlice, height)(d.y))
-              .attr('cx', d => this._systemX(dataSlice, width)(d.x));
+                return `rgb(250, ${g}, 130)`;
+              }
 
-      // Exit
-      systems
-        .exit()
-        .remove();
+              return 'rgb(60, 154, 149)';
+            })
+            .attr('cy', d => this._systemY(dataSlice, height)(d.y))
+            .attr('cx', d => this._systemX(dataSlice, width)(d.x));
 
-      if (region.id === regions[regions.length - 1].id) {
-        this.sendAction('notifyMapHasLoaded');
-      }
-    }
+    // Exit
+    systems
+      .exit()
+      .remove();
 
-  }).restartable(),
+  }).keepLatest(),
 
   drawRegions() {
     this.get('drawRegionsTask').perform();
   },
 
   drawRegionsTask: task(function * () {
-    yield waitForProperty(this, 'pauseFleetUpdates', false);
-    yield waitForProperty(this, 'fleets.length', val => val !== 0);
-    yield waitForProperty(this, 'regions.length', val => val !== 0);
-
-    let data = get(this, 'regions');
+    let data = [get(this, 'selectedRegion')];
     let width = get(this, 'width') - 160;
     let height = get(this, 'height') - 160;
-    let centered;
 
-    let isMobile = bowser.tablet || bowser.mobile;
-    let pauseDuration = isMobile ? 4000 : 2000;
+    let pauseDuration = 2000;
 
-    let _selectRegion = (d) => {
-      this.set('pauseFleetUpdates', true);
-      later(() => this.set('pauseFleetUpdates', false), pauseDuration / 2);
-
-      let x, y, k;
-
-      if (d && centered !== d) {
-        x = this._regionX(data, width)(d.x);
-        y = this._regionY(data, height)(d.z);
-        k = 5;
-        centered = d;
-
-        this.sendAction('selectRegion', d);
-      } else {
-        x = width / 2;
-        y = height / 2;
-        k = 1;
-        centered = null;
-
-        this.sendAction('selectRegion', null);
-      }
-
-      plot.selectAll('g')
-        .classed('active', centered && function(d) { return d === centered; })
-        .select('text')
-          .attr('style', () => {
-            return centered ? 'font-size: 4px' : 'font-size: 9px';
-          });
-
-      plot
-        .transition()
-          .duration(750)
-          .attr('transform', "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")");
-    };
+    let _unselectRegion = () => {
+      this.sendAction('selectRegion', null);
+    }
 
     // Create a transition to use later
     let t = transition()
@@ -227,10 +184,10 @@ export default Component.extend(ResizeAware, {
     let enter = regions
       .enter()
       .append('g')
-        .attr('class', 'Gloss-map--region')
+        .attr('class', 'Gloss-map--region active')
         .attr('data-id', d => d.id)
         .attr('data-name', d => d.name)
-        .on('click', _selectRegion);
+        .on('click', _unselectRegion);
 
     yield this.get('drawSystems').perform();
 
@@ -238,27 +195,22 @@ export default Component.extend(ResizeAware, {
       .append('text')
         .text(d => d.name)
           .attr('fill', '#d2fffd')
-          .attr('style', 'font-size: 9px;')
-          .attr('text-anchor', 'middle')
+          .attr('style', 'font-size: 4px;')
+          .attr('text-anchor', 'end')
           .attr('dominant-baseline', 'central')
-          .attr('opacity', 0);
+          .attr('opacity', 0)
+          .transition(t)
+            .delay((d, i) => 500 + i * 100)
+            .attr('x', 160)
+            .attr('y', -15)
+            .attr('opacity', 1);
 
     // Update
     enter
       .merge(regions)
         .attr('transform', (d) => {
-          return `translate(${this._regionX(data, width)(d.x)}, ${this._regionY(data, height)(d.z)})`
+          return `translate(${width / 4},${height / 4})scale(8)`
         })
-        .select('text')
-          .attr('x', function() {
-            return this.parentNode.getBBox().width / 2
-          })
-          .attr('y', function() {
-            return this.parentNode.getBBox().height / 2
-          })
-          .transition(t)
-            .delay((d, i) => 2000 + i * 100)
-            .attr('opacity', 1);
 
     // Exit
     regions
@@ -269,6 +221,6 @@ export default Component.extend(ResizeAware, {
     // of fleets over the socket, a lot of redraws will be queued,
     // leaving little time for DOM interaction otherwise.
     yield timeout(pauseDuration);
-  }).restartable(),
+  }).keepLatest(),
 
 });

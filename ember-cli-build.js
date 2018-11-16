@@ -20,6 +20,10 @@ module.exports = function(defaults) {
       includePaths: [
         'node_modules/sass-semantic-ui/dist/themes/material/assets/fonts'
       ]
+    },
+
+    sourcemaps: {
+      enabled: true
     }
   });
 

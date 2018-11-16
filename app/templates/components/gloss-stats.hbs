@@ -8,69 +8,19 @@
     selectAction=(action 'openAboutDialog')
     }}
 
-  {{#if (eq mode 'discover')}}
+  {{gloss-shard
+    label="Fleets"
+    value=fleets
+    loaded=loadUiElements
+    loadOrder=2
+    }}
 
-    {{gloss-shard
-      label="Fleets"
-      value=fleets
-      loaded=loadUiElements
-      loadOrder=2
-      }}
-
-    {{gloss-shard
-      label="Kills"
-      value=kills
-      loaded=loadUiElements
-      loadOrder=3
-      }}
-
-  {{else}}
-
-    {{gloss-shard
-      label=(if (not-eq context 'tracker') "Jumps")
-      value=stats.shipJumps
-      loaded=loadUiElements
-      loadOrder=2
-      }}
-
-    {{gloss-shard
-      label=(if (not-eq context 'tracker') "NPC")
-      value=stats.npcKills
-      loaded=loadUiElements
-      loadOrder=3
-      }}
-
-    {{gloss-shard
-      label=(if (not-eq context 'tracker') "Ships")
-      value=stats.shipKills
-      loaded=loadUiElements
-      loadOrder=4
-      }}
-
-    {{gloss-shard
-      label=(if (not-eq context 'tracker') "Capsules")
-      value=stats.podKills
-      loaded=loadUiElements
-      loadOrder=5
-      }}
-
-    {{#if stats.createdAt}}
-      {{gloss-shard
-        label="Stat Refresh"
-        value=(sub 60 (moment-diff stats.createdAt now precision='minutes' interval='60000'))
-        loaded=loadUiElements
-        loadOrder=6
-        }}
-    {{else}}
-      {{gloss-shard
-        label=(if (not-eq context 'tracker') "Stat Refresh")
-        value=(if (not-eq context 'tracker') "?")
-        loaded=loadUiElements
-        loadOrder=6
-        }}
-    {{/if}}
-
-  {{/if}}
+  {{gloss-shard
+    label="Kills"
+    value=kills
+    loaded=loadUiElements
+    loadOrder=3
+    }}
 
   {{gloss-shard
     label="Arbiter"

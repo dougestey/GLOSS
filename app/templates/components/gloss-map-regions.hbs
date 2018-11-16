@@ -1,0 +1,6 @@
+{{#each regions as |region|}}
+  {{gloss-map-region
+    region=region
+    selectRegion=(action 'selectRegion')
+    }}
+{{/each}}
