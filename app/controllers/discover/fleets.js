@@ -10,7 +10,7 @@ export default Controller.extend({
 
   fleets: reads('discovery.fleets.[]'),
 
-  fleetsLoaded: reads('discovery.loaded'),
+  fleetsLoaded: reads('discovery.initialized'),
 
   actions: {
     selectFleet(id) {

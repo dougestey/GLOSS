@@ -25,8 +25,6 @@ export default Controller.extend({
 
   message: service(),
 
-  intel: service(),
-
   tracker: service(),
 
   route: reads('application.currentPath'),
@@ -35,49 +33,56 @@ export default Controller.extend({
 
   system: reads('location.system'),
 
-  constellation: reads('location.constellation'),
-
   region: reads('location.region'),
 
   isConnected: reads('arbiter.connected'),
-
-  systemFleets: reads('intel.fleets.system.[]'),
-
-  constellationFleets: reads('intel.fleets.constellation.[]'),
-
-  regionFleets: reads('intel.fleets.region.[]'),
 
   trackerFleets: reads('tracker.fleets.[]'),
 
   trackerKills: reads('tracker.kills.[]'),
 
-  systemKills: reads('intel.kills.system.[]'),
+  allKills: reads('discovery.kills.[]'),
 
-  constellationKills: reads('intel.kills.constellation.[]'),
+  allFleets: reads('discovery.fleets.[]'),
 
-  regionKills: reads('intel.kills.region.[]'),
+  nearbyFleets: computed('allFleets', 'region.id', function() {
+    let allFleets = this.get('allFleets');
+    let currentRegionId = this.get('region.id');
+
+    return allFleets.filterBy('system.region.id', currentRegionId);
+  }),
+
+  nearbyKills: computed('allKills', 'region.id', function() {
+    let allKills = this.get('allKills');
+    let currentRegionId = this.get('region.id');
+
+    return allKills.filterBy('system.region', currentRegionId);
+  }),
 
   context: computed('route', function() {
     let route = this.get('route');
     let context = route.split('.')[1];
 
+    if (context !== 'tracker') {
+      return 'nearby';
+    }
+
     return context;
   }),
 
-  mode: computed('route', function() {
-    let route = this.get('route');
-    let mode = route.split('.')[0];
+  fleets: computed('context', 'nearbyFleets.[]', 'trackerFleets.[]', function() {
+    let context = this.get('context');
 
-    return mode;
+    return this.get(`${context}Fleets`);
   }),
 
-  kills: computed('context', 'regionKills.[]', 'constellationKills.[]', 'systemKills.[]', 'trackerKills.[]', function() {
+  kills: computed('context', 'nearbyKills.[]', 'trackerKills.[]', function() {
     let context = this.get('context');
 
     return this.get(`${context}Kills`);
   }),
 
-  killsRenderable: computed('kills', 'context', 'regionKills.[]', 'constellationKills.[]', 'systemKills.[]', function() {
+  killsRenderable: computed('kills.[]', function() {
     let kills = this.get('kills');
 
     if (!kills)
@@ -86,17 +91,15 @@ export default Controller.extend({
     return kills.sortBy('time').reverse().slice(0, 500);
   }),
 
-  stats: computed('context', 'system', 'constellation', 'region', function() {
-    let context = this.get('context');
+  selectFleet: task(function * (id) {
+    this.set('selectedFleetId', id);
 
-    if (context === 'tracker') {
-      return {};
-    }
+    $('.ui.threat.modal').modal('show');
+    $('.ui.threat.modal').modal('hide dimmer');
+    $('.ui.threat.modal').scrollTop(0);
+  }).drop(),
 
-    return this.get(`${context}.stats`);
-  }),
-
-  selectedFleet: computed('selectedFleetId', 'discovery.fleets.[]', 'systemFleets', 'constellationFleets', 'regionFleets', 'trackerFleets', function() {
+  selectedFleet: computed('selectedFleetId', 'allFleets.[]', 'trackerFleets.[]', function() {
     let id = this.get('selectedFleetId');
 
     if (!id) {
@@ -104,28 +107,26 @@ export default Controller.extend({
       return null;
     }
 
-    let discoveryFleets = this.get('discovery.fleets');
+    let allFleets = this.get('allFleets');
+    let trackerFleets = this.get('trackerFleets');
+    let cache = this.get('selectedFleetCache');
     let selected;
 
-    if (discoveryFleets)
-      selected = discoveryFleets.findBy('id', id);
+    if (allFleets) {
+      selected = allFleets.findBy('id', id);
+    }
+
+    if (!selected) {
+      selected = trackerFleets.findBy('id', id);
+    }
 
     if (selected) {
+      this.set('selectedFleetCache', selected);
+
       return selected;
     }
 
-    let context = this.get('context');
-    let fleetsFromIntel = this.get(`${context}Fleets`);
-    let cache = this.get('selectedFleetCache');
-    selected = fleetsFromIntel.findBy('id', id);
-
-    if (!selected && cache) {
-      return cache;
-    } else if (selected) {
-      this.set('selectedFleetCache', selected);
-    }
-
-    return selected;
+    return cache;
   }),
 
   selectedFleetIsTracked: computed('selectedFleetId', 'trackerFleets.[]', function() {
@@ -138,14 +139,6 @@ export default Controller.extend({
     let existingTrackedFleet = fleets.findBy('id', id);
     return !!existingTrackedFleet;
   }),
-
-  selectFleet: task(function * (id) {
-    this.set('selectedFleetId', id);
-
-    $('.ui.threat.modal').modal('show');
-    $('.ui.threat.modal').modal('hide dimmer');
-    $('.ui.threat.modal').scrollTop(0);
-  }).drop(),
 
   init() {
     this._super(...arguments);

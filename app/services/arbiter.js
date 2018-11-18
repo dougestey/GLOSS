@@ -10,8 +10,6 @@ export default Service.extend({
 
   location: service(),
 
-  intel: service(),
-
   discovery: service(),
 
   session: service(),
@@ -53,7 +51,6 @@ export default Service.extend({
 
       if (character) {
         this.get('location').start(character.id);
-        this.get('intel').enable();
         this.get('discovery').enable();
       }
     }

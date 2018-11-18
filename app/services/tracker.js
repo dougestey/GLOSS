@@ -4,8 +4,6 @@ import { computed } from '@ember/object';
 
 export default Service.extend({
 
-  intel: service(),
-
   fleets: storageFor('tracked-fleets-01'),
 
   deadFleetCount: 0,
@@ -23,7 +21,6 @@ export default Service.extend({
 
   add(fleet) {
     this.get('fleets').addObject(fleet);
-    this.get('intel').subscribeFleet(fleet.id);
   },
 
   remove(fleet) {
@@ -31,8 +28,6 @@ export default Service.extend({
 
     if (existingFleet)
       this.get('fleets').removeObject(existingFleet);
-
-    this.get('intel').unsubscribeFleet(fleet.id);
   },
 
   evaluate(fleet) {

@@ -1,4 +1,5 @@
 import Controller, { inject as controller } from '@ember/controller';
+import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
@@ -6,13 +7,15 @@ export default Controller.extend({
 
   navigate: controller(),
 
-  intel: service(),
+  discovery: service(),
 
   location: service(),
 
   system: reads('location.system.id'),
 
-  fleets: reads('intel.fleets.region.[]'),
+  region: reads('location.region.id'),
+
+  fleets: reads('navigate.nearbyFleets'),
 
   actions: {
     selectFleet(id) {

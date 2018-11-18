@@ -1,5 +1,4 @@
 {{gloss-threat-display
-  selectedFaction=selectedFaction
   selectedFleet=selectedFleet
   toggleTracking=(action 'toggleTracking')
   }}
@@ -8,29 +7,17 @@
 
 <div class="Gloss">
   {{gloss-stats
-    stats=stats
-    context=context
+    fleets=fleets
+    kills=kills
     loadUiElements=loadUiElements
     isConnected=isConnected
     }}
 
   <div class="ui grid">
-    <div class="five column row no-gutter p0 mt2 mb1">
+    <div class="three column row no-gutter p0 mt2 mb1">
       <div class="column">
-        {{#link-to 'navigate.system' class='Gloss-button Gloss-button--small'}}
-          {{if system.name system.name 'System'}} <span class="Gloss-button--detail">{{systemFleets.length}}</span>
-        {{/link-to}}
-      </div>
-
-      <div class="column">
-        {{#link-to 'navigate.constellation' class='Gloss-button Gloss-button--small'}}
-          {{if constellation.name constellation.name 'Constellation'}} <span class="Gloss-button--detail">{{constellationFleets.length}}</span>
-        {{/link-to}}
-      </div>
-
-      <div class="column">
-        {{#link-to 'navigate.region' class='Gloss-button Gloss-button--small'}}
-          {{if region.name region.name 'Region'}} <span class="Gloss-button--detail">{{regionFleets.length}}</span>
+        {{#link-to 'navigate.index' class='Gloss-button Gloss-button--small'}}
+          {{if region.name region.name 'Your Location'}} <span class="Gloss-button--detail">{{nearbyFleets.length}}</span>
         {{/link-to}}
       </div>
 
@@ -53,7 +40,7 @@
   </div>
 
   <div class="Gloss-viewport {{if showKillStream 'Gloss-viewport--reduced'}}">
-    {{#unless (and loadIntel (or systemFleets (eq systemFleets.length 0)))}}
+    {{#unless (and loadIntel (or nearbyFleets (eq nearbyFleets.length 0)))}}
       <div class="ui active inverted text loader">Connecting to Sentinel</div>
     {{/unless}}
 
