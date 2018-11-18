@@ -2,9 +2,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-basis: 200px;
+  flex-basis: 19%;
 
   text-align: center;
-  padding: 1rem;
   cursor: pointer;
+
+  margin: 0.1rem;
+  background-color: transparentize($secondary, 0.94);
+
+  transition: background-color 175ms ease-in-out;
+
+  &:hover {
+    background-color: transparentize($secondary, 0.7);
+  }
+
+  .Gloss-shard {
+    flex: unset;
+  }
 }

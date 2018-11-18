@@ -17,8 +17,6 @@ export default Controller.extend({
 
   application: controller(),
 
-  arbiter: service(),
-
   discovery: service(),
 
   location: service(),
@@ -34,8 +32,6 @@ export default Controller.extend({
   system: reads('location.system'),
 
   region: reads('location.region'),
-
-  isConnected: reads('arbiter.connected'),
 
   trackerFleets: reads('tracker.fleets.[]'),
 

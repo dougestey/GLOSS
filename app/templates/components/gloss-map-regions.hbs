@@ -1,6 +1,7 @@
 {{#each regions as |region|}}
   {{gloss-map-region
     region=region
+    fleets=(filter-by-region fleets region.id fleets.length)
     selectRegion=(action 'selectRegion')
     }}
 {{/each}}

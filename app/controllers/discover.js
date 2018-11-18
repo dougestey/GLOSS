@@ -7,8 +7,6 @@ import { reads } from '@ember/object/computed';
 
 export default Controller.extend({
 
-  arbiter: service(),
-
   application: controller(),
 
   navigate: controller(),
@@ -20,8 +18,6 @@ export default Controller.extend({
   tracker: service(),
 
   message: service(),
-
-  isConnected: reads('arbiter.connected'),
 
   route: reads('application.currentPath'),
 

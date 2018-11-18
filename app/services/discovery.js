@@ -21,7 +21,8 @@ export default Service.extend({
   _filterRegions(data) {
     data = data.filter(region => 
       region.name.indexOf('ADR') === -1 &&
-      region.name.indexOf('000') === -1
+      region.name.indexOf('000') === -1 &&
+      region.name.indexOf('-') === -1
     );
 
     return data;

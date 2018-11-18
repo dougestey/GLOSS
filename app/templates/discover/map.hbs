@@ -1,7 +1,3 @@
-{{!-- {{#if loading}} --}}
-
-  {{!-- <div class="ui active inverted text loader">Visualizing {{selectedRegion}}</div> --}}
-
 {{#if selectedRegion}}
 
   {{gloss-map-universe
@@ -50,6 +46,8 @@
 
     {{gloss-map-regions
       regions=(sort-by 'name' regions)
+      fleets=fleets
+      kills=kills
       selectRegion=(action 'selectRegion')
       }}
 
@@ -62,5 +60,3 @@
   {{/if}}
 
 {{/if}}
-
-{{!-- <div class="ui active inverted text loader">Map interface is currently being rewritten<br><small>It will come back some day soon</small></div> --}}

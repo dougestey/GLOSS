@@ -1,31 +1,9 @@
-<div class="Gloss-module Gloss-module--x Gloss-flex--start">
+<div class="Gloss-module Gloss-module--x">
   {{gloss-shard
     value="GLOSS"
     loaded=loadUiElements
     loadOrder=0
     primary=true
-    align="left"
     selectAction=(action 'openAboutDialog')
-    }}
-
-  {{gloss-shard
-    label="Fleets"
-    value=fleets.length
-    loaded=loadUiElements
-    loadOrder=2
-    }}
-
-  {{gloss-shard
-    label="Kills"
-    value=kills.length
-    loaded=loadUiElements
-    loadOrder=3
-    }}
-
-  {{gloss-shard
-    label="Arbiter"
-    value=(if isConnected 'Online' 'Offline')
-    loaded=loadUiElements
-    loadOrder=7
     }}
 </div>

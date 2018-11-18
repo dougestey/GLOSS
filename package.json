@@ -1,6 +1,6 @@
 {
   "name": "gloss",
-  "version": "2.0.7",
+  "version": "3.0.0",
   "private": false,
   "description": "A heads up display for space travel.",
   "license": "MIT",
