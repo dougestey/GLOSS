@@ -1,27 +1,21 @@
-# Gloss
+# GLOSS
 Guided List Of Star Systems.
 
-The dream is a rich but performant nav computer for space travel. Designed for EVE Online. Built on [Ember](http://emberjs.com).
-
-Purpose-built to work hand in hand with [Arbiter](https://github.com/dougestey/arbiter).
-
-Currently under heavy development. Not supported in any way by the author at this time.
+The dream is a rich but performant nav computer for space travel. Designed for EVE Online. Built on [Ember](http://emberjs.com) and powered by [Sentinel](https://github.com/dougestey).
 
 ## Screenshots ##
 ![gloss space_](https://user-images.githubusercontent.com/680366/39587843-805b8386-4ec8-11e8-8e78-cb612430ec6c.png)
-![gloss space_navigate_showkillstream true](https://user-images.githubusercontent.com/680366/39587862-887c6ddc-4ec8-11e8-94ab-0bff800a0d66.png)
-![gloss space_navigate_showkillstream true 1](https://user-images.githubusercontent.com/680366/39587847-829a81b0-4ec8-11e8-92d5-cf661bd47f85.png)
-
+![gloss3](https://user-images.githubusercontent.com/680366/48974258-845bdd00-f021-11e8-8331-98d3fc6d8a76.png)
+![gloss2](https://user-images.githubusercontent.com/680366/48974260-8e7ddb80-f021-11e8-9a66-ce3a48a6af5f.png)
+![gloss1](https://user-images.githubusercontent.com/680366/48974262-963d8000-f021-11e8-84c3-994ecbd7ea94.png)
 
 ## Features ##
 - EVE SSO Authentication
-- Blistering WebSocket connection to [Arbiter](https://github.com/dougestey/arbiter)
-- Updates location, ship, status for active character sockets every 5 seconds
-- Updates ship jumps, kills, pods, NPCs every 1 hour
-- Live fleet tracking analysis provided by [Sentinel](https://github.com/dougestey/sentinel)
-
-## Roadmap
-Coming soon.
+- Location-aware HUD shows fleets active in your region
+- Bird's eye-level fleet monitoring
+- Individual fleet tracking
+- Regional maps
+- All data shown is piped live from ESI (via [Arbiter](https://github.com/dougestey/arbiter)) and zKillboard (via [Sentinel](https://github.com/dougestey/sentinel))
 
 ## Development
 
@@ -60,7 +54,8 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 ## Deploying
 
-Requires a running [Arbiter](https://github.com/dougestey/arbiter) server instance.
+- Requires a running [Arbiter](https://github.com/dougestey/arbiter) server instance.
+- Requires a running [Sentinel](https://github.com/dougestey/sentinel) server instance.
 
 ## Design Reference
 - http://sciencefictioninterfaces.tumblr.com/
