@@ -54,7 +54,7 @@
     "eslint-plugin-ember": "^5.0.0",
     "liquid-fire": "^0.29.1",
     "loader.js": "^4.2.3",
-    "lodash": "3.10.1",
+    "lodash": "4.17.21",
     "sass-semantic-ui": "^2.2.12-3",
     "semantic-ui-ember": "2.1"
   },
